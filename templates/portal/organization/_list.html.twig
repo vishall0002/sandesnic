@@ -1,0 +1,57 @@
+{% if (pagination | length > 0) %}
+<table class="table table-striped table-bordered table-hover table-sm">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th {% if pagination.issorted('ministrycode') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Ministry', 'ministrycode') }}</th>
+			<th {% if pagination.issorted('organization_code') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Organization Alias', 'organization_code') }}</th>
+			<th {% if pagination.issorted('o_name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Organization Name', 'o_name') }}</th>
+			<th {% if pagination.issorted('organizationtype') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Type', 'organizationtype') }}</th>
+			<th>VHOST Alias</th>
+			<th class="text-right">Action</th>
+		</tr>
+	</thead>
+	<tbody>
+		{% set offset = pagination.getPaginationData.numItemsPerPage %}
+		{% set current = pagination.getPaginationData.current %}
+		{% for record in pagination %}
+			{% set badges = '' %}
+			<tr data-id="{{record.gu_id}}" class="btn-action-trmenu" data-objid="{{record.gu_id}}" data-popper-header="{{record.o_name}}">
+				<td>{{ ((current-1)*offset)+loop.index }}</td>
+				<td>{{record.ministrycode}}</td>
+				<td>{{record.organization_code}}</td>
+				<td>{{record.o_name}}</td>
+				<td>{{record.organizationtype}}</td>
+				<td>{{record.vhost}}</td>
+				<td class="">
+					{% embed 'bases/__action_menu.html.twig' %}
+						{% block action_menu_header %}
+							<span>{{ record.o_name }}</span>
+							{{ badges | raw }}
+						{% endblock %}
+						{% import "/bases/__action_menu_item.html.twig" as amenu %}
+						{% block action_menu %}
+							{% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+								{{ amenu.gims(record.o_name,record.gu_id,"o")}}
+							{% endif %}
+							{{ amenu.divider() }}
+							{{ amenu.amenuitem("Edit", record.gu_id,  path('portal_o_edit'), "btn-action-view tooltipjs", "fa-edit", "primary")}}
+							{{ amenu.amenuitem("Delete", record.gu_id, path('portal_o_delete'),"btn-action-view tooltipjs", "fa-trash", "danger" )}}
+							{{ amenu.divider() }}
+							{{ amenu.amenuformitem("Daily Chat Statistics",record.gu_id,  path('app_dashboard_day_total_messages'),"frmDCLt","btn-primay", "fa-check")}}
+							{{ amenu.amenuformitem("Percapita Statistics",record.gu_id,  path('app_dashboard_day_rgc'),"frmP","btn-primay", "fa-pencil")}}
+							{{ amenu.amenuformitem("Organization Unit wise statistics",record.gu_id,  path('app_dashboard_ou_wise'),"frmOU","btn-primary", "fa-cube")}}
+							{{ amenu.divider() }}
+							{{ amenu.amenuformitem("TOP/BOTTOM Reports",record.gu_id,  path('app_dashboard_top_bottom_statistics'),"frmTB","btn-primay", "fa-level-down")}}
+							{{ amenu.amenuformitem("TOP/BOTTOM Reports Single Page View",record.gu_id,  path('app_dashboard_top_bottom_single_page'),"frmTBSV","btn-primay", "fa-bandcamp")}}
+						{% endblock %}
+					{% endembed %}
+				</td>
+			</tr>
+		{% endfor %}
+	</tbody>
+</table>
+{% else %}
+	<h4 class="alert alert-info">No more values</h4>
+{% endif %}
+{{ knp_pagination_render(pagination) }}

@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <title>SANDES</title>
+        <meta content="" name="description">
+        <meta content="" name="author">
+        <meta content="width=device-width, initial-scale=1" name="viewport">
+        <link href="{{ asset('resources/device/css/normalize.css') }}" rel="stylesheet">
+        <link href="{{ asset('resources/device/css/skeleton.css') }}" rel="stylesheet">
+        <link href="{{ asset('resources/device/css/custom.css') }}" rel="stylesheet">
+    </head>
+    <body>
+        <div class="section ">
+            <div class="container">
+                <h2 class="section-heading">Hello</h2>
+                <h5>Optimize notifications on your device.
+                </h5>
+                <p>
+                    In order to make some of the features to work, you need to enable some settings in your phone.Please follow the instructions to continue
+                </p>
+                <h5>Step 1. Enable Auto Start for SANDES</h5>
+                <a class="button button-primary" href="#" onclick="{{ deviceSettings.settingsAutoStart }}">SET AUTO START FOR SANDES</a>
+            </div>
+            <h5>Step 2. Ignore Battery Optmizations
+            </h5>
+            <a class="button button-primary" href="#" onclick="{{ deviceSettings.settingsBattery }}">OPEN SETTINGS</a>
+        </div>
+    </body>
+</html>

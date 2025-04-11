@@ -1,0 +1,11 @@
+{# empty Twig template #}
+<select 
+    id="sbParent1" 
+    class="form-control dropdownSearch cfParent" 
+    data-parentlevel ="2"
+    name="masterEntityList">
+    <option value="">-- Select --</option>
+    {% for item in masterEntity %}
+        <option value="{{ item.id }}">{{ attribute(item,param) }}</option>
+    {% endfor %}
+</select>

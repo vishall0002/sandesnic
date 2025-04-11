@@ -1,0 +1,30 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    Create New Employee Level{% endblock %}
+{% block formstart %}
+    {{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        {{ form_row(form.guId) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{form_row(form.organization) }}</div>
+            <div class="col-md-6">
+                {{ form_row(form.employeeLevelCode) }}</div>
+            <div class="col-md-6">
+                {{ form_row(form.employeeLevelName) }}</div>
+        </div>
+    </section>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        {{ form_widget(form.btnInsert, {attr: {class: 'btn btn-sm btn-primary btn-action-submit'} }) }}
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+
+    </div>
+{% endblock %}
+{% block formend %}
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

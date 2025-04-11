@@ -1,0 +1,47 @@
+<div class="row ">
+	<div class="col-md-4">
+		<span class="text-primary">
+			Showing page
+			{{current}}/{{pageCount}}
+			of
+			{{totalCount}}
+			results</span>
+	</div>
+	<div class="col-md-8 text-right">
+		{% if pageCount > 1 %}
+			{% if first is defined and current != first %}
+				<a class="btn btn-sm btn-secondary pagination-navigator" href="{{ path(route, query|merge({(pageParameterName): first})) }}">
+					&lt;&lt;
+				</a>
+			{% endif %}
+			{% if previous is defined %}
+				<a class="btn btn-sm btn-secondary pagination-navigator" href="{{ path(route, query|merge({(pageParameterName): previous})) }}">
+					&lt;
+				</a>
+			{% endif %}
+			{% for page in pagesInRange %}
+				{% if page != current %}
+					<a class="btn btn-sm btn-secondary pagination-navigator" href="{{ path(route, query|merge({(pageParameterName): page})) }}">
+						<span style="width: 32px;">{{ page }}</span>
+					</a>
+				{% else %}
+					<a class="btn btn-sm btn-primary">{{ page }}</a>
+				{% endif %}
+			{% endfor %}
+			{% if next is defined %}
+				<a class="btn btn-sm btn-secondary pagination-navigator" href="{{ path(route, query|merge({(pageParameterName): next})) }}">
+					<span>&gt;</span>
+				</a>
+			{% endif %}
+			{% if last is defined and current != last %}
+				<a class="btn btn-sm btn-secondary pagination-navigator" href="{{ path(route, query|merge({(pageParameterName): last})) }}">
+					<span>&gt;&gt;</span>
+				</a>
+			{% endif %}
+		{% endif %}
+        {% if pageCount > 1 %}
+				<input class="input-xs" style="width: 50px;" placeholder="Page#" id="__KNP_goto_page" value="{{current}}" type="text"/>
+				<span id="search" data-paginator-url="{{ path(route, query|merge({(pageParameterName): '__gPage__'})) }}" class="btn btn-sm btn-secondary btn-flat text-bold paginator-goto-button">Go</span>
+		{% endif %}
+	</div>
+</div>

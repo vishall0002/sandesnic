@@ -1,0 +1,13 @@
+{% extends 'FundsUserBundle:Default:master.html.twig' %} 
+{% block mastercontent %}
+<div style="margin-right: auto; margin-left: auto; padding: 3%;">
+    <div class="ui-corner-all"
+         style=" margin-right: auto; margin-left: auto; width: 50%; padding: 2%; text-align: center; background: rgba(0,0,0,0.2);  border: solid 10px grey; ">
+        <span class="ui-widget CaptionXXLarge ColorTheme">Login Expired</span>
+        <br />
+        <span class="ui-widget CaptionXXLarge ColorNavy">Your login has been expired because of lengthy inactivity on the portal, Please login again to continue working on this portal</span>
+        <br />
+         <a href="{{ path('login') }}" class="ui-widget CaptionXXLarge ColorTheme">{{'layout.login'|trans({}, 'FOSUserBundle') }}</a>
+    </div>
+</div>
+{% endblock %} 

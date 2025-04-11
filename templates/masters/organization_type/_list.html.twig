@@ -1,0 +1,19 @@
+<h5 class="display-5">
+    Available Organization Types
+</h5>
+<table class="table table-sm table-striped table-bordered table-hover table-condensed">
+    <thead>
+        <tr>
+            <th scope="col">Code</th>
+            <th scope="col">Name</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for OUType in OUTypes %}
+            <tr>
+                <td>{{OUType.id}}</td>
+                <td>{{OUType.OrganizationTypeName}}</td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>

@@ -1,0 +1,19 @@
+<div class="container-fluid">
+	<div class="row">
+		<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
+			<a class="navbar-brand m-0 float-left" href="/" aria-label="Bootstrap">
+				<img src="{{ asset('img/ashoklogo.png') }}"  style="width: 36px;"/>
+					<img src="{{ asset('img/home_page_logo.png') }}" style="width: 54px;margin-left: 16px;"/></a>
+			<div style="width: 100px" class="float-left pt-3">
+				<a class="navbar-brand" href="/" aria-label="Bootstrap">
+					<h1 class="text-white" style="font-family: Metropolis; font-weight: bolder; font-size: 2em;">SANDES</h1>
+				</a>
+			</div>
+			<div class="float-left pt-3 d-sm-block d-md-none d-lg-none">
+			</div>
+		</div>
+		<div class="col-lg-6 col-sm-6 col-md-12 col-xs-12">
+			{% include '/bases/_menu.html.twig' %}
+		</div>
+	</div>
+</div>

@@ -1,0 +1,37 @@
+{% macro btnAction(name) %}
+    {% if name == 'verify' or name == 'approve' %}
+        {% set colorClass = 'warning' %}
+    {% elseif name=='remove' %}
+        {% set colorClass = 'danger' %}
+    {% elseif name=='edit' %}
+        {% set colorClass = 'info' %}
+    {% elseif name=='MFD' %}
+        {% set colorClass='bg-red' %}
+    {% else %}
+        {% set colorClass = 'default' %}
+    {% endif %}
+    <button type="button" class="btn btn-{{colorClass}} {{ name }}Action">
+        {{ name|capitalize}}
+    </button>
+{% endmacro %}
+{% macro cropper_controlls() %}
+    <div class="controls-wrapper">
+        <div class="rotation-btns">
+            <span class="fa fa-rotate-left rotate-ccw"></span>
+            <span class="fa fa-rotate-right rotate-cw"></span>
+        </div>
+        <div class="slider-wrapper">
+            <span class="icon fa fa-image small-image"></span>
+            <input step="0.01" max="1" min="0" class="cropit-image-zoom-input custom" type="range">
+            <span class="icon fa fa-image large-image"></span>
+        </div>
+
+    </div>
+{% endmacro %}
+{% macro cropper_browse(name)%}
+    <label class="btn btn-primary btn-custom mt-2">
+        <i class="fa fa-folder-open"></i>
+        <span class="cropper_input_label">{{name}}</span>
+        <input type="file" class="cropit-image-input btn btn-xs" required="required"/>
+    </label>
+{% endmacro %}

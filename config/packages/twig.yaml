@@ -1,0 +1,19 @@
+twig:
+    paths: ['%kernel.project_dir%/templates']
+    debug: '%kernel.debug%'
+    strict_variables: '%kernel.debug%'
+    form_themes: ['bases/bootstrap_4_layout.html.twig']
+    exception_controller: null
+    globals:
+        kernelRootDir: "%kernel.project_dir%"
+        dateFormat: d/m/Y
+        jsDateFormat: dd/mm/yyyy
+        ckeditorchanged: 19122017
+        appServices: '@App\Services\AppServices'
+        defValue: '@App\Services\DefaultValue'
+        profileWorkspace: '@App\Services\ProfileWorkspace'
+        appversion: '%env(APP_VERSION)%'
+        sessionTimeOut: "%env(SESSION_TIMEOUT_MINUTES)%"
+framework:
+    # templating:
+    #     engines: ['twig', 'php']

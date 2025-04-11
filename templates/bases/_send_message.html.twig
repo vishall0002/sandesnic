@@ -1,0 +1,88 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Send Message
+{% endblock %}
+{% block formstart %}{% endblock %}
+{% block modalContent %}
+	{% set name='' %}
+	{% set guids='' %}
+	{% for val in data %}
+		{% if (name != '') %}
+			{% set name =name ~ ' '%}
+			{% set guids =guids ~ ','%}
+		{% endif %}
+		{% set guids =guids ~ val.objid %}
+		{% set name =name ~'<label class="badge badg-pill badge-secondary" style="background-color:#c4c4c4;font-size:16px !important;">' ~ val.objname ~ '</label>'%}
+	{% endfor %}
+	<section class="form-block">
+		<form action="" method="post" id="smForm">
+			<div class="row">
+				<div class="mt-1 col-2 text-right">
+					<label>Sender ID/App :
+					</label>
+				</div>
+				<div class="mt-1 col-10">
+					<select id="smsApp" name="app" class="form-control" type="text">
+						<option value="{{ defApp.id }}">{{ defApp.appTitle }}</option>
+						{% for app in apps %}
+							<option value="{{app['id']}}">{{ app['appTitle'] }}</option>
+						{% endfor %}
+					</select>
+				</div>
+				<div class="mt-1 col-2 text-right">
+					<label>To :
+					</label>
+				</div>
+				<div class="mt-1 col-10">
+					<label class="form-control" style="height:auto;">{{ name|raw }}
+					</label>
+				</div>
+				<div class="mt-1 col-2 text-right">
+					<label>Message :
+					</label>
+				</div>
+				<div class="mt-1 col-10">
+					<textarea name="message" class="form-control" id="smMessage" data-min-chars="10" data-max-chars="1000" rows="8"></textarea>
+					Allowed HTML tags :
+					<blockquote>&lt;b&gt; &lt;i&gt; &lt;font&gt; &lt;u&gt; &lt;br&gt;
+					</blockquote>
+					<div class="m-1">
+						<input type="checkbox" id="_bm_display_sn" name="_bm_display_sn" checked/>
+						<label for="_bm_display_sn">Include your name in message footer</label>
+					</div>
+					<div class="m-1">
+						<input type="checkbox" id="_bm_display_oun" name="_bm_display_oun" checked />
+						<label for="_bm_display_oun">Include your OU name in message footer</label>
+					</div>
+				</div>
+			</div>
+			<input id="smToAddress" name="guids" type="hidden" value='{{ guids }}'/>
+			<input id="smType" name="type" type="hidden" value='{{ type }}'/>
+			<input id="frf" name="frf" type="hidden" value="null"/>
+		</form>
+		<div class="row">
+			<div class="mt-1 col-2 text-right">
+				<label>Upload Files :
+				</label>
+			</div>
+			<div class="mt-1 col-10">
+				<div class="scanUploadDiv mb-1">
+					<form method="post" id="fileinfo" name="fileinfo">
+						<input id="msgFileUpload" data-guid="" data-upath="{{path('portal_msg_file_upload')}}" type="file" name="file"/>
+					</form>
+				</div>
+				<div class="clearfix"></div>
+				<div class="progress no-padding no-margin">
+					<div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+	<button data-path="{{ path('portal_ntfy_email') }}" class="btn btn-primary smSend" type="button">
+		<i class="fa fa-envelope"></i>Send Email</button>
+	<button data-path="{{ path('portal_ntfy_gims') }}" class="btn btn-primary smSend" type="button">
+		<i class="fa fa-list"></i>Send SANDES</button>
+{% endblock %}

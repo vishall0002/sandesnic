@@ -1,0 +1,71 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Release Notes
+{% endblock %}
+{% block modalContent %}
+<div id="version">
+	<div class="row">
+		<div class="col-6 m-0 ">
+			<div class="android-notes">
+				<div class="card">
+					<div class="card-header">
+						<strong>ANDROID Version -{{rnCurrentListANDROID.appVersionNo}}</strong>
+						<span class="float-right badge badge-secondary">Date :{{rnCurrentListANDROID.uploadDate|date("d/m/Y")}}</span>
+
+					</div>
+					<div class="card-body" style="height: 400px; overflow: auto;">
+						{{rnCurrentListANDROID.appReleaseNotes}}
+					</div>
+					<div class="card-footer">
+						{% for record in OldVersionNoANDROID %}
+							{% if record.appVersionNo %}
+								<button class="btn btn-xs m-1 btn-primary btn-version float-left" data-guid={{ record.guId }} data-type={{record.appType}} data-version-path="{{path('app_releasenoteslist')}}">Old Version</button>
+							{% endif %}
+						{% endfor %}
+						{% for record in NewVersionNoANDROID %}
+							{% if record.appVersionNo %}
+								<button class="btn btn-xs m-1 btn-primary btn-version float-right" data-guid={{ record.guId }} data-type={{record.appType}} data-version-path="{{path('app_releasenoteslist')}}">New Version</button>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-6 m-0 ">
+			<div class="ios-notes">
+				<div class="card">
+					<div class="card-header">
+						<strong>IOS Version -{{rnCurrentListIOS.appVersionNo}}</strong>
+						<span class="float-right badge badge-secondary">Date :{{rnCurrentListIOS.uploadDate|date("d/m/Y")}}</span>
+
+					</div>
+					<div class="card-body" style="height: 400px; overflow: auto;">
+
+						{{rnCurrentListIOS.appReleaseNotes}}
+					</div>
+					<div class="card-footer">
+						{% for record in OldVersionNoIOS %}
+
+							{% if record.appVersionNo %}
+								<button class="btn btn-xs m-1 btn-primary btn-version" data-guid={{ record.guId }} data-type={{record.appType}} data-version-path="{{path('app_releasenoteslist')}}">Old Version</button>
+							{% endif %}
+						{% endfor %}
+
+						{% for record in NewVersionNoIOS %}
+
+							{% if record.appVersionNo %}
+								<button class="btn btn-xs m-1 btn-primary btn-version" data-guid={{ record.guId }} data-type={{record.appType}} data-version-path="{{path('app_releasenoteslist')}}">New Version</button>
+							{% endif %}
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}

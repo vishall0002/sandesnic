@@ -1,0 +1,22 @@
+{% extends 'bases/base_dashboard.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col-6">
+			<h5>
+				Employee wise message statistics -
+				{{ou.OUName}}
+				(Top 1000)
+			</h5>
+		</div>
+		<div class="col-6 text-right">
+			<input type="text" class="input-daterange">
+			<button class="btn btn-xs btn-primary btn-pivot" data-objid="{{ou.guId}}" data-pull-path="{{ path('app_dashboard_pivot_load')}}">Generate</button>
+		</div>
+		<div class="col-12 pt-2">
+			<div id="output"></div>
+		</div>
+	</div>
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/dashboard.js') }}"></script>
+{% endblock %}

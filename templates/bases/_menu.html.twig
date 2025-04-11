@@ -1,0 +1,314 @@
+<div class="row">
+	<div class="col-12 pt-2">
+		<ul class="nav flex-row ml-md-auto  d-md-flex float-md-right">
+			{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+				<li class="nav-item">
+					<a href="{{ path('app_dashboard_dlink') }}" title="APP download center" class="nav-link">
+						<img style="width: 36px" src="{{asset('/resources/img/appdownload.png')}}"/>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('app_dashboard') }}" title="Navigate to Dashboard" class="nav-link">
+						<i class="text-white fa fa-2x fa-area-chart"></i>
+					</a>
+				</li>
+				<li class="nav-item">
+					<a href="{{ path('app_home') }}" title="Navigate to Home Page" class="nav-link">
+						<i class="text-white fa fa-2x fa-university"></i>
+					</a>
+				</li>
+				{% if (is_granted("ROLE_SUPER_ADMIN") or is_granted("ROLE_MINISTRY_ADMIN") or is_granted("ROLE_O_ADMIN") or is_granted("ROLE_OU_ADMIN") or is_granted("ROLE_SYSTEM_ADMIN") or is_granted("ROLE_GROUP_ADMIN")) %}
+					<li class="nav-item dropdown">
+						<a aria-expanded="true" class="nav-link text-white dropdown-toggle" data-toggle="dropdown" href="#" id="themes">
+							<i class="text-white fa fa-2x fa-bars"></i>
+						</a>
+						<div class="dropdown-menu dropdown-menu-right">
+							{% if is_granted("ROLE_SUPER_ADMIN") %}
+								<a href="{{ path('msr_out_index') }}" class="dropdown-item">
+									Organization Types
+								</a>
+								<a href="{{ path('portal_upload_rnindex') }}" class="dropdown-item">
+									Release Notes
+								</a>
+								<a href="{{ path('portal_vhost_index') }}" class="dropdown-item">
+									XMPP VHosts
+								</a>
+								<div class="dropdown-divider"></div>
+								<a href="{{ path('portal_ministry_index') }}" class="dropdown-item">
+
+									Ministries
+								</a>
+								<a href="{{ path('portal_o_index') }}" class="dropdown-item">
+									Organizations
+								</a>
+								<a href="{{ path('portal_ou_index') }}" class="dropdown-item">
+									Organization Units
+								</a>
+								<a href="{{ path('portal_designation_index') }}" class="dropdown-item">
+									Designations
+								</a>
+								<div class="dropdown-divider"></div>
+								<a href="{{ path('portal_grp_index') }}" class="dropdown-item">
+									Groups
+								</a>
+								<a href="{{ path('portal_emp_index') }}" class="dropdown-item">
+									Members
+								</a>
+								<a href="{{ path('portal_emp_search_index') }}" class="dropdown-item">
+									Search/Locate Member
+								</a>
+								<a href="{{ path('portal_verify_emp_index') }}" class="dropdown-item">
+									Members to be Verified
+								</a>
+								<a href="{{ path('portal_upload_index') }}" class="dropdown-item">
+									Upload Apps
+								</a>
+								<a href="{{ path('portal_import_employee_index') }}" class="dropdown-item">
+									Import Employees
+								</a>
+								<a href="{{ path('status_report_index') }}" class="dropdown-item">
+									Broadcast Logs
+								</a>
+								<a href="{{ path('portal_emp_mindex') }}" class="dropdown-item">
+									Ministry Admin List
+								</a>
+								<a href="{{ path('portal_emp_oindex') }}" class="dropdown-item">
+									Organization Admin List
+								</a>
+								<a href="{{ path('portal_emp_ouindex') }}" class="dropdown-item">
+									Organization Unit Admin List
+								</a>
+								<a href="{{ path('fmt_index') }}" class="dropdown-item">
+									FMT
+								</a>
+								<a href="{{ path('sadmin_custom_reports') }}" class="dropdown-item">
+									Custom Reports
+								</a>
+							{% endif %}
+							{% if (is_granted("ROLE_MINISTRY_ADMIN")) %}
+								<a href="{{ path('portal_o_index') }}" class="dropdown-item">
+									Organizations
+								</a>
+								<a href="{{ path('portal_ou_index') }}" class="dropdown-item">
+									Organization Units
+								</a>
+								<div class="dropdown-divider"></div>
+								<a href="{{ path('portal_designation_index') }}" class="dropdown-item">
+									Designations
+								</a>
+								<a href="{{ path('portal_emp_index') }}" class="dropdown-item">
+									Members
+								</a>
+								<a href="{{ path('portal_emp_search_index') }}" class="dropdown-item">
+									Search/Locate Member
+								</a>
+								<a href="{{ path('portal_grp_index') }}" class="dropdown-item">
+									Groups
+								</a>
+								<a href="{{ path('portal_import_employee_index') }}" class="dropdown-item">
+									Import Employees
+								</a>
+							{% endif %}
+							{% if (is_granted("ROLE_O_ADMIN")) %}
+								<a href="#" data-edit-path="{{ path('portal_o_edit') }}" class="dropdown-item btn-action-edit">
+									Organization Management
+								</a>
+								<a href="{{ path('portal_ou_index') }}" class="dropdown-item">
+									Organization Units
+								</a>
+								<div class="dropdown-divider"></div>
+								<a href="{{ path('portal_designation_index') }}" class="dropdown-item">
+									Designations
+								</a>
+								<a href="{{ path('portal_emp_index') }}" class="dropdown-item">
+									Members
+								</a>
+								<a href="{{ path('portal_emp_search_index') }}" class="dropdown-item">
+									Search/Locate Member
+								</a>
+								<a href="{{ path('portal_grp_index') }}" class="dropdown-item">
+									Groups
+								</a>
+								<a href="{{ path('portal_import_employee_index') }}" class="dropdown-item">
+									Import Employees
+								</a>
+							{% endif %}
+							{% if (is_granted("ROLE_OU_ADMIN")) %}
+								<a href="{{ path('portal_grp_index') }}" class="dropdown-item">
+									Groups
+								</a>
+								<a href="{{ path('portal_emp_index') }}" class="dropdown-item">
+									Members
+								</a>
+								<a href="{{ path('portal_verify_emp_index') }}" class="dropdown-item">
+									Members to be Verified
+								</a>
+								<a href="{{ path('portal_emp_search_index') }}" class="dropdown-item">
+									Search/Locate Member
+								</a>
+								<a href="{{ path('portal_import_employee_index') }}" class="dropdown-item">
+									Import Employees
+								</a>
+
+								<div class="dropdown-divider"></div>
+								<a href="{{ path('app_dashboard_memberised') }}" class="dropdown-item">
+									Member wise status
+								</a>
+								<a href="{{ path('app_dashboard_pivot_home', {'objid':'00000000-0000-4000-0000-000000000000'}) }}" class="dropdown-item">
+									Heat Map based on chat activity
+								</a>
+							{% endif %}
+							{% if (is_granted("ROLE_GROUP_ADMIN")) %}
+								<a href="{{ path('portal_grp_index') }}" class="dropdown-item">
+									Manage Groups
+								</a>								
+							{% endif %}
+							{% if (is_granted("ROLE_SYSTEM_ADMIN")) %}
+								<a href="{{ path('portal_item_index') }}" class="dropdown-item text-danger">
+									Device Support, Privacy, About Wordings
+								</a>
+								<a href="{{ path('portal_externalApp_index') }}" class="dropdown-item text-danger">
+									Gateway Apps ** Experimental
+								</a>
+								<a href="{{ path('masters_default_value_index') }}" class="dropdown-item text-danger">
+									Default Value
+								</a>
+								<a href="{{ path('portal_brdcst_index') }}" class="dropdown-item">
+									Broadcast List
+								</a>
+							{% endif %}
+						</div>
+					</li>
+				{% endif %}
+				<li class="nav-item dropdown">
+					<a class="nav-link dropdown-toggle text-white" data-toggle="dropdown" title="{{ app.user.username }}" href="#">
+						<img class="profile-photo" src="{{ path('app_dash_uphoto')}}"/>
+					</a>
+					<div class="dropdown-menu dropdown-menu-right">
+						{% set profiles= appServices.getAvailableRoles() %}
+						{% for profile in profiles %}
+							{% if profile.isCurrent %}
+								<a class="dropdown-item bg-secondary" href="#" onclick="return false;">
+									{% set role=profile.role?profile.role.role:'' %}
+									<i class="fa fa-check-circle text-success"></i>
+									{% if role == "ROLE_SUPER_ADMIN" %}
+										Signed in as
+										{{ (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+									{% elseif role == "ROLE_MINISTRY_ADMIN"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.ministry.MinistryName}}
+									{% elseif role == "ROLE_O_ADMIN"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organization.OrganizationName}}
+									{% elseif role == "ROLE_OU_ADMIN"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organizationUnit.OUName }}
+									{% elseif role == "ROLE_GROUP_ADMIN"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organizationUnit.OUName }}
+									{% elseif role == "ROLE_SUPERVISOR"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '})  }}
+									{% elseif role == "ROLE_OU_SUPERVISOR"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organizationUnit.OUName }}
+									{% elseif role == "ROLE_SYSTEM_ADMIN"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+									{% elseif role == "ROLE_GROUP_ADMIN"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+									{% elseif role == "ROLE_MEMBER"  %}
+										Signed in as
+										{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+									{% endif  %}
+								</a>
+							{% else %}
+								{% set role=profile.role?profile.role.role:'' %}
+								{% set objid=profile.organizationUnit?profile.organizationUnit.guId:'' %}
+								{% if role == "ROLE_OU_MANAGER" or role == "ROLE_NODAL_OFFICER"  %}
+									{# Nothing to be listed #}
+								{% else %}
+									<a class="dropdown-item switch_role text-left" href="#" onclick="return false;" data-objid="{{profile.guId}}" data-path="{{ path('app_dashboard_switch_role') }}">
+										<i class="fa fa-check-circle"></i>
+										{% if role == "ROLE_SUPER_ADMIN" %}
+											Sign in as
+											{{ (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+										{% elseif role == "ROLE_MINISTRY_ADMIN"  %}
+											Sign in as
+											{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.ministry.MinistryName}}
+										{% elseif role == "ROLE_O_ADMIN"  %}
+											Sign in as
+											{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organization.OrganizationName}}
+										{% elseif role == "ROLE_OU_ADMIN"  %}
+											Sign in as
+											{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organizationUnit.OUName }}
+										{% elseif role == "ROLE_SUPERVISOR"  %}
+											Sign in as
+											{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+										{% elseif role == "ROLE_OU_SUPERVISOR"  %}
+											Sign in as
+											{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organizationUnit.OUName}}
+										{% elseif role == "ROLE_SYSTEM_ADMIN"  %}
+											Sign in as
+											{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+										{% elseif role == "ROLE_GROUP_ADMIN"  %}
+											Sign in as
+											{{  (profile.role?profile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ profile.organizationUnit.OUName }}
+										{% endif  %}
+									</a>
+								{% endif %}
+							{% endif %}
+						{% endfor %}
+						<div class="dropdown-divider"></div>
+						<a class="dropdown-item" href="#" onclick="return false;">
+							Logged in as
+							{{ app.user.username }}
+						</a>
+
+						<a class="dropdown-item" href="{{ path('_llogout') }}">Logout</a>
+						{# <a class="dropdown-item" href="{{ path('parichay_logout') }}">Parichay Logout</a> #}
+					</div>
+				</li>
+			{% endif %}
+		</ul>
+	</div>
+	<div class="col-12  d-none d-md-block text-right">
+		{% if is_granted("IS_AUTHENTICATED_FULLY") %}
+			<span class="timer badge  text-danger" id="__loginExpiresIn" data-stp="{{ path('app_ping') }}" data-sto="{{ sessionTimeOut }}" data-lp="https://parichay.nic.in/Accounts/ClientManagement?sessionTimeOut=true&service=Sandes"></span>
+			<span class="badge badge-warning mr-3" style="font-size: 1em">
+				{% set curProfile=profileWorkspace.getProfile() %}
+				{% set role=curProfile.role?curProfile.role.role:'' %}
+				{% if role == "ROLE_SUPER_ADMIN" %}
+					Signed in as
+					{{ (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+				{% elseif role == "ROLE_MINISTRY_ADMIN"  %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ curProfile.ministry.MinistryName}}
+				{% elseif role == "ROLE_O_ADMIN"  %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ curProfile.organization.OrganizationName}}
+				{% elseif role == "ROLE_OU_ADMIN"  %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ curProfile.organizationUnit.OUName }}
+				{% elseif role == "ROLE_SUPERVISOR" %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+				{% elseif role == "ROLE_OU_SUPERVISOR" %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ curProfile.organizationUnit.OUName}}
+				{% elseif role == "ROLE_SYSTEM_ADMIN" %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+				{% elseif role == "ROLE_GROUP_ADMIN"  %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) ~' '~ curProfile.organizationUnit.OUName }}
+				
+				{% else %}
+					Signed in as
+					{{  (curProfile.role?curProfile.role.role:'')|replace({'_': ' ', 'ROLE':' '}) }}
+				{% endif  %}
+			</span>
+		{% endif %}
+	</div>
+</div>

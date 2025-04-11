@@ -1,0 +1,113 @@
+<div id="returnForm">
+    {% form_theme form 'bootstrap_3_layout.html.twig' %}
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+        </button>
+        <h4 class="modal-title" id="portalModalLabel">Change Your Password</h4>
+    </div>
+    {{ form_start(form) }}
+    <div class="modal-body row">
+        <div class="col-md-12">
+            {{form_row(form.current_password)}}
+        </div>
+        <div class="col-md-12">
+            {{form_row(form.new_password)}}
+        </div>
+
+        <div class="col-md-12 text-center ">
+            <button type="submit" name="submit" id="changePwd" class="btn btn-primary">Change Password</button>
+            <button class="btn btn-default resetBtn" type="reset">Reset Values</button>
+        </div>
+    </div>
+    {{ form_end(form) }}
+</div>
+<script defer src="{{ asset('bundles/app/js/sjcl.js') }}" type="text/javascript"></script>
+<script type="text/javascript">
+    $("#changePwd").click(function(e) {
+        $('#portalModalContent').find('.has-error').removeClass('has-error');
+        $('#portalModalContent').find('.help-block').remove();
+        if (isFormValid(e)) {
+            hashPasswords();
+            var path = '{{form.vars.action}}';
+            var data = $('form').serialize();
+            Ajax(path, data, 'F').success(function(data) {
+                if (data.type === 'success') {
+                    $('#portalModal').modal('hide');
+                    addMsg('success', 'Password changed Successfully');
+                } else {
+                    if (data.form) {
+                        $("#returnForm").html(data.form);
+                    } else {
+                        addMsg('danger', data.msg);
+                        $(".resetBtn").click();
+                    }
+                }
+            });
+        } else {
+            return false;
+        }
+        e.preventDefault();
+    });
+    function isFormValid(e) {
+        $curP = $("#{{form.current_password.vars.id}}");
+        $newP = $("#{{form.new_password.vars.id}}_first");
+        $confirmP = $("#{{form.new_password.vars.id}}_second");
+        if ($curP.val() === '') {
+            injectError($curP);
+            return false;
+        } else if ($newP.val() === '') {
+            injectError($newP);
+            return false;
+        } else if ($confirmP.val() === '') {
+            injectError($confirmP);
+            return false;
+        } else if ($newP.val() != $confirmP.val()) {
+            $newP.closest('.form-group').addClass('has-error');
+            injectError($confirmP, 'New Password and Repeat Password is mismatching');
+            $curP.val('');
+            $newP.val('');
+            $confirmP.val('');
+        } else if (!validPassword($newP.val())){
+            injectError($confirmP, 'Password strength is not enough, need atleast 6 characters, one uppercase letter, one lowercase character, one digit and a symbol');
+            $newP.val('');
+            $confirmP.val('');
+        }
+        else {
+            $('#portalModalContent').find('.has-error').removeClass('has-error');
+            $('#portalModalContent').find('.help-block').remove();
+            return true;
+        }
+    }
+    function validPassword(pwd) {
+        var regex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])[A-Za-z\d$@$!%*?&]{6,12}/;
+        if (regex.test(pwd)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function injectError($el, msg) {
+        msg = msg || 'Please enter your current password !';
+        $el.closest('.help-block').remove();
+        $el.closest('.form-group').addClass('has-error').append('<span class="help-block">\n\
+                        <ul class="list-unstyled"><li><span class="glyphicon glyphicon-exclamation-sign"></span>\n\
+                    ' + msg + '</li></ul></span>');
+    }
+    function hashPasswords() {
+        var currentP = $("#{{form.current_password.vars.id}}");
+        var newP = $("#{{form.new_password.vars.id}}_first");
+        var confirmP = $("#{{form.new_password.vars.id}}_second");
+        if (currentP.val() !== null && newP.val() !== "" && confirmP.val() !== '') {
+            var baS1 = sjcl.hash.sha256.hash(currentP.val());
+            var digestS1 = sjcl.codec.hex.fromBits(baS1);
+            var baS2 = sjcl.hash.sha256.hash(newP.val());
+            var digestS2 = sjcl.codec.hex.fromBits(baS2);
+            var baS3 = sjcl.hash.sha256.hash(confirmP.val());
+            var digestS3 = sjcl.codec.hex.fromBits(baS3);
+            currentP.val(digestS1);
+            newP.val(digestS2);
+            confirmP.val(digestS3);
+        }
+    }
+</script>

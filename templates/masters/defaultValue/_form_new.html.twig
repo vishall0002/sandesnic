@@ -1,0 +1,33 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Create Default value
+{% endblock %}
+{% block formstart %}
+	{{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		{# {{ form_row(form.id) }} #}
+		<div class="row">
+			<div class="col-md-6">
+				{{ form_row(form.code) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.environment) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.description) }}</div>
+            <div class="col-md-6">
+				{{ form_row(form.defaultValue) }}</div>
+
+		</div>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		{{ form_widget(form.btnInsert, {attr: {class: 'btn btn-sm btn-primary btn-action-submit'} }) }}
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}
+	{{ form_row(form._token) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

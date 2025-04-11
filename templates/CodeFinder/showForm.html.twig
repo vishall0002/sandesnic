@@ -1,0 +1,67 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block mTitle %}
+    <i class="fa fa-search"></i>Code Finder
+{% endblock %}
+{% block mBody %}
+    {#     <button style="margin-left:2%;" data-path="{{ path('app_code_finder_create_json') }}" type="button" class="btn btn-xs btn-primary createJsonAction">Create Json</button>  #}
+    {{ form_start(form) }}
+    <div class="col-md-7">
+        <label class="col-md-2">SubCaste</label>
+        <span class="col-md-1">
+            :
+        </span>
+        <div class="col-md-6 no-padding">
+            <div class="input-group input-group-sm">
+                {{form_widget(form.SubCaste,{'attr' : {'data-use' : 'SubCaste'}})}}
+                <div class="has-error">
+                    {{ form_errors(form.SubCaste) }}
+                </div>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info btn-flat text-bold codeFinderAction">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-7 mrg5T">
+        <label class="col-md-2">JobSeeker By SubCaste</label>
+        <span class="col-md-1">
+            :
+        </span>
+        <div class="col-md-6 no-padding">
+            <div class="input-group input-group-sm">
+                {{form_widget(form.JobSeekerBySubCaste,{'attr' : {'data-use' : 'JobSeekerBySubCaste'}})}}
+                <div class="has-error">
+                    {{ form_errors(form.JobSeekerBySubCaste) }}
+                </div>
+                <span class="input-group-btn">
+                    <button type="button" class="btn btn-info btn-flat text-bold codeFinderAction">
+                        <i class="fa fa-search"></i>
+                    </button>
+                </span>
+            </div>
+        </div>
+    </div>
+    {{ form_end(form) }}
+{% endblock %}
+{% block mFooter %}
+    <script type="text/javascript">
+        $('.createJsonAction').click(function (e) {
+            e.preventDefault();
+            var path = $(this).data('path');
+            Ajax(path, null).success(function (result) {
+                if (result.type === 'success') {
+                    $('#thozhilModal').modal('hide');
+                    addMsg(result.type, result.msg);
+                } else {
+                    $('#thozhilModalContent').html('');
+                    $('#thozhilModalContent').html(data.form);
+                    $('#thozhilModal').modal('show');
+                    addMsg(result.type, result.msg);
+                }
+            });
+        });
+    </script>
+{% endblock %}

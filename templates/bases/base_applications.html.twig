@@ -1,0 +1,16 @@
+{% extends 'bases/base.html.twig' %}
+{% block stylesheets %}
+    {{ parent() }}
+    <link rel="stylesheet" href="{{ asset('build/css/application.css') }}">
+{% endblock %}
+{% block body %}
+    <div class="container-fluid body-container">
+    {% block content %}{% endblock %}
+</div>
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script src="{{ asset('build/js/global.js') }}"></script>
+    <script src="{{ asset('build/js/application.js') }}"></script>
+    <script src="{{ asset('build/js/msrou.js') }}"></script>
+{% endblock %}

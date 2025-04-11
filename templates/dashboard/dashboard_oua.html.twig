@@ -1,0 +1,10 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+	<input type="hidden" id="btnMemberisedRefresh" data-objid="{{organization}}" data-api-path="{{path('app_dashboard_ou_list')}}"/>
+	<div id="__listContainer">
+		{{ render(controller('App\\Controller\\DashboardController::organizationUnitList')) }}
+	</div>
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/dashboard-memberised.js') }}"></script>
+{% endblock %}

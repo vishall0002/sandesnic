@@ -1,0 +1,15 @@
+{
+    "SubscriberMinistry": {
+        "Parent1": {
+            "Entity": "Masters\\MinistryCategory",
+            "param": "ministryCategory",
+            "label": "Ministry Category"
+        },
+        "Parent2": {
+            "path":"get_ministries",
+            "param": "ministryName",
+            "label": "Ministry",
+            "postParam":"ministryCategoryId"
+        }
+    }
+}

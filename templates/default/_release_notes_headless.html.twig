@@ -1,0 +1,476 @@
+<div class="box box-primary">
+	<div class="box-header">
+		<span class="no-margin fa-2x">SANDES - Release Notes</span>
+	</div>
+	<div class="box-body">
+
+		<h4>14-01-2020 [Happy New Year 2020]</h4>
+		<h5>
+			SANDES Android 1.2.1.build.22
+		</h5>
+		<ul>
+			<li>UI Changes</li>
+			<ul>
+				<li>Redesigned/simplified Home Screen (Chats - Option 2)</li>
+				<ul>
+					<li>Removed left drawer menu and panel.</li>
+					<li>Removed Recent Conversation list</li>
+					<li>Redesigned right menu.</li>
+					<li>Replaced Info Service icon with menu item.</li>
+					<li>Added Settings menu</li>
+				</ul>
+				<li>Redesigned Profile screen</li>
+				<ul>
+					<li>Added contact statistics</li>
+					<li>Added Organization, contact details and logos</li>
+				</ul>
+				<li>Created new Settings activity</li>
+				<ul>
+					<li>Profile Preview on Top</li>
+					<li>Added Settings items functionality (Notifications, Backup, Manage Contact, Help, Logout)</li>
+				</ul>
+				<li>Created  Notifications  sub settings  with Mute Notifications and Optimize Notifications functions</li>
+				<li>Created Manage Contact sub-settings with Phone Book Sync and Add Contact functions</li>
+				<li>Created Help sub-settings activity with QRG and FAQ links.</li>
+				<li>Splash screen added Government  Instant Messaging System below SANDES</li>
+				<li>Login Screen</li>
+			</ul>
+			<li>Fixed file attachment problem in Android 10.</li>
+			<li>Fixed notification related issue (Some times chat not opening when clicking notification)</li>
+			<li>Fixed Samsung keyboard issue - Enter key not working</li>
+			<li>Fixed issue  (Some times chat window not opening when clicking from conversation list)</li>
+			<li>Fixed security issues reported by SonarQube source code static analyzer.</li>
+			<li>Fixed Info service some times giving multiple reply</li>
+			<li>Show missed call info message</li>
+			<li>Fixed - Clicking back button in ChatUI exiting SANDES</li>
+			<li>Push Notification improvements</li>
+			<li>Audio/Video Call establishment status message improvement</li>
+		</ul>
+		<h5>
+			SANDES iOS 1.0.8
+		</h5>
+		<h6 style="color: red;">Users are advised to take  a backup of messages before installing the new version.</h6>
+		<ul>
+			<li>Major changes</li>
+			<ul>
+				<li>Audio calls</li>
+				<li>Video calls</li>
+				<li>Apple push notifications for guaranteed intimation for unread messages</li>
+				<li>Performance improvements in sending/receiving messages</li>
+				<li>Bug fixes in backup recovery and End to end encryption</li>
+			</ul>
+			<li>Known issues</li>
+			<ul>
+				<li>Audio video calling between ios devices seems to have some glitches, we are working on it</li>
+				<li>Ring tones and caller tones are not available in this version</li>
+			</ul>
+		</ul>
+
+		<b>22-11-2019</b>
+		<h5>
+			SANDES Android 1.1.6.build.20
+		</h5>
+		<ul>
+			<li>UI redesign and improvements</li>
+			<li>Message recovery of non-decrypted one to one E2EE messages</li>
+			<li>Group Management Page revamp</li>
+			<li>Added options for editing group title, description, image and cover image</li>
+			<li>Group Admin can disperse a group</li>
+			<li>Scrollbars in chat list</li>
+			<li>Screen dim when kept idle</li>
+			<li>FAQ and QRG links in App</li>
+			<li>BUG fixes-
+				<ul>
+					<li>Fixed sorting issue of contact list in Share Activity.</li>
+					<li>Fixed memory problem in contact syn</li>
+					<li>Removed foreground service based logic to resolve some crash scenario</li>
+					<li>Fixed crash during clear conversation</li>
+				</ul>
+			</li>
+		</ul>
+		<h5>
+			SANDES iOS 1.0.6.build.7
+		</h5>
+		<ul>
+			<li>Group management -
+				<ul>
+					<li>
+						Disperse group</li>
+					<li>
+						Edit group title</li>
+					<li>
+						Edit group description</li>
+					<li>
+						Edit group cover photo</li>
+					<li>
+						Edit group icon</li>
+				</ul>
+			</li>
+
+			<li>
+				Input text box height to auto adjust based on user input
+			</li>
+			<li>
+				Bugs fixes in Unicode rendering</li>
+			<li>
+				Bug fixes in End to end encryption</li>
+			<li>
+				Other bug fixes and improvements</li>
+		</ul>
+
+		<b>05-11-2019</b>
+		<h5>
+			SANDES Android 1.1.5
+		</h5>
+		<ul>
+			<li>Group Admin can dismiss a group</li>
+			<li>Group Admin can change group title, description</li>
+			<li>Group admin can change group icon</li>
+			<li>E2EE recovery of unencrypted message</li>
+			<li>Clicking notification will open actual chat</li>
+			<li>Shows Organization Unit name of sender in list message</li>
+			<li>Attachments shared to List messaging now shows name instead of lbot</li>
+			<li>Documents can be shared from external apps to SANDES like images</li>
+			<li>Issue in mute sound is fixed</li>
+			<li>Crashing issue when reply to lbot- id in list message is fixed</li>
+			<li>Sorting issue of Share Contact is fixed</li>
+			<li>Crash scenarios related to some phone models fixed</li>
+		</ul>
+		<b>21-10-2019</b>
+		<h5>
+			SANDES Android 1.1.4
+		</h5>
+		<ul>
+
+			<li>ChatUI - Edit box will expand up to 5 lines on typing multi line</li>
+			<li>Tap on group member in a group detail screen  allows one to one chat with the member</li>
+			<li>Sender's name in group chat is displayed if date changes</li>
+			<li>Admin can exit from a non-official group after removing all members.</li>
+			<li>Members can exit themselves from non-official group</li>
+			<li>Admin can change affiliation of any member to Admin or Member</li>
+			<li>Name of member is shown in Group Activity messages instead of id.</li>
+			<li>Changed group activity messages to added and removed instead of joined and left.</li>
+			<li>Default group image and cover image for non-official groups (created through App)</li>
+			<li>Shows progress bar on creating group and managing members for indicating long network operation.</li>
+			<li>App not working in Android version 4.4.2 is fixed.</li>
+			<li>Shows error messages if user sends message to group in which he is not member.</li>
+			<li>Retains device Id and security keys for the same user in same device  after logout.</li>
+			<li>Logs version change information to server when new version is installed</li>
+			<li>Redesigned  Group management icon</li>
+			<li>Fixed recent conversation not updated on external sharing.</li>
+			<li>Group listing with classified tag as "Official Group" for official groups.</li>
+		</ul>
+
+		<h5>
+			SANDES iOS 1.0.4
+		</h5>
+		<ul>
+
+			<li>End to End Encryption for One to One Messages</li>
+			<li>Group Creation through App</li>
+			<li>Admin can exit from a non-official group after removing all members.</li>
+			<li>Admin can add members to the group by picking from contact</li>
+			<li>Admin can add members to the group by email of the person</li>
+			<li>Members can exit themselves from non-official group</li>
+			<li>Admin can change affiliation of any member to Admin or Member</li>
+			<li>Change group activity messages to added and removed instead of joined and left.</li>
+			<li>Default group image and cover image for non-official groups (created through App)</li>
+			<li>Show progress bar on creating group and managing members.</li>
+			<li>Group activity indicators</li>
+			<li>Show error messages if user sends message to group in which he is not member.</li>
+			<li>Link Preview for the links received from android version with meta data</li>
+			<li>Improved UI response and performance</li>
+			<li>Group listing with classified tag as “”Official group” for official groups</li>
+			<li>Changed Group management icon placement</li>
+			<li>NIC and Digital India logo in the app</li>
+			<li>ChatUI - Edit box support typing multi line input</li>
+			<li>Sender's name in group chat display if date changes</li>
+			<li>App UI support for IOS13
+			</li>
+			<li>Bug fixes in audio record and share</li>
+			<li>Other Bug fixes</li>
+		</ul>
+		<b>01-10-2019</b>
+		<ul>
+			<li>Incorporated changes to show Alert for New Version availability.</li>
+			<li>-Shows Alert on Login</li>
+			<li>-Shows Alert and Notification periodically</li>
+			<li>-Shows Alert and Notification on receiving system message.</li>
+		</ul>
+		<b>29-09-2019</b>
+		<ul>
+			<li>Group Creation through APP</li>
+			<li>Adding members to group by creator of group through APP</li>
+			<li>Removing members from group by creator of group through APP</li>
+			<li>UI  improvements (Font).</li>
+			<li>Notification grouping for unread messages.</li>
+		</ul>
+		<b>09-08-2019</b>
+		<ul>
+			<li>Fixed issue of login not possible for users with long email id.</li>
+			<li>Enabled stream redemption</li>
+			<li>Removed  showing frequent notification for "Checking messages"
+			</li>
+			<li>Sandes Portal - A New filter added for searching members with E-Mail Address
+			</li>
+		</ul>
+		<b>01-08-2019</b>
+		<ul>
+			<li>Send Contact - Add to Gim Contacts, Add to Phone Contacts</li>
+			<li>Custom Broadcast Message - Added menu option and restricted broadcast list to 10</li>
+			<li>Star Message - Stared message will not be cleared on performing 'Clear Chat'</li>
+			<li>Fixed UI freezing issue of main dashboard on fresh login</li>
+			<li>Improved phone book sync by adding to roster only if not in roster.</li>
+			<li>Introduced bulk syncing of Roster contact instead of syncing one by one.</li>
+			<li>Improved performance of GIMXMPP Connection - introduced synchronized connect function.</li>
+			<li>Improved time taken for re-login in case of no restore db.</li>
+			<li>Fixed the issues reported regarding sending PDF.</li>
+			<li>UI improvements in Chat control.</li>
+			<li>Identified and fixed some instances of ‘GIM Not Responding ANR error’.</li>
+			<li>Fixed issues of Favorite contact getting overwritten during contact sync.</li>
+		</ul>
+		<b>28-07-2019</b>
+		<ul>
+			<li>Retirement, Deceased Marking completely rewritten into a configurable dynamic system, Offboarding of employees</li>
+			<li>Group Photo change option .</li>
+			<li>Registration count and active user count anomaly fixed</li>
+			<li>OU Manager Role Activated, OU Manager could perform Employee onboarding, Group Management</li>
+		</ul>
+		<b>25-07-2019</b>
+		<ul>
+			<li>Homepage Image alignment made to center for wider screen</li>
+			<li>FIXED - Designation Column header employee management list page.</li>
+			<li>FIXED - Group name case sensitivity forced to lower case</li>
+			<li>FIXED - Group name may now contain digits</li>
+		</ul>
+		<b>24-07-2019</b>
+		<ul>
+			<li>Retirement, Deceased Marking for affected employees now possible via employee management</li>
+			<li>Markers placed to identify whether the employee is retired, deceased, OU Admin, OU Manager</li>
+			<li>Download Page now shows the list of OU Managers of that user's OU</li>
+			<li>Added a new filter to list out OU Managers of entire OU for Super Admins</li>
+		</ul>
+		<b>10-07-2019</b>
+		<ul>
+			<li>InfoService Bot integration - Added new features like Registering service, automatic screen capture from URL, facility for scheduling a service by SANDES user.</li>
+			<li>Reply to list messages. The reply will go to original sender of list message and to the group members.</li>
+			<li>Private reply to group message. Private reply will go to original sender of message alone.</li>
+			<li>Gimoji Integration</li>
+			<li>Short lived messages</li>
+			<li>Message Backup and Restore</li>
+			<li>Automated version and release management.</li>
+			<li>DigiLocker integration</li>
+			<li>Message forwarding to NICeMail</li>
+			<li>Chatbot based Info services – Weather, Instant Dashboards (SBM, Service Plus, eTaal)</li>
+			<li>Presence Indication</li>
+			<li>Message delivery indication: Pending, Sent, Delivered, Read</li>
+			<li>Message Tagging (Confidential, Short lived, Priority)</li>
+			<li>Performance and overall response improvement</li>
+			<li>Bug fix in attachment forwarding, checking attachment size.</li>
+			<li>UI improvements like display of last message time</li>
+			<li>Optimized Contact Sync</li>
+			<li>Better user experience in Log in, Log out and Backup</li>
+			<li>Restriction in forwarding message increased</li>
+			<li>Clear Chat</li>
+		</ul>
+		<b>12-06-2019</b>
+		<ul>
+			<li>Feature
+				<a href="#">#19954</a>
+				<small class="text-muted">(VB)</small>
+				- Device Settings Page to be rendered in the App.
+			</li>
+			<li>Feature
+				<a href="#">#19956</a>
+				<small class="text-muted">(VB)</small>
+				- Employee Quick Transfer Option
+			</li>
+		</ul>
+		<b>12-03-2019</b>
+		<ul>
+			<li>OU Admin can now add users of other OU into a particular group. This option is available in Group Management->Menu->Manage Members->Enter E-mail option</li>
+		</ul>
+		<b>19-02-2019</b>
+		<ul>
+			<li>Message read receipt system</li>
+			<li>
+				New Message status indication icons</li>
+			<li>
+				Message Tags</li>
+			<li>
+				SANDESojis
+			</li>
+			<li>
+				Chat Bots - Instant Dashboard Services</li>
+			<li>
+				File Upload optimizations</li>
+			<li>
+				Bug-Fixes</li>
+			<li>
+				UI-UX enhancements</li>
+			<li>
+				Short Lived Messages/Self Destructive Messages</li>
+		</ul>
+		<b>18-01-2019</b>
+		<ul>
+			Certain bug fixation and new features incorporated in SANDES App
+			<li>DigiLocker Integration</li>
+			<li>
+				User Presence indication and last seen status</li>
+			<li>
+				User Profile Page</li>
+			<li>
+				Email Integration</li>
+			<li>
+				Notification Changes</li>
+			<li>
+				File Upload optimizations</li>
+			<li>
+				UI Enhancements</li>
+			<li>
+				Battery Usage Optimization improvements</li>
+			<li>
+				File Sharing support for .mp4 files</li>
+			<li>New NIC logo incorporated</li>
+			<li>Multiple File Sharing from gallery</li>
+			<li>Message Backup and Restore</li>
+		</ul>
+		<b>05-12-2018</b>
+		<ul>
+			<li>Bug
+				<a href="#">#15261</a>
+				<small class="text-muted">(VB)</small>
+				- Group Management Editing resolved the issue
+			</li>
+			<li>Feature
+				<a href="#">#15260</a>
+				<small class="text-muted">(VB)</small>
+				- User profile photo provided in NAVBAR
+			</li>
+			<li>Feature
+				<a href="#">#15259</a>
+				<small class="text-muted">(VB)</small>
+				- Filter actions improved, automatic ILIKE search implemented (No need to provide * and case sensitive characters)
+			</li>
+			<li>Bug
+				<a href="#">#15255</a>
+				<small class="text-muted">(VB)</small>
+				- Typos fixed, missing links corrected and QRG updated
+			</li>
+		</ul>
+		<b>04-12-2018</b>
+		<ul>
+			<li>Bug
+				<a href="#">#15183</a>
+				<small class="text-muted">(VB)</small>
+				- Date 24hr issue resolved for Past 48 Hours Message Activity Graph
+			</li>
+			<li>Feature
+				<a href="#">#15184</a>
+				<small class="text-muted">(VB)</small>
+				- One more portlet added for showing total number of onbarded employees and registered employees (Device Logged in)
+			</li>
+			<li>Feature
+				<a href="#">#15185</a>
+				<small class="text-muted">(VB)</small>
+				- Dashboard for OU Administrators made online, the features available are as follows
+				<ul>
+					<li>Total Users (onboarded) in OU.</li>
+					<li>Total Registered users (Device Logged) in OU.</li>
+					<li>Total messages transferred by OU users.</li>
+					<li>Past 48 hrs Message Activity for the OU.</li>
+					<li>Date wise message activities for the OU</li>
+					<li>Date wise statistics could be launched by clicking on any of the portlets</li>
+				</ul>
+			</li>
+			<li>Feature
+				<a href="#">#15186</a>
+				<small class="text-muted">(VB)</small>
+				- The sort order on drill through reports are changed into reverse order so that recent date comes at first
+			</li>
+			<li>Feature
+				<a href="#">#15187</a>
+				<small class="text-muted">(VB)</small>
+				- The order of filter field has been rearranged to make most frequently used one as default
+			</li>
+			<li>Feature
+				<a href="#">#15188</a>
+				<small class="text-muted">(VB)</small>
+				- The employee wise chat statistics will now display all employees. Earlier employees who have sent at least one message were only listed
+			</li>
+		</ul>
+		<b>30-11-2018</b>
+		<ul>
+			<li>Feature
+				<a href="#">#14992(3)</a>
+				<small class="text-muted">(VB)</small>
+				- Bulk addition of members into a selected group. Please see the screen cast for information.
+				<button type="button" class="btn btn-primary btn-xs ubuntu" data-toggle="modal" data-target="#gifPoper" data-title="How to add members into group" data-href="{{ asset('resources/um/gifs/member_add.gif')}}">Screen Cast</button>
+			</li>
+			<li>Feature
+				<small class="text-muted">(VB)</small>
+				- A confirmation step has been positioned in critical actions for avoiding accedental operations.
+			</li>
+		</ul>
+		<b>29-11-2018</b>
+		<ul>
+			<li>Feature
+				<a href="#">#14992(4,5)</a>
+				<small class="text-muted">(VB)</small>
+				- Default values for group affiliation and role for default group and list group set
+			</li>
+			<li>Feature
+				<small class="text-muted">(VB)</small>
+				- Hompage and Dashboard home has been made truly responsive.
+			</li>
+			<li>Feature
+				<a href="#">#14992 (6)</a>
+				<small class="text-muted">(VB)</small>
+				- Member in Groups attribute management. The OU Admin may now manage affiliation and role attributes of Group Member. Choose, "MEMBERS" option of Menu button of respective group.
+				<button type="button" class="btn btn-primary btn-xs ubuntu" data-toggle="modal" data-target="#gifPoper" data-title="How to add members into group" data-href="{{ asset('resources/um/gifs/member_manage.gif')}}">Screen Cast</button>
+			</li>
+			<li>Bug
+				<a href="#">#15081
+				</a>
+				<small class="text-muted">(VB)</small>
+				- Resolved issue of group creation without prefix.
+			</li>
+			<li>Bug
+				<a href="#">#15082
+				</a>
+				<small class="text-muted">(VB)</small>
+				- Paginated records were not in continuous serial number - FIXED
+			</li>
+		</ul>
+		<b>28-11-2018</b>
+		<ul>
+			<li>Feature
+				<a href="#">#14992(7,8)</a>
+				<small class="text-muted">(VB)</small>
+				- Drill through facility involving following aspects, the report is triggered by clicking on Organization, Organization portlet on dashboard home.
+				<ul>
+					<li>Organization view</li>
+					<li>Organization view Date wise</li>
+					<li>Organization view OU Wise</li>
+					<li>OU view Date wise</li>
+					<li>OU view Employee wise</li>
+				</ul>
+				The columns available are
+				<strong>Onboard count, Registered count (App installed, launched and logged in), Group count, Active User count, Total Messages</strong>. The columns are sortable. The report is an offline one updated in every 30 minutes
+			</li>
+		</ul>
+	</div>
+</div>
+<div aria-labelledby="exampleModalLabel" class="modal fade" id="gifPoper" role="dialog" tabindex="-1">
+	<div class="modal-dialog modal-lg">
+		<div class="modal-content">
+			<div class="modal-header">
+				<button aria-label="Close" class="btn btn-xs btn-primary pull-right" data-dismiss="modal" type="button">
+					Close
+				</button>
+				<h4 class="modal-title" id="gifPoperTitle">Screen Cast</h4>
+			</div>
+			<div class="modal-body text-center"></div>
+		</div>
+	</div>
+</div>

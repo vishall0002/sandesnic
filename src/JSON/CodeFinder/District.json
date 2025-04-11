@@ -1,0 +1,21 @@
+{
+    "District": {
+        "Parent1": {
+            "Entity": "Masters\\Country",
+            "param": "countryName",
+            "label": "Country"
+        },
+        "Parent2": {
+            "path":"get_cf_states",
+            "param": "state",
+            "label": "State",
+            "postParam":"country"
+        },
+        "Parent3": {
+            "path":"get_cf_districts",
+            "param": "district",
+            "label": "District",
+            "postParam":"state"
+        }
+    }
+}

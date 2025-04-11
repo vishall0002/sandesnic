@@ -1,0 +1,82 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	New Organization Unit
+	{% if ministry is not null %}
+		[{{ ministry.ministryName }}]
+	{% endif %}
+{% endblock %}
+{% block formstart %}
+	{{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		{{ form_row(form.guId) }}
+		<div class="row">
+			{% if is_granted("ROLE_SUPER_ADMIN") %}
+				<div class="col-md-6">
+					{{form_row(form.ministry) }}
+				</div>
+				<div class="col-md-6">
+					{{form_row(form.organization) }}
+				</div>
+			{% elseif is_granted("ROLE_MINISTRY_ADMIN") %}
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					{{form_row(form.organization) }}
+				</div>
+			{% else %}
+				<div class="col-md-6"></div>
+				<div class="col-md-6">
+					Organization Name:
+					<div class="pt-3">
+						<h4>
+							{{organization.organizationName}}
+						</h4>
+					</div>
+				</div>
+			{% endif %}
+			{% if (is_granted("ROLE_OU_ADMIN")) %}
+				<div class="col-md-6">
+					Parent Organization Unit:
+					<div class="pt-3">
+						<h4>
+							{{organizationUnit.OUName}}
+						</h4>
+					</div>
+				</div>
+			{% else %}
+				<div class="col-md-6">
+					{{form_row(form.parentOrganizationUnit) }}
+				</div>
+			{% endif %}
+			<div class="col-md-6">
+				{{form_row(form.organizationUnitType) }}</div>
+			<div class="col-md-6">
+				{{form_row(form.state) }}</div>
+			<div class="col-md-6">
+				{{form_row(form.district) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.OUCode) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.OUName) }}</div>
+			<div class="col-md-6">
+				{{form_row(form.address) }}</div>
+			<div class="col-md-6">
+				{{form_row(form.pinCode) }}</div>
+			<div class="col-md-6">
+				{{form_row(form.landline) }}</div>
+			<div class="col-md-6">
+				{{form_row(form.website) }}</div>
+		</div>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		{{ form_widget(form.btnInsert, {attr: {class: 'btn btn-sm btn-primary btn-action-submit'} }) }}
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}
+	{{ form_row(form._token) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

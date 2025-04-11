@@ -1,0 +1,52 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    {{caption}}
+{% endblock %}
+{% block formstart %}
+    {{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        {{ form_row(form.guId) }}
+        <div class="row">
+            <div class="col-md-6">
+                {% if is_granted("ROLE_SUPER_ADMIN") %}
+                    {{ form_row(form.organizationUnit) }}
+                {% else %}
+                    <div class="text-center pt-3">
+                        <h3>
+                            {{organizationUnit.OUName}}
+                            [{{organizationUnit.OUCode}}]</h3>
+                        <input class="oubox" type="hidden" data-prefix="{{organizationUnit.OUCode}}"/>
+                    </div>
+                {% endif %}
+            </div>
+            {# <div class="col-md-6">
+                {{ form_row(form.groupType) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.groupPurpose) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.groupCreation) }}
+            </div> #}
+            <div class="col-md-6">
+                {{ form_row(form.groupTitle) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.groupDescription) }}
+            </div>
+        </div>
+    </section>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        {{ form_widget(form.btnUpdate, {attr: {class: 'btn btn-sm btn-primary btn-action-submit'} }) }}
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+        {{ form_row(form.guId) }}
+    </div>
+{% endblock %}
+{% block formend %}
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

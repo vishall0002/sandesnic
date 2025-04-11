@@ -1,0 +1,11 @@
+<div class="btn-group dropleft float-right">
+<a data-boundary="viewport" class="nav-link dropdown-toggle btn btn-xs btn-primary m-0 p-1" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+	Menu
+</a>
+	<div class="dropdown-menu dropdown-menu-right p-2 " aria-labelledby="navbarDropdown">
+		<div class="p-3 bg-purple" style="width: 300px; border: 1px dashed silver;">
+			{% block action_menu_header %}{% endblock %}
+		</div>
+		{% block action_menu %}{% endblock %}
+	</div>
+</div>

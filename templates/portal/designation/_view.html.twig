@@ -1,0 +1,23 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+   Delete Designation
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        <table class="table table-sm table-striped table-bordered table-hover table-condensed">
+			<tbody>
+				<tr>
+					<td class="text-right">Designation Name</td>
+					<td class="font-weight-bold display-5">{{designation.designationName}}</td>
+					<td class="text-right">Organization</td>
+					<td class="font-weight-bold display-5">{{designation.organization.organizationName}}</td>
+				</tr> 
+            </tbody>
+        </table>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        <button class="btn btn-sm btn-primary btn-action-delete" data-delete-path="{{path('portal_designation_delete_confirm')}}" data-objid = "{{designation.guid}}">Delete Confirm</button>
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}

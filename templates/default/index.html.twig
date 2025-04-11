@@ -1,0 +1,9 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+    <div id="__listContainer" >
+        {{ render(controller('App\\Controller\\DefaultController::releasenoteslist')) }}
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('build/js/upload.js') }}"></script>
+{% endblock %}

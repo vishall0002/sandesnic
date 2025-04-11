@@ -1,0 +1,73 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Transfer Employee
+{% endblock %}
+{% block formstart %}
+	{{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+	{% set assignedGroups = groupStatus.assignedGroups %}
+	<section class="form-block">
+		<div class="row">
+			<div class="col text-right">
+				<img alt="Employee Photo" src="data:image/png;base64,{{ photo }}" style="height: 170px;"/>
+			</div>
+			<div class="col text-left">
+				<h3 class="font-weight-bold">{{employee.employeeName}}</h3>
+				<h4 class="font-weight-bold">{{employee.designation.designationName}}</h4>
+				<h6>{{employee.organizationUnit.organization.ministry.ministryName}}</h6>
+				<h6>{{employee.organizationUnit.organization.organizationName ~ ', ' ~ employee.organizationUnit.OUName}}</h6>
+				<h6></h6>
+				<h6>{{employee.employeeCode}}</h6>
+				<h6>{{employee.emailAddress}}</h6>
+			</div>
+		</div>
+		<div class="row p-2">
+			<div class="col-6">
+				<div class="card">
+					<div class="card-body">
+						<h5 class="card-title">Member of following groups</h5>
+						<p class="card-text">Please click on the groups if any, to remove the membership</p>
+						{% for asgroup in assignedGroups %}
+							<h3>
+								<a href="#" data-toggle="confirmation" class="badge badge-pill badge-secondary btn-emp-trgroups-remove m-1" data-objid="{{ employee.guId }}" data-group="{{ asgroup.group.guId }}" data-group-remove-path="{{ path('portal_emp_groups_remove') }}">
+									<i class="fa fa-close" style="color: red"></i>
+									<small>
+										{{asgroup.group.groupTitle}}
+									</small>
+								</a>
+							</h3>
+						{% endfor %}
+					</div>
+				</div>
+			</div>
+			<div class="col-6">
+				<div class="card">
+					<div class="card-body">
+
+						<h5 class="card-title">Transfer to new OU</h5>
+						{% if active_profiles %}
+							<p class="alert alert-danger">This employee/member is assigned with extra roles. Please deactivate all the roles before continuing
+							</p>
+						{% else %}
+							{{form_row(form.ministry) }}
+							{{form_row(form.organization) }}
+							{{form_row(form.organizationUnit) }}
+							<button type="button" class="btn btn-primary btn-emp-transfer-update m-1" data-path="{{ path('portal_employee_transfer_update') }}" data-objid="{{ employee.guId }}">Apply Transfer
+							</button>
+						{% endif %}
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}
+	<input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

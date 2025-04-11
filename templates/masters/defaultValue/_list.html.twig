@@ -1,0 +1,43 @@
+{% if (pagination | length > 0) %}
+<table class="table table-striped table-bordered table-hover table-sm">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th {% if pagination.issorted('code') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Code', 'd.code') }}</th>
+			<th {% if pagination.issorted('environment') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Environment', 'd.environment') }}</th>
+			<th {% if pagination.issorted('description') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Description', 'd.description') }}</th>
+            <th {% if pagination.issorted('defaultValue') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Default Value', 'd.default_value') }}</th>
+            <th class="text-right">Action</th>
+		</tr>
+	</thead>
+	{% set offset = pagination.getPaginationData.numItemsPerPage %}
+	{% set current = pagination.getPaginationData.current %}
+	{% for record in pagination %}
+		{% set badges = '' %}
+		<tr data-id="{{record.id}}" class="btn-action-trmenu" data-popper-header="{{record.code}}">
+			<td>{{ ((current-1)*offset)+loop.index }}</td>
+			<td>{{record.code}}</td>
+			<td>{{record.environment}}</td>
+            <td>{{record.description}}</td>
+            <td>{{record.defaultValue}}</td>
+			<td class="">
+				{# {% embed 'bases/__action_menu.html.twig' %}
+					{% block action_menu_header %}
+						<span>{{ record.code }}</span>
+						{{ badges | raw }}
+					{% endblock %}
+					{% import "/bases/__action_menu_item.html.twig" as amenu %}
+					{% block action_menu %}
+						{{ amenu.divider() }}
+						{{ amenu.amenuitem("Edit", record.id,  path('masters_default_value_edit'), "btn-action-view", "fa-edit", "primary")}}
+					{% endblock %}
+				{% endembed %} #}
+				<button class="btn btn-xs btn-primary btn-edit" data-edit-path="{{path('masters_default_value_edit')}}" data-id = "{{record.id}}">Edit</button>
+			</td>
+		</tr>
+	{% endfor %}
+</table>
+{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No more values</h4>
+{% endif %}

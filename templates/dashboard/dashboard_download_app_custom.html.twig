@@ -1,0 +1,70 @@
+{% extends 'bases/base_dashboard.html.twig' %}
+{% block content %}
+{% set fileSizes = defValue.getDefaultValueObject('FILE_SIZES') %}
+	<h3>Download Center</h3>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card text-center mb-3">
+				<div class="card-body" style="min-height: 200px;">
+					<h5 class="card-title">
+						<i class="fa fa-android fa-2x"></i>Android</h5>
+					<a class="btn btn-primary btn-lg" href="{{ asset('uploads/'~androidCurrent.appFileName) }}" role="button">Download
+						{{androidCurrent.appVersionNo}}[{{fileSizes.apkandroid}}]</a>
+					{% if androidBeta %}
+						{% if ((app.user is null) ? false : app.user.isBetaUser) %}
+							<a class="btn btn-primary btn-lg" href="{{ asset('uploads/'~androidBeta.appFileName)}}" role="button">Download Beta
+								{{androidBeta.appVersionNo}}[{{fileSizes.apkandroidbeta}}]</a>
+						{% endif %}
+					{% endif %}
+					<p class="card-text m-1">Compatible on Android Version 5.0 or above.</p>
+<a class="btn btn-xs btn-secondary btn-lg m-1" href="{{ asset('resources/um/qrg.pdf') }}" role="button">QRG [{{fileSizes.qrgandroid}}][PDF]</a>
+
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="card text-center mb-3">
+				<div class="card-body" style="min-height: 200px;">
+					<h5 class="card-title">
+						<i class="fa fa-apple fa-2x"></i>
+						iOS</h5>
+					<a class="btn btn-primary btn-lg" href="https://apps.apple.com/in/app/gims-instant-messaging-system/id1517976582">Download from Apple App Store [{{fileSizes.apkios}}]</a>
+					<p class="card-text m-1">Compatible on iOS Version 11 or above.</p>
+<a class="btn btn-xs btn-secondary btn-lg m-1" href="{{ asset('resources/um/qrg-ios.pdf') }}" role="button">QRG [{{fileSizes.qrgios}}][PDF]</a>
+				</div>
+			</div>
+		</div>
+
+			<div class="col-12">
+				<div class="card text-center mb-3">
+					<div class="card-body">
+						<h5 class="card-title">
+							<i class="fa fa-apple fa-2x"></i>
+							iOS for BETA Testers</h5>
+						<div class="alert alert-danger">
+							<h3>Please note that this build will clear the data from your APP, if you have already installed Application from AppStore. Ensure that you have a backup ready.</h3>
+						</div>
+						{% if iosBeta %}
+							<a class="btn btn-primary btn-lg" href="itms-services://?action=download-manifest&amp;url={{ app.request.schemeAndHttpHost~path('app_dashboard_download_ios_beta_custom',{'objid':objid})}}">Download Beta
+								{{iosBeta.appVersionNo}}</a>
+						{% endif %}
+						<p class="card-text m-1">Compatible on iOS Version 11 or above.</p>
+						<h4>Release Notes</h4>
+						<p class="card-text m-1">{{ iosBeta.appReleaseNotes}}</p>
+						
+					</div>
+				</div>
+			</div>
+	</div>
+
+	<h3>Support</h3>
+<a class="btn btn-primary btn-lg m-1" href="{{ asset('resources/um/faq.pdf') }}" role="button">FAQ [{{fileSizes.faqapp}}][PDF]</a>
+
+<a class="btn btn-primary btn-lg m-1" href="{{ asset('resources/um/faq-portal.pdf') }}" role="button">FAQ - Sandes Portal [{{fileSizes.faqportal}}][PDF]</a>
+
+
+	<a class="btn btn-primary btn-lg m-1" href="{{ path('um_index')}}" role="button">Screen Casts</a>
+	<a class="btn btn-primary btn-lg m-1" href="{{ path('app_releasenotes')}}" role="button">Release notes</a>
+	<hr class="my-4">
+	
+{% endblock %}

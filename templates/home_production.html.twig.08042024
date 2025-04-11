@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<title>
+			SANDES Portal
+		</title>
+		<link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="#">
+		<link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+		<link rel="icon" type="image/x-icon" href="{{ asset('img/logo_app.png') }}"/>
+	</head>
+	<body>
+		<div class="container pt-3">
+			<div class="row">
+				<div class="col-12">
+					<a class="navbar-brand m-0 float-left" href="/" aria-label="Bootstrap">
+						<img src="{{ asset('img/logo.png') }}"/></a>
+					<div class="float-left pt-3 ">
+						<h1 class="text-white" style="font-family: Metropolis; font-weight: bolder; font-size: 2em;">SANDES</h1>
+						<h3 class="text-white d-none d-md-block" style="font-family: Metropolis; font-weight: bolder; font-size: 2em;">Government Instant Messaging System</h3>
+					</div>
+				</div>
+			</div>
+			<div class="row" style="height: 60vh">
+				<div class="col-12 text-center">
+
+					{# Added two new carosel images #}
+					<div class="rewind  tns-slider tns-carousel tns-subpixel tns-calc tns-horizontal" id="rewind" style="transform: translate3d(-845px, 0px, 0px); transition: all 0s ease 0s; width: 100%;  display: none;">
+						{#<div class="item tns-item" id="rewind-item0" aria-hidden="true" tabindex="-1" style="width: 100%;">
+							<a href="https://amritmahotsav.nic.in/"><img src="/img/yogadaynew.jpg" style="width:100%; height: 270px; display"/></a>
+						</div>#}
+						<div class="item tns-item" id="rewind-item0" aria-hidden="true" tabindex="-1" style="width: 100%;">
+							<a href="https://amritmahotsav.nic.in/"><img src="/img/G20-Day-1.jpg" style="width:100%; height: 270px; display"/></a>
+						</div>
+						{#<div class="item tns-item" id="rewind-item0" aria-hidden="true" tabindex="-1" style="width: 100%;">
+							<a href="https://amritmahotsav.nic.in/"><img src="/img/pm-akam.jpg" style="width:100%; height: 270px; display"/></a>
+						</div>#}
+						{# <div class="item tns-item tns-slide-active" id="rewind-item1" style="width: 100%;">
+													<a href="https://pmmementos.gov.in/"><img src="/img/pm-mementos.jpg"  style="width:100%; height: 100%;"/>
+													</a>
+												</div> #}
+					</div>
+				</div>
+				{# <div class="col-12">
+					<h2 class="text-danger">
+						Sandes Services will not be available from 22:00 to 23:00 [02-April-2022] due to maintenance activities
+					</h2>
+				</div> #}
+				<div
+					class="col-12 text-center pt-3">
+					<a href="{{ path('parichay_login') }}" class="btn btn-sm btn-outline-primary m-1">Parichay</a>
+					<a href="{{ path('app_login_ldap') }}" class="btn btn-sm btn-primary m-1">
+						Sign In - LDAP</a>
+					{# <a href="{{ path('app_login_native') }}" class="btn btn-sm btn-outline-primary m-1">	Sign In - Native</a> #}
+					<a href="{{ path('app_login_gimsotp') }}" class="btn btn-sm btn-primary m-1">
+						Sign In - SANDES OTP</a>
+					<a href="{{ path('app_gims_web_start') }}" class="btn btn-sm btn-primary m-1">
+						Sandes Web</a>
+				</div>
+				<div class="col-12 text-center p-2">
+					<img alt="Digital India Logo" src="/img/logos/di/white.svg" width="125px"/>
+					<a class="m-3" href="http://www.nic.in" rel="noopener noreferrer" target="_blank">
+						<img src="{{ asset('img/logos/nic/Nic_logo3-01.svg') }}" width="125px" class="left" alt=""></a>
+				</div>
+				<div class="col-12 text-center p-2">
+					<a class="m-3" href="https://twitter.com/NICMeity" style="text-decoration: none;">
+						<i class="fa fa-2x fa-twitter-square m-0"></i>
+					</a>
+					<a class="m-3" href="https://facebook.com/NICIndia" style="text-decoration: none;">
+						<i class="fa fa-2x fa-facebook-square m-0"></i>
+					</a>
+					<a class="m-3" href="https://linkedin.com/company/national-informatics-centre" style="text-decoration: none;">
+						<i class="fa fa-2x fa-linkedin-square m-0"></i>
+					</a>
+					<a class="m-3" href="mailto:support-sandes@nic.in?Subject=Sandes Support required">
+						<i class="fa fa-2x fa-comment m-0"></i>
+						support-sandes[at]nic.in
+					</a>
+					<a class="m-3" href="https://www.nic.in">
+						<i class="fa fa-2x fa-globe m-0"></i>
+						www.nic.in</a>
+				</div>
+				<div class="col-md-12 text-center p-2">
+					<small class="text-center">
+						<span class="text-success">{{ 'GO GREEN  Version: ' ~ appversion  }}</span>
+						|
+						<span id="timeShow" style="color: #718a83;" data-time="{{ appServices.getUnixTimeStamp()}}"></span>
+					</small>
+				</div>
+			</div>
+		</div>
+		<script type="module">
+			import {tns} from '/js/ts/tiny-slider.js';
+
+var paragraph = document.getElementById("rewind");
+paragraph.style.display = "block";
+
+var slider = tns({
+container: "#rewind",
+autoWidth: true,
+items: 1,
+controls: false,
+rewind: true,
+swipeAngle: false,
+loop: true,
+autoplay: true,
+autoplayButtonOutput: false,
+speed: 400,
+nav: false
+});
+		</script>
+	</body>
+</html>

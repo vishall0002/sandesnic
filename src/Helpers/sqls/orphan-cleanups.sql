@@ -1,0 +1,2 @@
+select u.username,u.mobile_number from gim.portal_users as u LEFT JOIN gim.employee as e ON u.id = e.user_id WHERE e.user_id is null;
+update gim.portal_users set mobile_number = null where username like '%-orphan';

@@ -1,0 +1,93 @@
+<div class="row">
+	{% if paged_records[0] is defined %}
+		<div class="col-6">
+			<h5>
+				{% if organization is defined %}
+					{{ organization }}
+					- OU Wise Statistics
+				{% else %}
+					Statistics
+				{% endif %}
+			</h5>
+		</div>
+		<div class="col-6">
+			<small class="display-5 float-right">Data last updated at
+				{{paged_records[0].update_time}}
+			</small>
+		</div>
+		<div class="col-12">
+			<div class="table-responsive">
+				<table class="table table-striped table-bordered table-hover table-sm">
+					<thead>
+						<tr>
+							<th class="text-center">#</th>
+							<th class="sorted text-left" style="width: 300px;">{{ knp_pagination_sortable(paged_records, 'OU', '[ou_name]') }}</th>
+							<th class="sorted text-right">{{ knp_pagination_sortable(paged_records, 'Onboarded', '[onboarded_count]') }}</th>
+							<th class="sorted text-right">{{ knp_pagination_sortable(paged_records, 'Registered', '[registered_count]') }}</th>
+							<th class="sorted text-right">{{ knp_pagination_sortable(paged_records, 'Groups', '[group_count]') }}</th>
+							<th class="sorted text-right">{{ knp_pagination_sortable(paged_records, 'Active Users', '[active_users]') }}</th>
+							<th class="sorted text-right">{{ knp_pagination_sortable(paged_records, 'Total Messages', '[total_messages]') }}</th>
+							<th class="text-right">Actions</th>
+						</tr>
+					</thead>
+					<tbody>
+						{% set offset = paged_records.getPaginationData.numItemsPerPage %}
+						{% set current = paged_records.getPaginationData.current %}
+						{% for record in paged_records %}
+							<tr>
+								<td class="text-center">{{ ((current-1)*offset)+loop.index }}</td>
+								<td class="text-left">
+									{% set data = [] %}
+									{% set data = data|merge([{ guid: record.gu_id, name:record.ou_name }]) %}
+									<strong>{{record.ou_name}}</strong>
+									{% if 'ROLE_EMAILER' in app.user.roles %}
+										<span class="fa fa-envelope text-primary pull-right pointer sendMessage" data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-type="ou" data-data="{{ data|json_encode() }}" style="cursor: pointer"></span>
+									{% endif %}
+								</td>
+								<td class="text-right align-right ">
+									{{record.onboarded_count}}
+								</td>
+								<td class="text-right align-right ">
+									{{record.registered_count}}
+								</td>
+								<td class="text-right align-right ">
+									{{record.group_count}}
+								</td>
+								<td class="text-right align-right ">
+									{{record.active_users}}
+								</td>
+								<td class="text-right align-right ">
+									{{record.total_messages}}
+								</td>
+								<td class="">
+									{% embed 'bases/__action_menu.html.twig' %}
+										{% block action_menu_header %}
+											<span>{{ record.ou_name }}</span>
+										{% endblock %}
+										{% import "/bases/__action_menu_item.html.twig" as amenu %}
+										{% block action_menu %}
+											{% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+												{{ amenu.gims(record.ou_name,record.gu_id,"ou")}}
+											{% endif %}
+											{{ amenu.divider() }}
+											{{ amenu.amenuformitem("Member wise status",record.gu_id,  path('app_dashboard_memberised'),"frmSts","btn-primay", "fa-check")}}
+											{{ amenu.amenuhrefitem("Heat Map based on chat activity",record.gu_id,  path('app_dashboard_pivot_home', {'objid':record.gu_id }),"", "fa-pencil")}}
+											{{ amenu.amenuformitem("APP Insights",record.gu_id,  path('status_device_os_list_ou'),"frmSDOLOU","btn-primay", "fa-calculator")}}
+										{% endblock %}
+									{% endembed %}
+								</td>
+							</tr>
+						{% endfor %}
+					</tbody>
+				</table>
+			</div>
+			{{ knp_pagination_render(paged_records) }}</div>
+	{% else %}
+		<div class="col-12">
+			<div class="alert alert-secondary m-3 p-3">
+				<h2 class="text-dark">Organization Units</h2>
+				<h3 class="text-warning">No records are available</h3>
+			</div>
+		</div>
+	{% endif %}
+</div>

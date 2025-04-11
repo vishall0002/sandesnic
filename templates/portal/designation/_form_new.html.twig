@@ -1,0 +1,61 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    Create New Designation{% endblock %}
+{% block formstart %}
+    {{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+    <style>
+        .txtGroupNameRO {
+            font-size: 36px;
+            font-weight: bolder;
+            color: green;
+            border: none !important;
+            background-color: white !important;
+        }
+    </style>
+    <section class="form-block">
+        {{ form_row(form.guId) }}
+        <div class="row">
+        {% if (is_granted("ROLE_SUPER_ADMIN")) %}
+            <div class="col-md-6">
+                {{ form_label(form.organization) }}
+                <div class="input-group">
+                    {{ form_widget(form.organization,  {'id' : "codefinder-id"} ) }}
+                    {{ form_errors(form.organization) }}
+                    <span class="input-group-btn">
+                        <button type="button" data-path="{{path('app_code_finder_show_form_for_code_finder')}}" class="btn btn-info btn-flat text-bold codeFinderAction" data-use="Organization">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                </div>
+            </div>
+        {% elseif is_granted("ROLE_MINISTRY_ADMIN") %}
+            <div class="col-md-6">                
+                {{ form_row(form.organization) }}
+            </div>
+        {% elseif is_granted("ROLE_O_ADMIN") %}                     
+            <input class="oubox" type="hidden" data-prefix="{{organization.OrganizationCode}}"/>                   
+        {% else %}
+            <div class="col-md-6"> 
+                {{form_row(organization.organizationName) }}
+                    [{{organization.OrganizationCode}}]
+                <input class="oubox" type="hidden" data-prefix="{{organization.OrganizationCode}}"/>
+            </div>                
+        {%  endif %}
+
+        <div class="col-md-6">
+            {{ form_row(form.designationName) }}</div>
+        </div>
+    </section>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        {{ form_widget(form.btnInsert, {attr: {class: 'btn btn-sm btn-primary btn_codefinder_submit'} }) }}
+        <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+    </div>
+{% endblock %}
+{% block formend %}
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

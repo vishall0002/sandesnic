@@ -1,0 +1,73 @@
+<div class="row">
+	<div class="col-6">
+		<h5>
+			Ministries/States/Agencies
+		</h5>
+	</div>
+	<div class="col-6">
+		<small class="display-5 float-right">Data last updated at
+			{{paged_records[0].update_time}}
+		</small>
+	</div>
+	<div class="col-12">
+		<div class="table-responsive">
+			<table class="table table-striped table-bordered table-hover table-sm  ml-auto ">
+				<thead>
+					<tr>
+						<th class="text-center">#</th>
+						<th class="text-left sorted" style="width: 300px;">{{ knp_pagination_sortable(paged_records, 'Ministry', '[ministry_name]') }}</th>
+						<th class="text-right sorted">{{ knp_pagination_sortable(paged_records, 'Onboarded', '[onboarded_count]') }}</th>
+						<th class="text-right sorted">{{ knp_pagination_sortable(paged_records, 'Registered', '[registered_count]') }}</th>
+						<th class="text-right sorted">{{ knp_pagination_sortable(paged_records, 'Groups', '[group_count]') }}</th>
+						<th class="text-right sorted">{{ knp_pagination_sortable(paged_records, 'Active Users', '[active_users]') }}</th>
+						<th class="text-right sorted">{{ knp_pagination_sortable(paged_records, 'Messages', '[total_messages]') }}</th>
+						<th class="text-center">Actions</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% set offset = paged_records.getPaginationData.numItemsPerPage %}
+					{% set current = paged_records.getPaginationData.current %}
+					{% for record in paged_records %}
+						{% set badges = '' %}
+						<tr class="btn-action-trmenu" data-objid="{{record.mgu_id}}" data-popper-header="{{record.ministry_name}}">
+							<td class="text-center">{{ ((current-1)*offset)+loop.index }}</td>
+							<td class="text-left">
+								{{record.ministry_name}}
+							</td>
+							<td class="text-right align-right ">
+								{{record.onboarded_count}}
+							</td>
+							<td class="text-right align-right ">
+								{{record.registered_count}}
+							</td>
+							<td class="text-right align-right ">
+								{{record.group_count}}
+							</td>
+							<td class="text-right align-right ">
+								{{record.active_users}}
+							</td>
+							<td class="text-right align-right ">
+								{{record.total_messages}}
+							</td>
+							<td class="">
+								{% embed 'bases/__action_menu.html.twig' %}
+									{% block action_menu_header %}
+										<span>{{ record.ministry_name }}</span>
+									{% endblock %}
+									{% import "/bases/__action_menu_item.html.twig" as amenu %}
+									{% block action_menu %}
+										{{ amenu.gims(record.ministry_name,record.mgu_id,"ministry")}}
+										{{ amenu.divider() }}
+										{{ amenu.amenuformitem("Organization List",record.mgu_id,  path('app_dashboard_owise'),"frmMinLt","btn-primay", "fa-cubes")}}
+										{{ amenu.amenuformitem("APP Insights",record.mgu_id,  path('status_device_os_list_ministry'),"frmSDOLMin","btn-primay", "fa-calculator")}}
+									{% endblock %}
+								{% endembed %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+		</div>
+		{{ knp_pagination_render(paged_records) }}
+	</div>
+</div>

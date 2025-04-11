@@ -1,0 +1,53 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+   Delete Organization Unit
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        <table class="table table-sm table-striped table-bordered table-hover table-condensed">
+			<tbody>
+				<tr>
+					<td class="text-right">Organization Unit Code</td>
+					<td class="font-weight-bold display-5">{{ou.ouCode}}</td>
+					<td class="text-right"></td>
+					<td class="font-weight-bold display-5"></td>
+				</tr>
+                <tr>
+					<td class="text-right">Organization Name</td>
+					<td class="font-weight-bold display-5">{{ou.OUName}}</td>
+					<td class="text-right">Organization</td>
+					<td class="font-weight-bold display-5">{{ou.organization.OrganizationName}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">Parent Organization Unit</td>
+					<td class="font-weight-bold display-5">{{ou.parentOrganizationUnit.OUName}}</td>
+					<td class="text-right">Organization Unit Type</td>
+					<td class="font-weight-bold display-5">{{ou.organizationUnitType.organizationTypeName}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">Address</td>
+					<td class="font-weight-bold display-5">{{ou.address}}</td>
+					<td class="text-right">State</td>
+					<td class="font-weight-bold display-5">{{ou.state.state}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">District</td>
+					<td class="font-weight-bold display-5">{{ou.district.district}}</td>
+					<td class="text-right">Pin Code</td>
+					<td class="font-weight-bold display-5">{{ou.pincode}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">Land Line Number</td>
+					<td class="font-weight-bold display-5">{{ou.landline}}</td>
+					<td class="text-right">Website</td>
+					<td class="font-weight-bold display-5">{{ou.website}}</td>
+				</tr>
+            </tbody>
+        </table>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        <button class="btn btn-sm btn-primary btn-action-delete" data-delete-path="{{path('portal_ou_delete_confirm')}}" data-objid = "{{ou.guid}}">Delete Confirm</button>
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}

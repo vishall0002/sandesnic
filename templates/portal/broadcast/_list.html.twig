@@ -1,0 +1,72 @@
+<div class="row">
+    <div class="col-4">
+        <h5>
+            List Management
+        </h5>
+    </div>
+    <div class="col-5 p-0">
+        {{ knp_pagination_filter(pagination, { 'list_name': 'List Name', 'ou_name': 'Organization Unit'}) }}
+    </div>
+    <div class="col-3 text-right">
+        <a class="btn btn-xs btn-success text-white" data-list-path="{{ path('portal_brdcst_list' )}}" data-new-path="{{ path('portal_brdcst_new' )}}"  href="{{ path('portal_brdcst_new' )}}" title="Register a new List">
+            + Create a New List
+        </a>
+    </div>
+</div>
+{% if (pagination | length > 0) %}
+    <table class="table table-striped table-bordered table-hover table-sm">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th {% if pagination.issorted('id') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'List ID', '[list_id]') }}</th>
+                <th {% if pagination.issorted('ou_name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Organization Unit', '[ou_name]') }}</th>
+                <th {% if pagination.issorted('list_name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'List Name', '[list_name]') }}</th>
+                <th>Action</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set offset = pagination.getPaginationData.numItemsPerPage %}
+            {% set current = pagination.getPaginationData.current %}
+            {% for record in pagination %}
+                <tr class="btn-action-trmenu" data-objid="{{record.gu_id}}" data-popper-header="{#{{record.group_description}}#}">
+                    <td>{{ ((current-1)*offset)+loop.index }}
+                        <span class="pull-right text-green glyphicon glyphicon-user" title="Active"></span>
+                    </td>
+                    <td class="data">
+                        {{record.list_id}}
+                    </td>
+                    <td class="data">
+                        {{record.ou_name}}
+                    </td>
+                    <td class="data">
+                        {{record.list_name}}
+                    </td>
+                    <td class="text-right">
+                        <div class="btn-group dropup">
+                            <a href="{{ path('portal_brdcst_edit',{'objid':record.gu_id}) }}"><button class="btn btn-xs btn-block btn-primary tooltipjs data-objid" data-objid="" title="Modify some basic data" data-edit-path="{{ path('portal_brdcst_edit',{'objid':record.gu_id}) }}">Edit</button></a>
+                            {#<a class="btn btn-flat btn-primary btn-xs dropdown-toggle pull-right btn-action-menu" href="#" id="popL{{ record.gu_id }}">
+                                <i class="caret"></i>Menu
+                            </a>#}
+
+                        </div>
+
+                    </td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <div class="popper flex" id="popperContainer" style="display: none; width: 500px;">
+        <h5 class="popper-header"></h5>
+        <div class="card-columns">
+            <div class="col p-1 m-0">
+                <button class="btn btn-lg btn-block btn-primary tooltipjs data-objid" data-objid="" title="Modify some basic data" data-edit-path="{{ path('portal_grp_edit') }}">Edit</button>
+            </div>
+            <br/>
+            <small class="text-dark pull-right">ESC to dismiss this menu</small>
+            <div class="popper__arrow" x-arrow=""></div>
+        </div>
+    </div>
+    {{ knp_pagination_render(pagination) }}
+{% else %}
+    <h4 class="alert alert-secondary">No Groups found</h4>
+{% endif %}

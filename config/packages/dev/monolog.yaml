@@ -1,0 +1,50 @@
+monolog:
+    channels: ['generalapi','groupapi1','groupapi2','groupapi5','ldap']
+    handlers:
+        main:
+            type: stream
+            path: "%kernel.logs_dir%/%kernel.environment%.log"
+            level: debug
+            channels: ["!event"]
+        # uncomment to get logging in your browser
+        # you may have to allow bigger header sizes in your Web server configuration
+        #firephp:
+        #    type: firephp
+        #    level: info
+        #chromephp:
+        #    type: chromephp
+        #    level: info
+        console:
+            type: console
+            process_psr_3_messages: false
+            channels: ["!event", "!doctrine", "!console"]
+
+        generalapi:
+            type: stream
+            path: "%kernel.logs_dir%/generalapi.log"
+            level: info
+            channels: ['generalapi']
+        
+        groupapi1:
+            type: stream
+            path: "%kernel.logs_dir%/groupapi1.log"
+            level: info
+            channels: ['groupapi1']
+
+        groupapi2:
+            type: stream
+            path: "%kernel.logs_dir%/groupapi2.log"
+            level: info
+            channels: ['groupapi2']
+
+        groupapi5:
+            type: stream
+            path: "%kernel.logs_dir%/groupapi5.log"
+            level: info
+            channels: ['groupapi5']
+
+        ldap:
+            type: stream
+            path: "%kernel.logs_dir%/ldap.log"
+            level: info
+            channels: ['ldap']

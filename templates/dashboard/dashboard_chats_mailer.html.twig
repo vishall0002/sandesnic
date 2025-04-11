@@ -1,0 +1,178 @@
+<div class="card-group">
+	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+		<a class="card p-1">
+			<div class="row pl-4">
+				<div class="text-right pr-0 pt-1">
+					<i class="fa fa-podcast fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+				</div>
+				<div class="col-7 text-left pl-0">
+					<span class="badge badge-pill badge-success">&nbsp;</span>
+					<span class="text-muted dashboard-label">
+						Online Users
+					</span><br/>
+					<strong class="online-users h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+		<a class="card p-1" style="text-decoration: none" href="{{ path('app_dashboard_ministry_wise')}}">
+			<div class="row pl-4">
+				<div class="text-right pr-0 pt-1">
+					<i class="fa fa-dot-circle-o fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+				</div>
+				<div class="col-8 text-left pl-0">
+					<span class="text-muted dashboard-label">
+						Ministries
+					</span><br/>
+					<strong class="db_min_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+		<a class="card p-1" style="text-decoration: none" href="{{ path('app_dashboard_ministry_wise')}}">
+			<div class="row pl-4">
+				<div class="text-right pr-0 pt-1">
+					<i class="fa fa-cubes fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+				</div>
+				<div class="col-8 text-left pl-0">
+					<span class="text-muted dashboard-label">
+						Organizations
+					</span><br/>
+					<strong class="db_o_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+		<a class="card p-1" style="text-decoration: none" href="{{ path('app_dashboard_ministry_wise')}}">
+			<div class="row pl-4">
+				<div class="text-right pr-0 pt-1">
+					<i class="fa fa-cube fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+				</div>
+				<div class="col-8 text-left pl-0">
+					<span class="text-muted dashboard-label">
+						Organization Units
+					</span><br/>
+					<strong class="db_ou_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+		<a class="card p-1" style="text-decoration: none">
+			<div class="row pl-4">
+				<div class="text-right pr-0 pt-1">
+					<i class="fa fa-group fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+				</div>
+				<div class="col-8 text-left pl-0">
+					<span class="text-muted dashboard-label">
+						Onboarded Users
+					</span><br/>
+					<strong class="db_e_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+		<a class="card p-1" style="text-decoration: none">
+			<div class="row pl-4">
+				<div class="text-right pr-0 pt-1">
+					<i class="fa fa-check-square fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+				</div>
+				<div class="col-8 text-left pl-0">
+					<span class="text-muted dashboard-label">
+						Registered Users
+					</span><br/>
+					<strong class="db_re_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+				</div>
+			</div>
+		</a>
+	</div>
+	<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+		<a class="card p-1" style="text-decoration: none">
+			<div class="row pl-4">
+				<div class="text-right pr-0 pt-1">
+					<i class="fa fa-line-chart fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+				</div>
+				<div class="col-8 text-left pl-0">
+					<span class="text-muted dashboard-label">
+						Message Count
+					</span><br/>
+					<strong class="db_m_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+				</div>
+			</div>
+		</a>
+	</div>
+</div>
+<div class="col-12 mt-4 mb-4">
+	<div class="card bg-light">
+		<div class="card-body">
+			<h4 class="card-title">Message Activity</h4>
+			<p>Hourly message acitivty - past 48hrs</p>
+			<div class="graph-block-container">
+				<div class="graph-container-with-legend" style="width: 100%;">
+					<div id="dvChatFlow" class="graph-with-legend-right"></div>
+					<div id="dvChatFlowL" class="graph-legend"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-12 mb-4">
+	<div class="card bg-light">
+		<div class="card-body">
+			<h4 class="card-title">Message Activity</h4>
+			<p>Date wise message activity - last two months</p>
+			<div class="graph-block-container">
+				<div class="graph-container-with-legend" style="width: 100%;">
+					<div id="dvDWChatFlow" class="graph-with-legend-right"></div>
+					<div id="dvDWChatFlowL" class="graph-legend"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-12 mb-4">
+	<div class="card bg-light">
+		<div class="card-body">
+			<h4 class="card-title">Online Users</h4>
+			<p>Hourly online user count - past 48hrs</p>
+			<div class="graph-block-container">
+				<div class="graph-container-with-legend" style="width: 100%;">
+					<div id="dvLiveUser" class="graph-with-legend-right"></div>
+					<div id="dvLiveUserL" class="graph-legend"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-12 mb-4">
+	<div class="card bg-light">
+		<div class="card-body">
+			<h4 class="card-title">Online Users</h4>
+			<p>Daily peak online user count - last two months</p>
+			<div class="graph-block-container">
+				<div class="graph-container-with-legend" style="width: 100%;">
+					<div id="dvDWLiveUser" class="graph-with-legend-right"></div>
+					<div id="dvDWLiveUserL" class="graph-legend"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>
+<div class="col-12 mb-4">
+	<div class="card bg-light">
+		<div class="card-body">
+			<h5 class="card-title">Active Users</h5>
+			<p>Users who have sent at least one message</p>
+			<div class="graph-block-container">
+				<div class="graph-container-with-legend" style="width: 100%;">
+					<div id="dvActiveUser" class="graph-with-legend-right"></div>
+					<div id="dvActiveUserL" class="graph-legend"></div>
+				</div>
+			</div>
+		</div>
+	</div>
+</div>

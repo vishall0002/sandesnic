@@ -1,0 +1,1122 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<title>
+			SANDES Portal
+		</title>
+		<link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="#">
+		<link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+		<link rel="stylesheet" href="{{ asset('build/css/dashboard_stat.css') }}">
+		 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+		<link
+		rel="icon" type="image/x-icon" href="{{ asset('img/logo_app.png') }}"/>
+		<!-- Latest compiled and minified CSS -->
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+		<!-- Latest compiled JavaScript -->
+		 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+		
+			<style>
+
+			{# footer  #}
+
+				.footer a{
+					background-color: #1c4b6b;
+					color: white!important;
+					text-decoration: none;
+					letter-spacing: 1px;
+					background-color: transparent;
+				}
+				.footer a:hover {
+				text-decoration: underline;
+				color: #ffffff !important;
+				}
+
+			{# footer  #}
+				{# banner section  #}
+				.custom-banner {
+				position: relative;
+				overflow: hidden;
+				}
+				.banner-image {
+				width: 100%;
+				height: auto; /* Adjust height automatically */
+				display: block;
+				}
+
+				.banner-overlay {
+				position: absolute;
+				top: 0;
+				left: 0;
+				height: 100%;
+				width: 100%;
+				background: rgba(28, 75, 107, 0.5);
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				z-index: 2;
+				}
+
+				.banner-content {
+				color: #fff;
+				text-align: center;
+				z-index: 3;
+				}
+
+				.banner-content h1 {
+				font-size: 48px;
+				font-weight: bold;
+				margin-bottom: 10px;
+				}
+
+				.banner-content p {
+				font-size: 20px;
+				}
+
+
+				{# banner section  #}
+
+			{# features section style starts here  #}
+
+			
+					#features {
+					padding: 60px 20px;
+					background-color: white;
+					}
+
+					.site-heading h2 {
+							display: block;
+							font-weight: 700;
+							margin-bottom: 10px;
+							text-transform: uppercase;
+						}
+						.site-heading h2 span {
+							color: #178a43;
+						}
+							.site-heading h4 {
+							display: inline-block;
+							padding-bottom: 20px;
+							position: relative;
+							text-transform: capitalize;
+							z-index: 1;
+						}
+				.site-heading h4::before {
+					background: #178a43;
+					bottom: 0;
+					content: "";
+					height: 2px;
+					left: 50%;
+					margin-left: -25px;
+					position: absolute;
+					width: 50px;
+				}
+				.site-heading {
+					margin-bottom: 60px;
+					overflow: hidden;
+				}
+				/* Wrap items with flexbox + gap */
+				.features-area .features-items {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 30px; /* Adjust this value to match vertical spacing */
+				justify-content: center;
+				}
+
+				/* Adjust columns to take up 30% for 3 per row with gap support */
+				.features-area .features-items .col-md-4 {
+				flex: 0 0 calc(33.333% - 20px);
+				max-width: calc(33.333% - 20px);
+				}
+
+				/* Make sure each item has full height */
+				.features-area .features-items .item {
+				background: #ededed;
+				padding: 30px 20px;
+				border-radius: 12px;
+				box-shadow: 0 4px 20px rgba(0,0,0,0.05);
+				transition: all 0.3s ease-in-out;
+				text-align: center;
+				height: 100%;
+				}
+
+				/* ... keep the rest of the styles the same as earlier ... */
+
+				/* ICON styling */
+				.features-area .features-items .item .icon i {
+				font-size: 40px;
+				margin-bottom: 20px;
+				color: #1c4b6b;
+				transition: all 0.3s ease-in-out;
+				}
+
+				/* TEXT styling */
+				.features-area .features-items .item .info h4 {
+				font-size: 18px;
+				font-weight: 600;
+				margin-bottom: 10px;
+				color: #1c4b6b;
+				transition: color 0.3s ease-in-out;
+				}
+
+				.features-area .features-items .item .info p {
+				font-size: 14px;
+				color: #555;
+				transition: color 0.3s ease-in-out;
+				}
+
+				/* Even item styles */
+				.features-area .features-items .col-md-4:nth-child(even) .item {
+				background-color: #178a43;
+				}
+				.features-area .features-items .col-md-4:nth-child(even) .item .icon i,
+				.features-area .features-items .col-md-4:nth-child(even) .item .info h4,
+				.features-area .features-items .col-md-4:nth-child(even) .item .info p {
+				color: #fff;
+				}
+
+				/* Hover effects */
+				.features-area .features-items .item:hover {
+				transform: translateY(-10px);
+				}
+
+				.features-area .features-items .col-md-4:nth-child(odd) .item:hover {
+				background-color: #178a43;
+				}
+				.features-area .features-items .col-md-4:nth-child(odd) .item:hover .icon i,
+				.features-area .features-items .col-md-4:nth-child(odd) .item:hover .info h4,
+				.features-area .features-items .col-md-4:nth-child(odd) .item:hover .info p {
+				color: #fff;
+				}
+
+				.features-area .features-items .col-md-4:nth-child(even) .item:hover {
+				background-color: #fff;
+				}
+				.features-area .features-items .col-md-4:nth-child(even) .item:hover .icon i,
+				.features-area .features-items .col-md-4:nth-child(even) .item:hover .info h4,
+				.features-area .features-items .col-md-4:nth-child(even) .item:hover .info p {
+				color: #1c4b6b;
+				}
+
+
+
+			{# features section style ends here  #}
+
+			.graphsection{
+				background: rgb(150,211,255);
+				background: linear-gradient(90deg, rgba(150,211,255,1) 0%, rgba(25,73,108,1) 0%, rgba(70,145,199,1) 75%);
+			}
+			.shadow-sm {
+				box-shadow:none!important;
+			}
+			 .sandeshPort h2 {
+					font-size: 2rem;
+					border-left: 5px solid #dc3545;
+					padding-left: 10px;
+				}
+
+				.sandeshPort p {
+					line-height: 1.7;
+				}
+
+				@media (max-width: 767.98px) {
+					.sandeshPort img {
+					height: auto !important;
+					}
+				}
+				.sandeshPort {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+					{# margin: 5px !important; #}
+					padding: 15px !important;
+					
+				}
+				.sandeshPort table th,
+				.sandeshPort table td {
+					vertical-align: middle;
+				}
+
+				.sandeshPort table th small {
+					font-size: 0.75em;
+				}
+
+				.sandeshPort .table-hover tbody tr:hover {
+					background-color: #f5f5f5;
+				}
+				.data-colu{
+					padding: 0;
+					margin: 0;
+					margin-left: 5px;
+					margin-bottom: 1rem!important;
+					box-shadow: rgba(149, 157, 165, 0.2) 0px 8px 24px;
+				}
+				.store-icon {
+					transition: transform 0.3s ease, box-shadow 0.3s ease;
+				}
+				.store-icon:hover {
+					transform: scale(1.05);
+					box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+				}
+				.playstoreRow {
+					display: flex;
+					justify-content: center;
+					align-items: center;
+				}
+				.index-hedding {
+					font-size: 2rem;
+					font-weight: 700;
+					color: #2c3e50;
+					margin-bottom: 1rem;
+				}
+				.index-font {
+					font-size: 1rem;
+					color: #555;
+					line-height: 1.6;
+				}
+				.dashboard-label {
+					font-size: 0.95rem;
+				}
+				.dashboard-value {
+					font-size: 1.75rem;
+					font-weight: bold;
+				}
+				.card {
+					transition: all 0.3s ease;
+					border-radius: 12px;
+					box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+					margin-bottom: 20px; /* ⬅️ Card bottom margin */
+				}
+				.card:hover {
+					transform: translateY(-5px);
+					box-shadow: 0 6px 18px rgba(0, 0, 0, 0.1);
+				}
+				.left-container,
+				.right-container {
+					width: 49%;
+					background: linear-gradient(135deg, #f0f4f8, #ffffff);
+					border-radius: 12px;
+					padding: 2rem; /* ⬅️ Equal padding for both */
+					min-height: 100%; /* Ensures they stretch properly */
+				}
+				.right-container {
+					width: 49%;
+					margin-left: 2%;
+					display: flex;
+					flex-direction: column;
+					justify-content: center;
+					align-items: center;
+					background: linear-gradient(90deg, rgba(9,9,121,1) 0%, rgba(2,0,36,1) 0%, rgba(228,250,255,1) 0%);
+				}
+				.section-wrapper {
+					margin: 2rem 0; /* ⬅️ Spacing above and below section */
+				}
+				
+				
+
+
+				@media (max-width: 768px) {
+				.equal-height {
+					flex-direction: column;
+				}
+
+				.left-container,
+				.right-container {
+					width: 100% !important;
+					margin-left: 0 !important;
+					margin-top: 1rem;
+				}
+			}
+
+				.note-container {
+					margin: 14px;
+				}
+				#notecard {
+					font-size: 18px;
+					background-color: white;
+					padding: 10px;
+					border-radius: 3px;
+					text-shadow: 0 0 black;
+					width: 100%;
+					display: none;
+				}
+	</style>
+	</head>
+		<body>
+			<div id="myModal" class="modal"> <div class="modal-content">
+				<span class="close">&times;</span>
+				<div class="slide-container">
+					<div class="slide ">
+						<img src="{{ asset('img/G20-Day-1.jpg') }}">
+					</div>
+					<div class="slide">
+						<img src="{{ asset('img/pm-g20.png') }}">
+					</div>
+					<a href="#" class="prev" title="Previous">&#10094</a>
+					<a href="#" class="next" title="Next">&#10095</a>
+				</div>
+				<div class="dots-container">
+					<span class="dot"></span>
+					<span class="dot"></span>
+				</div>
+			</div>
+		</div>
+		
+		
+		
+		{# <div class="row">
+			<div class="col-lg-4 col-md-6 col-sm-12 home_page_log">
+				<a class="navbar-brand m-0 float-left" href="/" aria-label="Bootstrap">
+					<img src="{{ asset('img/ashoklogo.png') }}" style="width: 36px;"/>
+					<img src="{{ asset('img/home_page_logo.png') }}" style="width: 54px;margin-left: 16px;"/></a>
+			</div>
+			<div class="col-lg-4 col-md-6 col-sm-12 ">
+				<h1 class="text-white sandes" style="font-family: Metropolis; font-weight: bolder; font-size: 4em;">SANDES</h1>
+				<h3 class="text-white d-none d-md-block sub-hedding_home" style="font-family: Metropolis; font-weight: bolder; font-size: 2em;padding-left: 50px;">Government Instant Messaging System</h3>
+			</div>
+			<div class=" col-lg-4 col-md-6 col-sm-12 login-button">
+				<a href="{{ path('app_login_gimsotp') }}" class="btn btn-sm btn-primary m-1">
+					Login - Admin</a>
+				<a href="{{ path('app_gims_web_start') }}" class="btn btn-sm btn-primary m-1">
+					Login - Sandes Web</a>
+			</div>
+		</div> #}
+
+		<div class="container-fluid py-3" style="background-color: #1c4b6b;">
+			<div class="row align-items-center text-center text-md-start px-3">
+				
+				<!-- Logo Section -->
+				<div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+				<a class="navbar-brand d-inline-flex align-items-center" href="/" aria-label="Sandes">
+					<img src="{{ asset('img/ashoklogo.png') }}" style="width: 36px;" alt="Ashoka Logo" />
+					<img src="{{ asset('img/home_page_logo.png') }}" style="width: 54px; margin-left: 16px;" alt="Sandes Logo" />
+				</a>
+				</div>
+
+				<!-- Title Section -->
+				<div class="col-lg-4 col-md-6 mb-3 mb-md-0">
+				<h1 class="text-white fw-bold text-center" style="font-family: Metropolis; font-size: 3em;">SANDES</h1>
+				<h3 class="text-white text-center fw-bold d-none d-md-block" style="font-family: Metropolis; font-size: 1.5em; ">
+					Government Instant Messaging System
+				</h3>
+				</div>
+
+				<!-- Login Buttons -->
+				<div class="col-lg-4 col-md-12 text-md-end">
+				<a href="{{ path('app_login_gimsotp') }}" class="btn btn-sm btn-light me-2 mb-2">Login - Admin</a>
+				<a href="{{ path('app_gims_web_start') }}" class="btn btn-sm btn-outline-light mb-2">Login - Sandes Web</a>
+				</div>
+
+			</div>
+		</div>
+
+
+
+
+		<div class="note-container">
+			<marquee id="notecard" direction="left" loop="infinite"></marquee>
+		</div>
+
+
+		{# vishal  #}
+
+		{# banner section  #}
+
+		<section class="custom-banner">
+		<picture>
+			<!-- Optional: mobile-specific image -->
+			<source media="(max-width: 768px)" srcset="/img/banner1.png">
+			<!-- Optional: high-res desktop image -->
+			<source media="(min-width: 769px)" srcset="/img/banner1.png">
+			<img src="/img/banner1.png" alt="Sandes Banner" class="banner-image">
+		</picture>
+
+	
+		</section>
+
+
+		{# banner section  #}
+
+
+
+		<section class="sandeshPort">
+			<div class="container-fluid section-wrapper">
+				<div class="row equal-height">
+					<div class="col-md-6 col-12 left-container">
+						<h1 class="index-hedding">Sandes Dashboard Overview</h1>
+						<p class="text-muted mb-4 text-center">Get a quick glance at current usage and statistics</p>
+						<div
+							class="row" style="display: flex;justify-content: center;">
+							<!-- Card 1 -->
+							<div class="col-sm-5 data-colu">
+								<div class="card p-2 h-100">
+									<div class="d-flex align-items-center">
+										<i class="fa fa-cubes fa-2x me-3 text-primary"></i>
+										<div>
+											<span class="text-muted dashboard-label">Organizations</span><br/>
+											<span class="dashboard-value db_o_count text-dark">000</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Card 2 -->
+							<div class="col-sm-5 data-colu">
+								<div class="card p-2 h-100">
+									<div class="d-flex align-items-center">
+										<i class="fa fa-check-square fa-2x me-3 text-primary"></i>
+										<div>
+											<span class="text-muted dashboard-label">Registered Users</span><br/>
+											<span class="dashboard-value db_re_count text-dark">000</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Card 3 -->
+							<div class="col-sm-5 data-colu">
+								<div class="card p-2 h-100">
+									<div class="d-flex align-items-center">
+										<i class="fa fa-line-chart fa-2x me-3 text-primary"></i>
+										<div>
+											<span class="text-muted dashboard-label">Message Count-App</span><br/>
+											<span class="dashboard-value db_m_count text-dark">000</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<!-- Card 4 -->
+							<div class="col-sm-5 data-colu">
+								<div class="card p-2 h-100">
+									<div class="d-flex align-items-center">
+										<i class="fa fa-line-chart fa-2x me-3 text-primary"></i>
+										<div>
+											<span class="text-muted dashboard-label">Message Count-eGov Applications</span><br/>
+											<span class="dashboard-value egove_message_count text-dark">000</span>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+					<!-- Right Column: About -->
+					<div class="col-md-5 col-12 right-container">
+						<h1 class="index-hedding">About Sandes</h1>
+						<p class="index-font">
+							Sandes, an initiative by the Government of India under Atma Nirbhar Bharat, is a secure communication platform for government officials and citizens. Integrated with eGov applications, it supports G2C, C2G, and G2G messaging. Sandes ensures end-to-end encryption for all messages, calls, and files. Admins can manage users seamlessly, making it a reliable choice for secure digital communication.
+						</p>
+						{# 
+						                  <p style="color:black;">@Apps Available On</p>
+						                  #}
+						<h4 class="index-hedding-small">Quick Links</h4>
+						{% set fileSizes = defValue.getDefaultValueObject('FILE_SIZES') %}
+						<div class="card-body p-4" style="background-color: #f8f9fa;">
+							<div class="row g-4">
+								<div class="col-md-4 d-flex align-items-start">
+									<img src="{{ asset('img/icon_2.svg') }}" alt="icon" class="me-2" style="width: 32px;">
+									<a href="{{ asset('resources/um/qrg.pdf') }}" target="_blank" class="text-decoration-none text-dark">
+										QRG - Android
+										<br><small class="text-muted">[{{fileSizes.qrgandroid}}]</small>
+									</a>
+								</div>
+								<div class="col-md-4 d-flex align-items-start">
+									<img src="{{ asset('img/icon_2.svg') }}" alt="icon" class="me-2" style="width: 32px;">
+									<a href="{{ asset('resources/um/qrg-ios.pdf') }}" target="_blank" class="text-decoration-none text-dark">
+										QRG - iOS
+										<br><small class="text-muted">[{{fileSizes.qrgios}}]</small>
+									</a>
+								</div>
+								<div class="col-md-4 d-flex align-items-start">
+									<img src="{{ asset('img/icon_2.svg') }}" alt="icon" class="me-2" style="width: 32px;">
+									<a href="{{ asset('img/anroid_video_english.mp4') }}" target="_blank" class="text-decoration-none text-dark">
+										Android Video (English)
+									</a>
+								</div>
+								<div class="col-md-4 d-flex align-items-start">
+									<img src="{{ asset('img/icon_2.svg') }}" alt="icon" class="me-2" style="width: 32px;">
+									<a href="{{ asset('img/android_video_hindi.mp4') }}" target="_blank" class="text-decoration-none text-dark">
+										Android Video (Hindi)
+									</a>
+								</div>
+								<div class="col-md-4 d-flex align-items-start">
+									<img src="{{ asset('img/icon_2.svg') }}" alt="icon" class="me-2" style="width: 32px;">
+									<a href="{{ asset('img/ios_video_english.mp4') }}" target="_blank" class="text-decoration-none text-dark">
+										iOS Video (English)
+									</a>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</section>
+
+		<div class="container my-5">
+			<div
+				class="d-flex justify-content-center align-items-center gap-4 flex-wrap p-4 rounded shadow" style="background-color: #f8f9fa;">
+				<div class="d-flex align-items-center gap-3">
+					<h4 class="mb-0 text-primary">@Apps Available On</h4>
+					<div style="width: 1px; height: 40px; background-color: #ccc;"></div>
+				</div>
+				<div class="d-flex gap-3">
+					<a href="https://play.google.com/store/apps/details?id=in.nic.gimkerala&hl=en_IN&gl=US" class="" role="button" target="_blank">
+						<img src="/img/plstore.png" alt="" style="width: auto; height: 84px"/>
+					</a>
+					<a href="https://apps.apple.com/in/app/gims-instant-messaging-system/id1517976582" class="" role="button" target="_blank">
+						<img src="/img/astore.png" alt="" style="width: auto; height: 84px"/></a>
+				</div>
+			</div>
+		</div>
+
+
+		<section class="sandeshPort bg-white py-5">
+			<div class="container">
+				<h4 class="text-center text-danger fw-bold mb-4">
+				Government Instant Messaging System / Sandes Dashboard
+				</h4>
+
+				<!-- Top Summary Box -->
+				<div class="table-responsive mb-5 shadow-sm rounded">
+				<table class="table table-bordered table-hover text-center align-middle bg-white">
+					<thead class="bg-danger text-white">
+					<tr>
+						<th colspan="4" class="fs-6">Total On-Boarded Organisations<br><small class="fw-light">(Messages in Crores)</small></th>
+						<th colspan="3" class="fs-6">Total On-Boarded eGov Applications<br><small class="fw-light">(Messages in Crores)</small></th>
+					</tr>
+					<tr class="bg-light text-dark">
+						<th></th>
+						<th>Central</th>
+						<th>State</th>
+						<th>Others<br><small class="fw-light">(PSUs, Courts, etc)</small></th>
+						<th>Central</th>
+						<th>State</th>
+						<th>Others<br><small class="fw-light">(Courts, etc)</small></th>
+					</tr>
+					</thead>
+					<tbody class="table-striped">
+					<tr>
+						<td><strong>Organisations</strong></td>
+						<td>155</td>
+						<td>80</td>
+						<td>20</td>
+						<td>224</td>
+						<td>110</td>
+						<td>16</td>
+					</tr>
+					<tr>
+						<td><strong>Ministries</strong></td>
+						<td>50</td>
+						<td>125</td>
+						<td>-</td>
+						<td>30</td>
+						<td>85</td>
+						<td>-</td>
+					</tr>
+					<tr>
+						<td><strong>Total Messages Count</strong></td>
+						<td>4.25</td>
+						<td>1.75</td>
+						<td>0.66</td>
+						<td>19.25</td>
+						<td>5.75</td>
+						<td>2.70</td>
+					</tr>
+					</tbody>
+				</table>
+				</div>
+
+				<!-- Monthly Messages Count -->
+				<h5 class="text-danger fw-bold mb-3">Monthly Messages Count:</h5>
+				<div class="table-responsive shadow-sm rounded">
+				<table class="table table-bordered table-hover text-center align-middle table-striped bg-white">
+					<thead class="bg-primary text-white">
+					<tr>
+						<th>Sl No</th>
+						<th>Month</th>
+						<th>Organisations</th>
+						<th>eGov Apps</th>
+					</tr>
+					</thead>
+					<tbody>
+					<tr>
+						<td>1</td>
+						<td>Mar 2025</td>
+						<td>20076</td>
+						<td>3453673</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td>Feb 2025</td>
+						<td>19788</td>
+						<td>2453453</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td>Jan 2025</td>
+						<td>23452</td>
+						<td>2335352</td>
+					</tr>
+					<tr>
+						<td>4</td>
+						<td>Dec 2024</td>
+						<td>2345652</td>
+						<td>2362346</td>
+					</tr>
+					<tr>
+						<td>12**</td>
+						<td>Dec 2023</td>
+						<td>232532</td>
+						<td>2525234</td>
+					</tr>
+					</tbody>
+				</table>
+
+				<p class="text-muted mt-3 mb-1">
+					<strong>**</strong> Data for the past 12 months.
+				</p>
+				<p class="text-muted">
+					<strong>Note:</strong> This is a sample dashboard.
+				</p>
+				</div>
+			</div>
+		</section>
+
+
+
+		{# banner section  #}
+
+		<section class="custom-banner">
+		<picture>
+			<!-- Optional: mobile-specific image -->
+			<source media="(max-width: 768px)" srcset="/img/banner1.png">
+			<!-- Optional: high-res desktop image -->
+			<source media="(min-width: 769px)" srcset="/img/banner1.png">
+			<img src="/img/banner1.png" alt="Sandes Banner" class="banner-image">
+		</picture>
+
+	
+		</section>
+
+
+		{# banner section  #}
+
+		{# features section starts here  #}
+
+		<section id="features" class="features-area item-full text-center cell-items default-padding">
+				<div class="container">
+					<div class="row">
+						<div class="col-md-12">
+							<div class="site-heading text-center mt-4">
+								<h2>Sandes <span>Features</span></h2>
+								<h4 style="color:#f79a39">Checkout our latest features</h4>
+							</div>
+						</div>
+					</div>
+					<div class="row features-items">
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-eye"></i>
+								</div>
+								<div class="info">
+									<h4>Configure Profile Visiting</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-users"></i>
+								</div>
+								<div class="info">
+									<h4>Organisations and user management</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-users-rays"></i>
+								</div>
+								<div class="info">
+									<h4>Official group management</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-certificate"></i>
+								</div>
+								<div class="info">
+									<h4>Verify Government users</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-tower-broadcast"></i>
+								</div>
+								<div class="info">
+									<h4>Broadcast message</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-cloud-arrow-down"></i>
+								</div>
+								<div class="info">
+									<h4>Download and support center</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-globe"></i>
+								</div>
+								<div class="info">
+									<h4>Sandes web</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+						<div class="col-md-4 col-sm-6">
+							<div class="item">
+								<div class="icon">
+									<i class="fa-solid fa-gauge"></i>
+								</div>
+								<div class="info">
+									<h4>Dashboard Reporting</h4>
+									<p>Lorem Ipsum is simply dummy text of the printing and typesetting industry.</p>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</section>
+
+		{# features section ends here  #}
+
+
+
+
+		{# footer section  #}
+
+		<footer class="footer text-white pt-5 pb-4">
+		<div class="container">
+			<div class="row">
+			
+			<!-- Column 1: Logo + Description -->
+			<div class="col-md-3 col-sm-6 mb-4">
+				<a class="navbar-brand d-inline-flex align-items-center" href="/" aria-label="Sandes">
+					<img src="{{ asset('img/ashoklogo.png') }}" style="width: 36px;" alt="Ashoka Logo" />
+					<img src="{{ asset('img/home_page_logo.png') }}" style="width: 54px; margin-left: 16px;" alt="Sandes Logo" />
+				</a>
+				<p style="color:white;">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vestibulum at orci et justo sollicitudin sagittis.</p>
+			</div>
+
+			<!-- Column 2: Features -->
+			<div class="col-md-3 col-sm-6 mb-4">
+				<h5 class="text-uppercase mb-3">Features</h5>
+				<ul class="list-unstyled">
+				<li><a href="#" class="text-white-50">Profile Visiting</a></li>
+				<li><a href="#" class="text-white-50">Group Management</a></li>
+				<li><a href="#" class="text-white-50">Broadcast</a></li>
+				<li><a href="#" class="text-white-50">Dashboard</a></li>
+				</ul>
+			</div>
+
+			<!-- Column 3: Quick Links -->
+			<div class="col-md-3 col-sm-6 mb-4">
+				<h5 class="text-uppercase mb-3">Quick Links</h5>
+				<ul class="list-unstyled">
+				<li><a href="#" class="text-white-50">About Us</a></li>
+				<li><a href="#" class="text-white-50">Contact</a></li>
+				<li><a href="#" class="text-white-50">Support</a></li>
+				<li><a href="#" class="text-white-50">Privacy Policy</a></li>
+				</ul>
+			</div>
+
+			<!-- Column 4: Social Media -->
+			<div class="col-md-3 col-sm-6 mb-4">
+				<h5 class="text-uppercase mb-3">Follow Us</h5>
+				<div class="d-flex gap-3">
+				<a href="#" class="text-white fs-5"><i class="fab fa-facebook-f"></i></a>
+				<a href="#" class="text-white fs-5"><i class="fab fa-instagram"></i></a>
+				<a href="#" class="text-white fs-5"><i class="fab fa-twitter"></i></a>
+				<a href="#" class="text-white fs-5"><i class="fab fa-linkedin-in"></i></a>
+				</div>
+			</div>
+			</div>
+
+			<!-- Newsletter -->
+			<div class="row mt-5">
+			<div class="col-md-8 mx-auto text-center">
+				<h5 class="mb-3">Subscribe to our Newsletter</h5>
+				<form class="d-flex flex-column flex-sm-row justify-content-center gap-2">
+				<input type="email" class="form-control" placeholder="Enter your email" required>
+				<button type="submit" class="btn btn-success px-4">Subscribe</button>
+				</form>
+			</div>
+			</div>
+
+			<hr class="my-4 border-light">
+
+			<div class="text-center text-white-50 small">
+			© 2025 Your Company Name. All rights reserved.
+			</div>
+		</div>
+		</footer>
+
+
+		{# footer section  #}
+
+		<section class="sandeshPort py-5 graphsection d-none" >
+			<div class="container">
+				<div class="row align-items-center">
+				<!-- Image Section -->
+				<div class="col-lg-6 col-md-6 col-sm-12 mb-4 mb-md-0">
+					<div class="shadow-sm rounded overflow-hidden">
+					<img src="{{ asset('img/Sandes_Brochure_v1.png') }}" alt="Sandes Brochure"
+						class="img-fluid w-100" style="height: 550px; object-fit: cover; border-radius: 12px;">
+					</div>
+				</div>
+
+				<!-- Text Content -->
+				<div class="col-lg-6 col-md-6 col-sm-12">
+					<div class="p-4 bg-white shadow-sm rounded">
+					<h2 class="text-danger fw-bold mb-3">About Sandes</h2>
+					<p class="text-secondary fs-6" style="text-align: justify;">
+						<strong>Sandes</strong>, an initiative by the Government of India under <em>Atma Nirbhar Bharat</em>,
+						is a platform to facilitate government officials and citizens to securely exchange messages.
+						Unique features of Sandes include integration with eGov applications to enable G2C, C2G, and G2G governance at your fingertips.
+						<br><br>
+						Sandes supports messages, audio/video calls, and file exchanges — all <strong>end-to-end encrypted</strong>. The portal facilitates user management by all onboarded organization admins. It is also intended for use by all registered Sandes users via the web version.
+					</p>
+					</div>
+				</div>
+				</div>
+			</div>
+		</section>
+
+
+
+		{# vishal ends  #}
+		<!------------------------------------------start of the count of all ------------------------------------------------------------>
+		{# <div class="row d-none">
+			<div class="col-12">
+				<div class="card-group">
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+						<a class="card p-1" style="text-decoration: none">
+							<div class="row pl-4">
+								<div class="text-right pr-0 pt-1">
+									<i class="fa fa-cubes fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+								</div>
+								<div class="col-8 text-left pl-0">
+									<span class="text-muted dashboard-label">
+										Organizations
+									</span><br/>
+									<strong class="db_o_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+						<a class="card p-1" style="text-decoration: none">
+							<div class="row pl-4">
+								<div class="text-right pr-0 pt-1">
+									<i class="fa fa-check-square fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+								</div>
+								<div class="col-8 text-left pl-0">
+									<span class="text-muted dashboard-label">
+										Registered Users
+									</span><br/>
+									<strong class="db_re_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+						<a class="card p-1" style="text-decoration: none">
+							<div class="row pl-4">
+								<div class="text-right pr-0 pt-1">
+									<i class="fa fa-line-chart fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+								</div>
+								<div class="col-8 text-left pl-0">
+									<span class="text-muted dashboard-label">
+										Message Count-App
+									</span><br/>
+									<strong class="db_m_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+								</div>
+							</div>
+						</a>
+					</div>
+					<div class="col-xl-3 col-lg-3 col-md-6 col-sm-6 col-xs-12 mb-2">
+						<a class="card p-1" style="text-decoration: none">
+							<div class="row pl-4">
+								<div class="text-right pr-0 pt-1">
+									<i class="fa fa-line-chart fa-4x" style="color: hsl(206, 75%, 30%)"></i>
+								</div>
+								<div class="col-8 text-left pl-0">
+									<span class="text-muted dashboard-label">
+										Message Count-eGov Applicatios
+									</span><br/>
+									<strong class="egove_message_count h1 text-dark dashboard-value dbdvals blurry-text">000</strong>
+								</div>
+							</div>
+						</a>
+					</div>
+				</div>
+			</div>
+			<!------------------------------------------end of the count of all ------------------------------------------------------------>
+		</div> #}
+		
+		
+		
+		{# <div class="container pt-3" style="height: 15vh"><div class="col-12 text-center p-2">
+		<img alt="Digital India Logo" src="/img/logos/di/white.svg" width="125px"/>
+		<a class="m-3" href="http://www.nic.in" rel="noopener noreferrer" target="_blank">
+			<img src="{{ asset('img/logos/nic/Nic_logo3-01.svg') }}" width="125px" class="left" alt=""></a></div><div class="col-12 text-center p-2">
+		<a class="m-3" href="https://twitter.com/NICMeity" style="text-decoration: none;">
+			<i class="fa fa-2x fa-twitter-square m-0"></i>
+		</a>
+		<a class="m-3" href="https://facebook.com/NICIndia" style="text-decoration: none;">
+			<i class="fa fa-2x fa-facebook-square m-0"></i>
+		</a>
+		<a class="m-3" href="https://linkedin.com/company/national-informatics-centre" style="text-decoration: none;">
+			<i class="fa fa-2x fa-linkedin-square m-0"></i>
+		</a>
+		<a class="m-3" href="mailto:support-sandes@nic.in?Subject=Sandes Support required">
+			<i class="fa fa-2x fa-comment m-0"></i>
+			support-sandes[at]nic.in
+		</a>
+		<a class="m-3" href="https://www.nic.in">
+			<i class="fa fa-2x fa-globe m-0"></i>
+			www.nic.in</a></div><div class="col-md-12 text-center p-2">
+		<small class="text-center">
+			<span class="text-success">{{ 'GO GREEN  Version: ' ~ appversion  }}</span>
+			<span id="timeShow" style="color: #718a83;" data-time="{{ appServices.getUnixTimeStamp()}}"></span>
+		</small></div></div> #}
+		
+		
+		
+	</body></html> 
+		
+		
+		
+	<script src="{{ asset('build/js/index_ajx_call.js') }}"></script> <script>
+	   $(document).ready(function () {
+	   	var url = "{{ path('get_index_data') }}";
+	       $.ajax({
+	          url: url,
+	           beforeSend: function () {
+	               $('.progress').addClass('d-block');
+	               $('.dbdvals').addClass('blurry-text');
+	           },
+	           success: function (dbdata) {
+	               if (!dbdata.OLUCount){
+	                   $(".online-users").removeClass('h1').removeClass('dashboard-value').addClass('blink_text').text('Connecting...');
+	               } else {
+	                   $(".online-users").text(dbdata.OLUCount);
+	               }
+	               $(".db_o_count").text(dbdata.OCount);
+	               $(".db_e_count").text(dbdata.ECount);
+	               $(".db_re_count").text(formatNumber(dbdata.ERCount));
+	               $(".db_m_count").text(formatNumber(dbdata.MCount));
+	               $(".db_min_count").text(formatNumber(dbdata.MinCount));
+	               $(".egove_message_count").text(formatNumber(dbdata.egovemessage));
+	               $(".last-updated-at").text('Last updated at ' + dbdata.LAU);
+	           },
+	           complete: function () {
+	               $('.dbdvals').removeClass('blurry-text');
+	               $('.progress').removeClass('d-block').addClass('d-none');
+	   
+	           }
+	       });
+	   
+	   	var url = "{{ path('get_message_data') }}";
+	   	$.ajax({
+	   		url: url,
+	   		beforeSend: function () {
+	   			$('.progress').addClass('d-block');
+	   			$('.dbdvals').addClass('blurry-text');
+	   		},
+	   		success: function (dbdata) {
+	   			if(dbdata.show == true) {
+	   				const msg = '<strong>' + dbdata.heading + '</strong>' + dbdata.message;
+	   				$("#notecard").html(msg);
+	   $("#notecard").show();
+	   				$("#notecard")[0].offsetHeight;
+	   			}
+	   		}
+	   	});
+	   });
+	   
+	   function formatNumber(num) {
+	   if (num === undefined || num === null) {
+	          return "Data not available"; // or handle it in any other appropriate way
+	      }
+	      if (num >= 10000000) {
+	          num = (num / 10000000).toFixed(2) + ' Crore';
+	      } else if (num >= 100000) {
+	          num = (num / 100000).toFixed(2) + ' Lakh';
+	      } else {
+	          num = num.toString();
+	      }
+	      return num;
+	   }
+	   // Get the modal
+	   var modal = document.getElementById("myModal");
+	   var span = document.getElementsByClassName("close")[0];
+	   span.onclick = function() {
+	    modal.style.display = "none";
+	   }
+	   // When the user clicks anywhere outside of the modal, close it
+	   window.onclick = function(event) {
+	    if (event.target == modal) {
+	      modal.style.display = "none";
+	    }
+	   }
+	   let currentSlide = 0;
+	   const slides = document.querySelectorAll(".slide");
+	   const dots = document.querySelectorAll('.dot');
+	   const init = (n) => {
+	    slides.forEach((slide, index) => {
+	      slide.style.display = "none";
+	    });
+	    dots.forEach((dot, index) => {
+	      dot.classList.remove("active");
+	    });
+	    slides[n].style.display = "block";
+	    dots[n].classList.add("active");
+	   };
+	   document.addEventListener("DOMContentLoaded", () => {
+	    init(currentSlide);
+	   });
+	   const next = () => {
+	    currentSlide >= slides.length - 1 ? currentSlide = 0 : currentSlide++;
+	    init(currentSlide);
+	   };
+	   const prev = () => {
+	    currentSlide <= 0 ? currentSlide = slides.length - 1 : currentSlide--;
+	    init(currentSlide);
+	   };
+	   document.querySelector(".next").addEventListener('click', next);
+	   document.querySelector(".prev").addEventListener('click', prev);
+	   setInterval(next, 5000);
+	   
+	   dots.forEach((dot, i) => {
+	    dot.addEventListener("click", () => {
+	      init(i);
+	      currentSlide = i;
+	    });
+	   });
+	</script>

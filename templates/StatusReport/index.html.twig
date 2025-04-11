@@ -1,0 +1,16 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+    {# <div class="row">
+		<div class="col-8">
+			<h5>
+				Broadcast Logs
+			</h5>
+		</div>
+		<div class="col-4 text-right">
+
+		</div>
+	</div> #}
+	<div id="__listContainer">
+		{{ render(controller('App\\Controller\\StatusReportController::list')) }}
+	</div>
+{% endblock %}

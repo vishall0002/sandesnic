@@ -1,0 +1,26 @@
+{% extends 'bases/base_dashboard.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col">
+			<h3 class="display-5">Chat Statistics</h3>
+		</div>
+		<div class="col text-right">
+			{% if is_granted("ROLE_MINISTRY_ADMIN") %}
+				<button class="btn btn-sm btn-primary sendMessage float-right m-2" data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-dname="{{ministry.ministryName}}" data-type="ministry" data-objid="{{ministry.guId}}">
+					<i class="fa fa-envelope"></i>Broadcast Message</button>
+			{% elseif is_granted("ROLE_O_ADMIN") %}
+				<button class="btn btn-sm btn-primary sendMessage float-right m-2" data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-dname="{{organization.organizationName}}" data-type="o" data-objid="{{organization.guId}}">
+					<i class="fa fa-envelope"></i>Broadcast Message</button>
+			{% elseif is_granted("ROLE_OU_ADMIN") %}
+				<button class="btn btn-sm btn-primary sendMessage float-right m-2" data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-dname="{{ou.ouName}}" data-type="ou" data-objid="{{ou.guId}}">
+					<i class="fa fa-envelope"></i>Broadcast Message</button>
+			{% endif %}
+			<button class="d-none btn btn-xs btn-primary float-right fa fa-refresh" id="btnRefresh" data-api-path="{{path('app_dashboard_data_chats')}}" data-gd-dwpath="{{path('app_dashboard_gdata_dwchats')}}" data-gd-path="{{path('app_dashboard_gdata_chats')}} " data-gd-lupath="{{path('app_dashboard_gdata_online')}} " data-gd-dwlupath="{{path('app_dashboard_gdata_dwonline')}} "  data-gd-aupath="{{path('app_dashboard_graph_active_users')}} "  data-gd-drtmpath="{{path('app_dashboard_graph_data_registration_daily')}} "></button>
+			<h6 class="last-updated-at text-right d-none d-md-block" style="width: 100%"></h6>
+		</div>
+	</div>
+	{% include '/dashboard/dashboard_chats.html.twig' %}
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/dashboard.js') }}"></script>
+{% endblock %}

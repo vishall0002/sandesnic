@@ -1,0 +1,10 @@
+{
+    "SubscriberList": {
+        "Parent1": {
+            "path": "App\\Controller\\Portal\\BroadcastController::getListByOu",
+            "Entity": "Lists\\BroadcastList",
+            "param": "listName",
+            "label": "List"
+        }
+    }
+}

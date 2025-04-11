@@ -1,0 +1,15 @@
+{
+    "SubscriberState": {
+        "Parent1": {
+            "Entity": "Masters\\Country",
+            "param": "countryName",
+            "label": "Country"
+        },
+        "Parent2": {
+            "path":"get_states",
+            "param": "state",
+            "label": "State",
+            "postParam":"country"
+        }
+    }
+}

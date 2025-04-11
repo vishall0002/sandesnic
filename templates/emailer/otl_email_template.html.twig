@@ -1,0 +1,24 @@
+{% extends 'emailer/email_base.html.twig'%}
+{% block body %}
+    <table border="0" cellpadding="0" cellspacing="0" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%;" width="100%">
+        <tr>
+            <td style="font-family: sans-serif; font-size: 14px; vertical-align: top;" valign="top">
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">Respected Sir/Madam,</p>
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; Margin-bottom: 15px;">This is a one time link to download your Sandes mobile application , You may click the following button to download it. </p>
+                <table border="0" cellpadding="0" cellspacing="0" class="btn btn-primary" style="border-collapse: separate; mso-table-lspace: 0pt; mso-table-rspace: 0pt; width: 100%; box-sizing: border-box;" width="100%">
+                    <tbody>
+                        <tr>
+                            <td align="left" style="font-family: sans-serif; font-size: 14px; vertical-align: top; padding-bottom: 15px;" valign="top">
+                                <a href="https://www.sandes.gov.in/dash/dlink" style="font-family: sans-serif; font-size: 14px; vertical-align: top;margin-bottom:5px; width:49%;background-color: #3498db;border-radius: 5px; text-align: center;display: inline-block; color: #ffffff;color: #ffffff; background-color: #3498db; border: solid 1px #3498db; border-radius: 5px; box-sizing: border-box; cursor: pointer; text-decoration: none;padding: 12px 25px; text-transform: capitalize;font-weight: bold; ">Download Center</a>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 15px; color: navy; background-color: #F6F6F6;">The above link is a <u><b>One Time Link</b></u> and gets expired on single usage or within 24 hrs.</p>
+                <p style="font-family: sans-serif; font-size: 14px; font-weight: normal; margin: 0; margin-bottom: 10px; margin-top: 15px">
+                    Please do not reply to this e-mail address.
+                </p>
+            </td>
+        </tr>
+    </table>
+{% endblock %}

@@ -1,0 +1,30 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+    <div class='col-lg-12' style="background-color: white;">
+        <h1>
+            <b>Government Instant Messenger Portal</b>
+        </h1>
+        <h3>
+            <ul>
+                <li>https://www.sandes.gov.in (Live site)</li>
+            </ul>
+        </h3>
+
+        <h3>Contents</h3>
+
+        <ol>
+            <li>
+                <span>Screen cast video walkthrough for Super Administrators</span>
+                <a class="btn btn-primary btn-xs" href="{{ asset('resources/um/gim-portal.webm') }} ">Screen Cast
+                </a>
+                <span>(7 Minutes [Beta Release])</span>
+            </li>
+            <li>
+                <span>Screen cast video walkthrough for OU Admins</span>
+                <a class="btn btn-primary btn-xs" href="{{ asset('resources/um/gim-oua.webm') }}">Screen Cast</a>
+                <span>(6 Minutes [Beta Release])</span>
+            </li>
+
+        </ol>
+    </div>
+{% endblock %}

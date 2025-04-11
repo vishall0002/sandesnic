@@ -1,0 +1,77 @@
+{% if (pagination | length > 0) %}
+	<table class="table table-striped table-bordered table-hover table-sm">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th {% if pagination.issorted('uploadDate') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Upload Date ', '[uploadDate]') }}</th>
+				<th {% if pagination.issorted('appVersion') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'App Version ', '[appVersion]') }}</th>
+				<th {% if pagination.issorted('appType') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'App Type ', '[appType]') }}</th>
+				<th {% if pagination.issorted('appBuildNo') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Build No. ', '[appBuildNo]') }}</th>
+				<th {% if pagination.issorted('appVersionNo') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Version No. ', '[appVersionNo]') }}</th>
+				<th>File</th>
+				<th>Is Current Version</th>
+				<th>Is Beta Version</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>{% set offset = pagination.getPaginationData.numItemsPerPage %}
+			{% set current = pagination.getPaginationData.current %}
+			{% for record in pagination %}
+				<tr>
+					<td>{{ ((current-1)*offset)+loop.index }}
+						<span class="pull-right text-green glyphicon glyphicon-user" title="Active"></span>
+					</td>
+					<td class="data">
+						{{record.uploadDate|date('d-m-Y')}}</td>
+					<td class="data">
+						{{record.appVersion}}</td>
+					{#                    <td class="data"> {% if record.appManifestName %} <a href="{{path('portal_download_file',{'guid':record.guId,'type':'manifest'} )}}">{{record.appManifestName}}</a>{% else %}- {%endif%}</td>#}
+					<td class="data">
+						{{record.appType}}</td>
+					<td class="data">
+						{{record.appBuildNo}}</td>
+					<td class="data">
+						{{record.appVersionNo}}</td>
+					<td class="data">
+						<a href="{{path('portal_download_file',{'guid':record.guId} )}}">{{record.appFileName}}</a>
+					</td>
+					<td class="data">
+						{{record.isCurrent?'Yes':'No'}}</td>
+					<td class="data">
+						{{record.isBeta?'Yes':'No'}}
+						<br/>
+								{{ record.guId }}
+						</td>
+					<td class="text-right" data-type="{{ record.appType }}">
+                            {% embed 'bases/__action_menu.html.twig' %}
+							{% block action_menu_header %}
+								<h4>
+								{{ record.guId }}
+								</h4>
+							{% endblock %}
+							{% import "/bases/__action_menu_item.html.twig" as amenu %}
+							{% block action_menu %}
+								{{ amenu.amenuitem("Edit",record.guId,  path('portal_upload_edit'),"btn-action-view", "fa-edit", "primary")}}
+								<div class="dropdown-divider"></div>
+								{% if not record.isCurrent %}
+								{{ amenu.amenuitem("Delete",record.guId,  path('portal_upload_delete'),"btn-action-set-status", "fa-camera", "success")}}
+								{{ amenu.amenuitem("Set Is Current",record.guId,  path('portal_upload_set_iscurrent'),"btn-action-set-status","fa-picture-o")}}
+								{% endif %}
+								<div class="dropdown-divider"></div>
+								{% if not record.isBeta %}
+								{{ amenu.amenuitem("Set Is Beta",record.guId,  path('portal_upload_set_isbeta'),"btn-action-set-status","fa-users")}}
+								{% endif %}
+								<div class="dropdown-divider"></div>
+									{{ amenu.amenuitem("Release Notes",record.guId,  path('app_releasenoteslist'),"btn-version-apps","fa-users")}}
+									{{ amenu.amenuhrefitem("Download",record.guId,  path('portal_download_file', {'guid':record.guId }),"","fa-download")}}
+							{% endblock %}
+						{% endembed %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No uploads</h4>
+{% endif %}

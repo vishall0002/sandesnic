@@ -1,0 +1,10 @@
+{
+    "SubscriberCountry": {
+        "Parent1": {
+            "Entity": "Masters\\Country",
+            "param": "countryName",
+            "label": "Country"
+        }
+        
+    }
+}

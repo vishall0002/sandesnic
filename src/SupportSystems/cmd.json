@@ -1,0 +1,8 @@
+{
+  "ClientServicePort":"8021",
+  "GatewayBaseURL" : "https://dwar1.gims.gov.in/v2/api",
+  "ClientID": "80fbd095-633f-4e12-aa61-017529ea467d",
+  "ClientSecret":"c66e45f5303c94abe70cc116a0c3b771",
+  "HMACKey":"bd22dba50c589acc7e138d373069eb81d43f91839e60e309ec7db462a57b46d3"
+  
+}

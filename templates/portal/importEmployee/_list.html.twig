@@ -1,0 +1,226 @@
+<div class="row">
+	<div class="col-4">
+		<h5>
+			Import Employees
+		</h5>
+	</div>
+	<div class="col-8   text-center">
+		<a class="btn text-white pull-right btn-success btn-action-new mr-1" data-list-path="{{ path('portal_import_employee_list' )}}" data-new-path="{{ path('portal_import_employee_new_upload' )}}" title="New upload">
+			+ New Upload
+		</a>
+		<a class="btn pull-right btn-primary  mr-1" data-toggle="collapse" href="#collapsehelp" role="button" aria-expanded="false" aria-controls="collapsehelp">
+			<i class="fa fa-question-circle"></i>Help
+		</a>
+	</div>
+</div>
+<div class="collapse" id="collapsehelp">
+	<div class="card card-body">
+		<div class="col-12">
+			<span style="font-size:14px;" class="text-dark ml-3">
+				<strong>CSV Syntax</strong>
+				<a class="btn btn-xs pull-right btn-success  m-1" href="{{ path('portal_import_employee_download_schema' )}}">
+					Download CSV Format
+				</a>
+				<span class="text-danger">The CSV column may be in any order but the column name should be exactly as below</span>
+				<table class="table table-striped table-bordered">
+					<tr>
+						<td>#</td>
+						<td style="width: 20%;">CSV Column Name 
+						</td>
+						<td>CSV Column Description</td>
+						<td>Rules</td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td><strong>ename</strong></td>
+						<td>Employee Name</td>
+						<td>Only a-z,A-Z,0-9,.,space is allowed</td>
+					</tr>
+					<tr>
+						<td>2</td>
+						<td><strong>gender</strong></td>
+						<td>M/F, Male/Female, if not available N</td>
+						<td>M/F, Male/Female, N</td>
+					</tr>
+					<tr>
+						<td>3</td>
+						<td><strong>designation</strong></td>
+						<td>Employee Designation</td>
+						<td>Only a-z,A-Z,0-9,.,&,_,/,space is allowed</td>
+					</tr>
+					<tr>
+						<td>4</td>						
+						<td><strong>ecode</strong></td>
+						<td>Employee Code</td>
+						<td>Only a-z,A-Z,0-9,.,_,space is allowed, if code not available, mobile number shall be used</td>
+					</tr>
+					<tr>
+						<td>5</td>
+						<td><strong>email</strong></td>
+						<td>A valid email address</td>
+						<td>NON-Mandatory, if already existing email is given, this will be ignored</td>
+					</tr>
+					<tr>
+						<td>6</td>
+						<td><strong>alternateemail</strong></td>
+						<td>A valid alternate email address</td>
+						<td>NON-Mandatory, if already existing email is given, this will be ignored</td>
+					</tr>
+					<tr>
+						<td>7</td>
+						<td><strong>mobile</strong></td>
+						<td>A Valid 10/8 digit mobile number</td>
+						<td>A valid 10/8 digit number</td>
+					</tr>
+					<tr>
+						<td>8</td>
+						<td><strong>isocountrycode</strong></td>
+						<td>ISO Country Code</td>
+						<td>Only a-z,A-Z  is allowed
+							<br/><span class="text-danger">e.g. IN, US etc
+							</span><br/><i class="fa fa-external-link-square"></i>
+							<a target="_blank" href="https://en.wikipedia.org/wiki/ISO_3166-1_alpha-2#Officially_assigned_code_elements">Wikipedia Reference</a>
+						</td>
+					</tr>
+					<tr>
+						<td>9</td>
+						<td><strong>superannuationDate</strong></td>
+						<td>Superannuation Date</td>
+						<td>NON-Mandatory, should be a valid date in format
+							<span class="text-danger">(DD/MM/YYYY)</span>
+						</td>
+					</tr>
+					<tr>
+						<td>10</td>
+						<td><strong>district_lgdcode</strong></td>
+						<td>District LGDCode (Local Govt. Directory Code)</td>
+						<td>NON-Mandatory - LGD Code 							<a target="_blank" href="https://lgdirectory.gov.in/"><i class="fa fa-external-link-square"></i>LG Directory</a>. Invalid data will be ignored and OU's district code will be used. The state will be identified using internal mapping <br/><a class="btn btn-primary btn-xs" href="{{ path('portal_import_employee_download_district_lgd')}}">Download District LGD Codes</a></td>
+					</tr>
+				</table>
+			</span>
+		</div>
+		<h4>Bulk Onboarding System - Steps</h4>
+		<h5>STEP - 1</h5>
+		<ul>
+			<li>
+				Prepare a CSV format data of the employees. The first row MUST have the columns with above mentioned names, each column name is mandatory even if no data is available. The columns may be in any order. 
+			</li>
+			<li>
+				The data must be clean with valid mobile number[only one mobile], proper designations.
+			</li>
+			<li>
+				Upload the CSV
+			</li>
+			<li>
+				After the successful upload, error report is generated. If the data is OK, it will be imported
+			</li>
+		</ul>
+		<h5>STEP - 2</h5>
+		<ul>
+			<li>
+				The most recent upload will be listed on top of the list.
+			</li>
+			<li>
+				Please click on the process button. This step will validate, map and create any missing master data records for designation.
+			</li>
+			<li>
+				Go through some random records to verify that the imported records are as expected.
+			</li>
+		</ul>
+		<h5>STEP - 3 Final</h5>
+		<ul>
+			<li>
+				Click on the schedule button to initiate final import.
+			</li>
+			<li>
+				The scheduled employee records will be automatically imported into main tables by a background process. The schedule runs in every 2 minutes, please check status after few minutes.
+			</li>
+			<li>
+				Please check the Import dashboard to get overall status and individual status
+			</li>
+		</ul>
+		<div class="alert alert-info">
+			Note: The process will check for existing members based on the mobile number, if such a member exists, the import record will be marked as "Duplicate"
+		</div>
+	</div>
+</div>
+{% if (pagination | length > 0) %}
+	<table class="table table-striped table-bordered table-hover table-sm">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>OU Name</th>
+				<th>Batch Code</th>
+				<th>Upload Date</th>
+				<th>Records</th>
+				<th>Onboarded</th>
+				<th><span title="Failed/Duplicate cases. Please try uploading again after correction">
+				Failed
+				</span>
+				</th>
+				<th>Status</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>{% set offset = pagination.getPaginationData.numItemsPerPage %}
+			{% set current = pagination.getPaginationData.current %}
+			{% for record in pagination %}
+				<tr>
+					<td>{{ ((current-1)*offset)+loop.index }}
+						<span class="pull-right text-green glyphicon glyphicon-user" title="Active"></span>
+					</td>
+					<td class="data">
+						{{record.organizationUnit.OUName}}</td>
+					<td class="data">
+						{{record.batchCode|upper}}</td>
+					<td class="data">
+						{{record.uploadDate|date('d-m-Y H:i:s')}}</td>
+					<td class="data">
+						{{record.recordsCount}}</td>
+					<td class="data">
+					{% if record.isFinalised %}
+						{{record.insertedCount ? record.insertedCount:'' }}</td>
+					{% endif %}
+					<td class="data">
+					{% if record.isFinalised %}
+						{{record.duplicatesCount ? record.duplicatesCount:'' }}</td>
+					{% endif %}
+					<td class="data">
+						{% if record.isFinalised %}
+							Completed
+						{% elseif record.isRejected %}
+							Rejected
+						{% elseif record.isScheduled %}
+							Scheduled
+						{% elseif record.isProcessed %}
+							Processed
+						{% else %}
+							Uploaded
+						{% endif %}
+					</td>
+					<td class="text-right">
+						{% if record.isFinalised  %}
+							<button class="btn btn-xs  btn-success btn-action-view-with-pagination-csv" data-objid="{{record.guId}}" data-view-path="{{ path('portal_import_employee_view') }}">Imported</button>
+						{% elseif record.isRejected  %}
+							<button class="btn btn-xs  btn-danger ">Rejected</button>
+						{% elseif record.isScheduled  %}
+							<button class="btn btn-xs  btn-primary btn-action-view-with-pagination-csv" data-objid="{{record.guId}}" data-view-path="{{ path('portal_import_employee_view') }}">Scheduled</button>
+						{% elseif record.isProcessed  %}
+							<button class="btn btn-xs   btn-primary btn-action-view-with-pagination-csv" data-objid="{{record.guId}}" data-view-path="{{ path('portal_import_employee_view') }}" data-toggle="confirmation">View & Schedule
+							</button>
+							<button class="btn btn-xs  btn-primary btn-action-set-status2" data-objid="{{record.guId}}" data-status-path="{{ path('portal_import_employee_delete') }}" data-toggle="confirmation">Delete</button>
+						{% else %}
+							<button class="btn btn-xs   btn-primary btn-action-view-with-pagination-csv" data-objid="{{record.guId}}" data-view-path="{{ path('portal_import_employee_view') }}" data-toggle="confirmation">View & Process
+							</button>
+							<button class="btn btn-xs  btn-primary btn-action-set-status2" data-objid="{{record.guId}}" data-status-path="{{ path('portal_import_employee_delete') }}" data-toggle="confirmation">Delete</button>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(pagination) }}
+	<span>FAILED cases: Please look for any data issues, you may try importing the CSV again. System will handle duplicate attempts.</span>
+{% else %}
+	<h4 class="alert alert-info">No records</h4>
+{% endif %}

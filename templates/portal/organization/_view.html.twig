@@ -1,0 +1,35 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+   Delete Organization
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        <table class="table table-sm table-striped table-bordered table-hover table-condensed">
+			<tbody>
+				<tr>
+					<td class="text-right">Organization Code</td>
+					<td class="font-weight-bold display-5">{{Organization.organizationCode}}</td>
+					<td class="text-right"></td>
+					<td class="font-weight-bold display-5"></td>
+				</tr>
+                <tr>
+                    <td class="text-right">Organization Name</td>
+					<td class="font-weight-bold display-5">{{Organization.organizationName}}</td>
+					<td class="text-right">Ministry</td>
+					<td class="font-weight-bold display-5">{{Organization.ministry.ministryName}}</td>
+				</tr>
+                <tr>
+                    <td class="text-right">Organization Type</td>
+					<td class="font-weight-bold display-5">{{Organization.organizationType.organizationTypeName}}</td>
+					<td class="text-right">Vhost</td>
+					<td class="font-weight-bold display-5">{{Organization.vhost}}</td>
+				</tr>
+            </tbody>
+        </table>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        <button class="btn btn-sm btn-primary btn-action-delete" data-delete-path="{{path('portal_o_delete_confirm')}}" data-objid = "{{Organization.guid}}">Delete Confirm</button>
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}

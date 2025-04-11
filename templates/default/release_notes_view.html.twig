@@ -1,0 +1,43 @@
+{% block body %}
+
+	{% if (curId<maxId) %}
+		{% set msg = ' (New release note available)' %}
+		{% set rlink ='/rn/' ~ appType ~ '/' ~ maxVersionNo  %}
+	{% else %}
+		{% set msg = '' %}
+		{% set rlink = '' %}
+	{% endif %}
+
+	<div class="card bg-light">
+		<div class="card-header">
+			<h3>Release Notes</h3>
+			<h4>Version
+				{{appVersionNo}}<a href={{rlink}}>{{msg}}</a>
+			</h4>
+		</div>
+		<div class="card-body">
+			{% if (releaseNotes | length > 0) %}
+				{% set prevDate='Release Date:' %}
+
+				{% for rn in releaseNotes %}
+					{% set curdate='Release Date:' ~ rn.uploadDate|date("d/m/Y")%}
+
+					{% if (prevDate==curdate) %}
+						{% set curdate = '' %}
+					{% endif %}
+
+					<h4 class="m-2">{{curdate}}</h4>
+					<div class="ml-4">{{rn.appReleaseNotes | raw}}</div>
+
+					{% set prevDate=curdate %}
+				{% endfor %}
+			{% else %}
+				<div>
+					<h4>No release note available</h4>
+					<br/>
+				</div>
+				<br/>
+			{% endif %}
+		</div>
+	</div>
+{% endblock %}

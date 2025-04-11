@@ -1,0 +1,138 @@
+{% extends 'bases/base_dashboard.html.twig' %}
+{% block content %}
+{% set fileSizes = defValue.getDefaultValueObject('FILE_SIZES') %}
+	<h3>Download Center</h3>
+	<div class="row">
+		<div class="col-sm-4">
+			<div class="card text-center mb-3">
+				<div class="card-body" style="min-height: 230px;">
+					<h5 class="card-title">
+						<i class="fa fa-android fa-2x"></i>Android</h5>
+					{# <a class="btn btn-primary btn-lg" href="{{ asset('uploads/'~androidCurrent.appFileName) }}" role="button">Download
+						{{androidCurrent.appVersionNo}}[{{fileSizes.apkandroid}}]</a> #}
+						<a href='https://play.google.com/store/apps/details?id=in.nic.gimkerala'><img alt='Get it on Google Play' style="width: 200px;" src='https://play.google.com/intl/en_us/badges/static/images/badges/en_badge_web_generic.png'/></a>
+					{% if androidBeta %}
+						{% if ((app.user is null) ? false : app.user.isBetaUser) %}
+							<a class="btn btn-primary btn-lg" href="{{ asset('uploads/'~androidBeta.appFileName)}}" role="button">Download Beta
+								{{androidBeta.appVersionNo}}[{{fileSizes.apkandroidbeta}}]</a>
+						{% endif %}
+					{% endif %}
+					<p class="card-text m-1">Compatible on Android Version 5.0 or above.</p>
+<a class="btn btn-xs btn-secondary btn-lg m-1" href="{{ asset('resources/um/qrg.pdf') }}" role="button">QRG [{{fileSizes.qrgandroid}}][PDF]</a>
+
+				</div>
+			</div>
+		</div>
+		
+		<div class="col-sm-4">
+			<div class="card text-center mb-3">
+				<div class="card-body" style="min-height: 230px;">
+					<h5 class="card-title">
+						<i class="fa fa-apple fa-2x"></i>
+						iOS</h5>
+						
+					<a href="https://apps.apple.com/in/app/gims-instant-messaging-system/id1517976582"><img alt='Download on the App Store'  src='{{ asset('img/getitonappstore.png') }}'/></a>
+					<p class="card-text m-1">Compatible on iOS Version 11 or above.</p>
+					<a class="btn btn-xs btn-secondary btn-lg m-1" href="{{ asset('resources/um/qrg-ios.pdf') }}" role="button">QRG [{{fileSizes.qrgios}}][PDF]</a>
+				</div>
+			</div>
+		</div>
+		{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+			{% if (logged_member.accountStatus == 'V') %}
+				<div class="col-sm-4">
+					<div class="card text-center mb-3">
+						<div class="card-body" style="min-height: 230px;">
+							<h5 class="card-title">
+								<i class="fa fa-web fa-2x"></i>Sandes Web</h5>
+							<a class="btn btn-primary btn-lg" href="{{ path('app_gims_web_start') }}" role="button">Launch Sandes Web
+							</a>
+							<a class="btn btn-xs btn-secondary m-1" href="{{ asset('resources/um/sandes-web-um.pdf') }}" role="button">Help [331KB][PDF]</a>
+						</div>
+					</div>
+				</div>
+			{% endif %}
+		{% endif %}
+		{% if ((app.user is null) ? false :app.user.isBetaUser) %}
+			<div class="col-12">
+				<div class="card text-center mb-3">
+					<div class="card-body">
+						<h5 class="card-title">
+							<i class="fa fa-apple fa-2x"></i>
+							iOS for BETA Testers</h5>
+						<div class="alert alert-danger">
+							<h3>Please note that this build will clear the data from your APP, if you have already installed Application from AppStore. Ensure that you have a backup ready.</h3>
+						</div>
+						{% if iosBeta %}
+							<a class="btn btn-primary btn-lg" href="itms-services://?action=download-manifest&amp;url={{ 'https://www.sandes.gov.in'~path('app_dashboard_download_ios_beta')}}">Download Beta
+								{{iosBeta.appVersionNo}}</a>
+						{% endif %}
+						<p class="card-text m-1">Compatible on iOS Version 11 or above.</p>
+						<h4>Release Notes</h4>
+						<p class="card-text m-1">{{ iosBeta.appReleaseNotes}}</p>
+						
+					</div>
+				</div>
+			</div>
+		{% endif %}
+	</div>
+
+	<h3>Support</h3>
+<a class="btn btn-primary btn-lg m-1" href="{{ asset('resources/um/faq.pdf') }}" role="button">FAQ [{{fileSizes.faqapp}}][PDF]</a>
+
+<a class="btn btn-primary btn-lg m-1" href="{{ asset('resources/um/portal-um.pdf') }}" role="button">Sandes Portal - User Manual [{{fileSizes.faqportal}}][PDF]</a>
+
+
+	<a class="btn btn-primary btn-lg m-1" href="{{ path('um_index')}}" role="button">Screen Casts</a>
+	<a class="btn btn-primary btn-lg m-1" href="{{ path('app_releasenotes')}}" role="button">Release notes</a>
+	<hr class="my-4">
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		<h4 class="card-heading">Support Network</h4>
+		<div class="card-deck">
+			{% if nodalOfficers is defined %}
+				{% for nodalOfficer in nodalOfficers %}
+					<div class="card bg-secondary mb-3">
+						<div class="card-body">
+							<h5 class="card-title">{{ nodalOfficer.employeename }}</h5>
+							<h5>
+								<i class="fa fa-envelope"></i>
+								{{ nodalOfficer.emailaddress }}</h5>
+							<h5>{{'+' ~ nodalOfficer.phoneCode ~ '-' ~  nodalOfficer.mobilenumber }}</h5>
+						</div>
+					</div>
+				{% endfor %}
+			{% endif %}
+			<div class="card bg-secondary mb-3">
+				<div class="card-body">
+					<h5 class="card-title">Sandes Team NIC Kerala</h5>
+					<h5>IP Phone: 33049</h5>
+				</div>
+			</div>
+			<div class="card bg-secondary mb-3">
+				<div class="card-body">
+					<h5 class="card-title">Sandes Team NIC HQ</h5>
+					<h5>IP Phone: 5951</h5>
+				</div>
+			</div>
+		</div>
+	{% endif %}
+	{% if is_granted('IS_AUTHENTICATED_FULLY') %}
+		{% if ouAdmins is defined %}
+			<h4 class="card-heading">Administrators</h4>
+			<div class="card-deck">
+				{% for ouAdmin in ouAdmins %}
+					<div class="card bg-secondary mb-3">
+						<div class="card-body">
+							<h5 class="card-title">{{ ouAdmin.employeename }}</h5>
+							<h5>
+								<i class="fa fa-envelope"></i>
+								{{ ouAdmin.emailaddress }}</h5>
+							<h5>
+								<i class="fa fa-mobile fa-2x"></i>
+								{{ '+' ~ ouAdmin.phoneCode ~ '-' ~ ouAdmin.mobilenumber }}</h5>
+						</div>
+					</div>
+				{% endfor %}
+			</div>
+		{% endif %}
+	{% endif %}
+{% endblock %}

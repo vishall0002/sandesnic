@@ -1,0 +1,88 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Uploaded Employee List
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block pagination_content">
+		<div class="row">
+			<div class="col text-left">
+				<span>
+					Organization Unit :
+				</span>
+				<span class="font-weight-bold">{{importEmployee.organizationUnit.OUName}}</span>
+				<span>
+					Organization :
+				</span>
+				<span class="font-weight-bold">{{importEmployee.organizationUnit.Organization.organizationName}}</span>
+			</div>
+		</div>
+		{% if (pagination | length > 0) %}
+			<table class="table table-sm table-striped table-bordered table-hover table-condensed">
+				<thead>
+					<tr>
+						<th>#</th>
+						<th>Employee Name</th>
+						<th>Employee Code</th>
+						<th>Gender</th>
+						<th>Designation</th>
+						<th>Email</th>
+						<th>AlternateEmail</th>
+						<th>Mobile</th>
+						<th>Superannuation</th>
+						<th>Country</th>
+						<th>State</th>
+						<th>District</th>
+						<th>Onboard Status</th>
+					</tr>
+				</thead>
+				<tbody>
+					{% set offset = pagination.getPaginationData.numItemsPerPage %}
+					{% set current = pagination.getPaginationData.current %}
+					{% for record in pagination %}
+						<tr>
+							<td>{{ ((current-1)*offset)+loop.index }}</td>
+							<td>{{record['ename']}}</td>
+							<td>{{record['ecode']}}</td>
+							<td>{{record['gender']}}</td>
+							<td>{{record['designation']}}</td>
+							<td>{{record['email']}}</td>
+							<td>{{record['alternate_email']}}</td>
+							<td>{{record['mobile']}}</td>
+							<td>
+								{% if record['dosa'] != '1970-01-01' %}
+									{{record['dosa']|date("m/d/Y")}}
+								{% endif %}
+							</td>
+							<td>{{record['country_code']|upper}}</td>
+							<td>{{record['state_code'] ~ record['state_name'] }}</td>
+							<td>{{record['district_lgdcode'] ~ record['district_name']}}</td>
+							<td class="text-center">
+								{% if record['is_imported'] %}
+									<i class="fa fa-check text-success"></i>
+									{% set message = record['remark']  %}
+								{% else  %}
+									queued
+								{% endif %}
+							</td>
+						</tr>
+					{% endfor %}
+				</tbody>
+			</table>
+			{{ knp_pagination_render(pagination) }}
+		{% else %}
+			<h4 class="alert alert-info">No records</h4>
+		{% endif %}
+		<input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+		<div id="custom_filter_param" data-param-value="{{importEmployee.guId}}"></div>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+		{% if not importEmployee.isProcessed %}
+			<button class="btn  btn-sm m-1 btn-primary btn-action-set-status2" data-objid="{{importEmployee.guId}}" data-toggle="confirmation" data-status-path="{{ path('portal_import_employee_set_isprocessed') }}">Process</button>
+		{% elseif  importEmployee.isProcessed and not importEmployee.isScheduled %}
+			<button class="btn  btn-sm m-1 btn-primary btn-action-set-status2" data-objid="{{importEmployee.guId}}" data-toggle="confirmation" data-status-path="{{ path('portal_import_employee_schedule') }}">Schedule</button>
+		{% endif %}
+	</div>
+{% endblock %}

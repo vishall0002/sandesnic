@@ -1,0 +1,54 @@
+{% if (pagination | length > 0) %}
+	<table class="table table-striped table-bordered table-hover table-sm">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th {% if pagination.issorted('ou_id') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'ID', 'ou_id') }}</th>
+				<th {% if pagination.issorted('ministrycode') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Ministry', 'ministrycode') }}</th>
+				<th {% if pagination.issorted('o_name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Organization', 'o_name') }}</th>
+				<th {% if pagination.issorted('ou_code') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'OU Alias', 'ou_code') }}</th>
+				<th {% if pagination.issorted('ou_name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'OU Name', 'ou_name') }}</th>
+				<th {% if pagination.issorted('ot_name') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Type', 'ot_name') }}</th>
+				<th class="text-right" style="width: 130px;">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% set offset = pagination.getPaginationData.numItemsPerPage %}
+			{% set current = pagination.getPaginationData.current %}
+			{% for record in pagination %}
+				{% set badges = '' %}
+				<tr class="btn-action-trmenu" data-objid="{{record.gu_id}}" data-popper-header="{{record.ou_name}}" data-id="{{record.gu_id}}">
+					<td>{{ ((current-1)*offset)+loop.index }}</td>
+					<td>{{record.ou_id}}</td>
+					<td>{{record.ministrycode}}</td>
+					<td>{{record.o_name}}</td>
+					<td>{{record.ou_code}}</td>
+					<td>{{record.ou_name}}</td>
+					<td>{{record.ot_name}}</td>
+					<td class="">
+						{% embed 'bases/__action_menu.html.twig' %}
+							{% block action_menu_header %}
+								<span>{{ record.ou_name }}</span>
+								{{ badges | raw }}
+							{% endblock %}
+							{% import "/bases/__action_menu_item.html.twig" as amenu %}
+							{% block action_menu %}
+								{{ amenu.gims(record.ou_name,record.gu_id,"ou")}}
+								{{ amenu.divider() }}
+								{{ amenu.amenuitem("Edit", record.gu_id,  path('portal_ou_edit'), "btn-action-view tooltipjs", "fa-edit", "primary")}}
+								{{ amenu.amenuitem("Delete", record.gu_id, path('portal_ou_delete'),"btn-action-view tooltipjs", "fa-trash", "danger" )}}
+								{{ amenu.divider() }}
+								{{ amenu.amenuformitem("Member wise status",record.gu_id,  path('app_dashboard_memberised'),"frmSts","btn-primay", "fa-check")}}
+								{{ amenu.amenuhrefitem("Heat Map based on chat activity",record.gu_id,  path('app_dashboard_pivot_home', {'objid':record.gu_id }),"", "fa-pencil")}}
+
+							{% endblock %}
+						{% endembed %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No more values</h4>
+{% endif %}

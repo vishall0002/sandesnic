@@ -1,0 +1,35 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Send Message
+{% endblock %}
+{% block formstart %}
+    {{ form_start(form,{'attr':{'id':'frmMessage'}}) }}
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        <div class="row">
+        <div class="col-md-6">
+            <div class="col-md-12">
+                {{ form_row(form.subject) }}
+            </div>
+            
+            <div class="col-md-12">
+                {{ form_row(form.message) }}
+            </div>
+           </div>
+        </div>
+    </section>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+       <button class="btn btn-sm btn-primary sendEmailToMembers" data-objid="{{ objid }}" data-path="{{ path('portal_emp_gims_messages_send') }}" type="submit">Send</button>
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+{#        {{ form_row(form.guId) }}#}
+    </div>
+{% endblock %}
+{% block formend %}
+            {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}
+
+

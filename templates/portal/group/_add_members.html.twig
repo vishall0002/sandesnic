@@ -1,0 +1,62 @@
+{% if (members | length > 0) %}
+	<table class="table table-sm table-striped table-bordered table-hover">
+		<tbody>
+			<tr>
+				<th class="text-center">#</th>
+				<th>Member Name</th>
+				<th>Email</th>
+				<th>Mobile</th>
+				<th>Role</th>
+				<th>Designation</th>
+				<th class="text-right">Set as</th>
+			</tr>
+			{% set offset = members.getPaginationData.numItemsPerPage %}
+			{% set current = members.getPaginationData.current %}
+			{% for member in members %}
+				<tr>
+					<td class="text-center">
+						{{ ((current-1)*offset)+loop.index }}
+					</td>
+					<td>
+						{{member.employeeName}}
+					</td>
+					<td>
+						{{member.emailAddress}}
+					</td>
+					<td>
+						{{member.mobileNumber}}
+					</td>
+					<td>
+						{% if member.id %}
+							Admin
+						{% else %}
+							{{member.role}}
+						{% endif %}
+					</td>
+					<td>
+						{{member.designationName}}
+					</td>
+					<td class="text-right">
+						{% if (member.mgId | length == 0) %}
+							{% if group.groupType.groupTypeCode == "DEFAULT" %}
+								<button class="btn btn-xs btn-primary btn-grp-add" data-toggle="confirmation" data-eobjid="{{ member.eGuId}}" data-gobjid="{{member.gGuId}}" data-migtype="DGA" data-set-path="{{ path('portal_grp_addm') }}">Participant</button>
+								<button class="btn btn-xs btn-primary btn-grp-add" data-toggle="confirmation" data-eobjid="{{ member.eGuId}}" data-gobjid="{{member.gGuId}}" data-migtype="DGM" data-set-path="{{ path('portal_grp_addm') }}">Visitor</button>
+							{% elseif group.groupType.groupTypeCode == "LIST" %}
+								<button class="btn btn-xs btn-primary btn-grp-add" data-eobjid="{{ member.eGuId}}" data-gobjid="{{member.gGuId}}" data-migtype="LM" data-toggle="confirmation" data-set-path="{{ path('portal_grp_addm') }}">List Member</button>
+							{% else %}
+								<button class="btn btn-xs btn-primary btn-grp-add" data-eobjid="{{ member.eGuId}}" data-gobjid="{{member.gGuId}}" data-migtype="GM" data-toggle="confirmation" data-set-path="{{ path('portal_grp_addm') }}">Group Member</button>
+							{% endif %}
+						{% else  %}
+							<span class="badge badge-success badge-medium">Already added
+							</span>
+							<button class="btn btn-xs btn-danger btn-grp-remove-member" data-toggle="confirmation" data-eobjid="{{ member.eGuId}}" data-gobjid="{{member.gGuId}}" data-migtype="REMOVEIT" data-set-path="{{ path('portal_grp_remm') }}">Remove Member</button>
+						{% endif %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+</section>
+<input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+{{ knp_pagination_render(members) }}{% else %}
+<h4 class="alert alert-secondary">No Data found</h4>{% endif %}

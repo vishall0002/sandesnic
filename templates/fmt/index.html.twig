@@ -1,0 +1,29 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+	<div class="row">
+{% if ( is_granted("ROLE_SUPER_ADMIN") ) %}
+		<div class="col-8">
+			<h5>
+				FMT
+			</h5>
+		</div>
+		<div class="col-4 text-right">
+			<button class="btn btn-xs btn-primary" data-toggle="collapse" data-target="#__filterContainer" aria-expanded="false" aria-controls="__filterContainer">
+				<span class="d-none d-md-block">Filter</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-search"></i>
+			</button>
+		</div>
+	</div>
+	{% include '/portal/generic/_dynamic_filter.html.twig' with {'listpath':path('fmt_list')} %}
+	<div id="__listContainer">
+		{{ render(controller('App\\Controller\\Portal\\FMTController::list')) }}
+	</div>
+{% else %}
+<div class="col-12">
+	<h4 class="alert alert-info">UNAUTHORIZED ACCESS</h4>
+</div>{% endif %}
+
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/generic.js') }}"></script>
+{% endblock %}

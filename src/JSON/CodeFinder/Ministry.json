@@ -1,0 +1,9 @@
+{
+    "Ministry": {
+        "Parent1": {
+            "path": "App\\Controller\\Portal\\MinistryController::getMinistryByRole",
+            "param": "ministryName",
+            "label": "Ministry"
+        }
+    }
+}

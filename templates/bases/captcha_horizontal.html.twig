@@ -1,0 +1,29 @@
+{% block captcha_widget %}
+	<div class="row">
+		<div class="col-md-5 ">
+			<img id="{{ image_id }}" src="{{ captcha_code }}" title="captcha" width="{{ captcha_width }}" height="{{ captcha_height }}"/>
+			{% if reload %}
+				<script type="text/javascript">
+					function reload_{{ image_id }}() {
+                    var img = document.getElementById('{{ image_id }}');
+                    img.src = '{{ captcha_code }}?n=' + (new Date()).getTime();
+                    }
+				</script>
+			{% endif %}
+		</div>
+		<div class="col-md-7 pl-0">
+			<div class="input-group input-group-sm"></div>
+			<div class="input-group input-group-sm">
+				<input type="text" style="height:{{ captcha_height }}px" placeholder="Text from image" class="form-control" name="user[captcha]" id="user_captcha">
+				<div class="has-error"></div>
+				<span class="input-group-btn">
+					{% if reload %}
+						<span class="btn btn-flat btn-xs btn-primary" onclick="javascript:reload_{{ image_id }}();">
+							<i class="fa fa-refresh text-white"></i>
+						</span>
+					{% endif %}
+				</span>
+			</div>
+		</div>
+	</div>
+{% endblock %}

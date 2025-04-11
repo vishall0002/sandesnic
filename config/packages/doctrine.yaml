@@ -1,0 +1,32 @@
+parameters:
+    env(DATABASE_URL): ''
+
+doctrine:
+    dbal:
+        # configure these for your database server
+        driver: 'pdo_pgsql'
+        server_version: 10.13
+        url: '%env(resolve:DATABASE_URL)%'
+        mapping_types:
+            _float8: string
+    orm:
+        auto_generate_proxy_classes: '%kernel.debug%'
+        naming_strategy: doctrine.orm.naming_strategy.underscore_number_aware
+        auto_mapping: true
+        mappings:
+            App:
+                is_bundle: false
+                type: annotation
+                dir: '%kernel.project_dir%/src/Entity'
+                prefix: 'App\Entity'
+                alias: App
+        dql:
+            string_functions:
+                ILIKE: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\Ilike
+                TO_JSONB: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToJsonb
+                TO_JSON: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\ToJson
+                JSON_GET_FIELD_AS_TEXT: MartinGeorgiev\Doctrine\ORM\Query\AST\Functions\JsonGetFieldAsText
+
+                REGEXP_REPLACE : Opsway\Doctrine\ORM\Query\AST\Functions\RegexpReplace
+                GET_JSON_FIELD : Opsway\Doctrine\ORM\Query\AST\Functions\GetJsonField
+

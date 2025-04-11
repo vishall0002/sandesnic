@@ -1,0 +1,51 @@
+{% trans_default_domain 'general' %}
+<div class="col-md-6">{{ 'recoverPassword.labels.enteredUserId'|trans({}) }}</div>
+<div class="col-md-6 text-bold">{{ userId }}</div>
+<div class="col-md-6 mrg5T">{{ 'recoverPassword.labels.enteredMobile'|trans({}) }}</div>
+<div class="col-md-6 mrg5T text-bold">{{ mobile }}</div>
+<div class="col-md-12 mrg10T">
+    {{form_start(form,{'attr' : {'id' : 'OtpForm'}})}}
+        {{form_row(form.otp)}}
+        <input type="hidden" name="guid" value="{{ guId }}" class="guidVal">
+        <div class="col-md-12 text-center">
+          <button class="btn btn-xs btn-primary submitOtp"> {{ 'recoverPassword.labels.submitOtp'|trans({}) }} </button>
+        </div>
+    {{form_end(form)}}
+  </div>
+
+<script type="text/javascript">
+  $('.submitOtp').off('click').on('click',function(e){
+      e.preventDefault();
+      var otp = $('#{{form.otp.vars.id}}').val();
+      if(otp === '' || otp === 'undefined'){
+          addMsg('danger', 'Enter OTP before sumbit');
+          $('form#OtpForm').addClass('has-error');
+          return false;
+      }
+      var data = $('form#OtpForm').serialize();
+      var path = $('form#OtpForm').attr('action');
+      $.ajax({
+          url: path,
+          data: data,
+          type: 'POST',
+          beforeSend: function(e){
+              $('#globalSubModalContent .modal-body').append('<div class="overlay"><span class="fa fa-refresh fa-spin fa-2x"></span></div>');
+          },
+          success: function(result){
+              if(result.type === 'success'){
+                  $('form#OtpForm').removeClass('has-error');
+                  addMsg(result.type, result.msg);
+                  window.setTimeout(function () {
+                    window.location.href = result.redirectPath;
+                  }, 1000);
+              }else{
+                  $('form#OtpForm').addClass('has-error');
+                  addMsg(result.type, result.msg);
+              }
+          },
+          complete: function(){
+              $('#globalSubModalContent').find('.overlay').remove();
+          }
+      });
+  });
+</script>

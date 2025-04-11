@@ -1,0 +1,88 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Manage Employee Apps
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		<div class="row">
+			<div class="col-md-12"></div>
+			<div class="col-md-12">
+				<div class="card">
+					<div class="col-md-12">
+						<h5 class="card-title mt-3">
+							Add External App</h5>
+						<div class="row " id="form1">
+						
+								<div class="col-md-4">
+									<div class="form-group">
+											{% block formstart %}
+                              {{ form_start(form) }}
+                                {% endblock %}
+                                             {{form_row(form.ExternalApps) }}
+
+                  <button type="button" class="btn btn-primary btn-emp-apps-update m-1" data-path="{{ path('portal_employee_apps_update') }}" data-objid="{{ employee.guId }}">Add App
+                        </button>
+
+
+	               <input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+
+     
+ 
+									</div>
+								</div>
+							
+						</div>
+					</div>
+					
+				</div>
+			</div>
+			<div class="col-md-12 mt-3">
+				<div class="card">
+					<div id="appAssigned" class="card-body">
+						<h5 class="card-title">External App Added</h5>
+						<table class="table table-striped table-bordered table-hover table-sm">
+							<thead>
+								<tr>
+									<th>ID</th>
+									<th>External AppName</th>
+									
+									<th>Action</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for val in addedApps %}
+								
+									<tr>
+										<td>{{ loop.index }}</td>
+										<td>{{ val.ExternalApps.appTitle }}</td>
+										
+										<td>
+											<a href="#" style="font-size:16px;font-weight:bold"  class="badge badge-pill badge-secondary btn-emp-apps-remove" data-objid="{{ val.guId }}"   data-apps-remove-path="{{ path('portal_emp_apps_remove') }}">
+												<i class="fa fa-close" style="color: red"></i>
+												<small>
+													Remove
+												</small>
+											</a>
+										</td>
+									</tr>
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
+	</section>
+	<input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}
+            
+    {{ form_end(form, {'render_rest': false}) }}
+{% endblock %}
+
+

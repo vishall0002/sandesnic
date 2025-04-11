@@ -1,0 +1,126 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    Members in Group
+    <strong>
+        {{ group.groupTitle }}</strong>
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        <table class="table table-sm table-striped table-bordered table-hover table-condensed">
+            <tbody>
+                <tr>
+                    <td class="text-right" style="width: 15%">Organization</td>
+                    <td class="font-weight-bold badge-medium" style="width: 35%">
+                        {{group.organizationUnit.organization.organizationName}}</td>
+                    <td class="text-right" style="width: 15%">Organization Unit</td>
+                    <td class="font-weight-bold display-5" style="width: 35%">
+                        {{group.organizationUnit.OUName}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">Group Title</td>
+                    <td class="font-weight-bold display-5">
+                        {{group.groupTitle}}</td>
+                    <td class="text-right">Group Description</td>
+                    <td class="font-weight-bold display-5">
+                        {{group.groupDescription}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">Group Type</td>
+                    <td class="font-weight-bold display-5">
+                        {{group.groupType ? group.groupType.groupTypeName : 'Not set'}}</td>
+                    <td class="text-right">Group Purpose</td>
+                    <td class="font-weight-bold display-5">
+                        {{group.groupPurpose ? group.groupPurpose.groupPurposeName : 'Not set'}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">Group Creation Mode</td>
+                    <td class="font-weight-bold display-5">
+                        {{group.groupCreation ? group.groupCreation.groupCreationName : 'Not set'}}</td>
+                    <td class="text-right">Host Name</td>
+                    <td class="font-weight-bold display-5">
+                        {{group.xmppHost}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right" colspan="2">
+                        {% if group.isHidden %}
+                            <span class="badge bg-success m-1 badge-medium">Hidden</span>
+                            {% else %}
+                            <span class="badge bg-secondary m-1 badge-medium">Hidden</span>
+                        {% endif %}
+                        {% if group.isMemberOnly %}
+                            <span class="badge bg-success m-1 badge-medium">Member Only</span>
+                            {% else %}
+                            <span class="badge bg-secondary m-1 badge-medium">Member Only</span>
+                        {% endif %}
+                        {% if group.isModerated %}
+                            <span class="badge bg-success m-1 badge-medium">Moderated</span>
+                            {% else %}
+                            <span class="badge bg-secondary m-1 badge-medium">Moderated</span>
+                        {% endif %}
+                        {% if group.isPasswordProtected %}
+                            <span class="badge bg-success m-1 badge-medium">Password Protected</span>
+                            {% else %}
+                            <span class="badge bg-secondary m-1 badge-medium">Password Protected</span>
+                        {% endif %}
+                    </td>
+                    <td class="text-right" colspan="2">
+                        {# {% if is_granted("ROLE_SUPER_ADMIN") %} #}
+                            Enter E-Mail
+                            <input id="any-member-email" style="width: 60%" type="email"></input>
+                            <button class="btn btn-xs btn-success btn-any-member-add"  data-migtype="GM" data-gobjid="{{group.guId}}" data-set-path="{{ path('portal_grp_add_any_member') }}" id="anyMemberAdd">Add Member</button>
+                            <br/><small>** Accepts any onboarded user's email irrespective of OU, one email address at a time</small>
+                        {# {% endif %} #}
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+        <table class="table table-sm table-striped table-bordered table-hover">
+            <tbody>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Member Name</th>
+                    <th>Jabber Name</th>
+                    <th>Affiliation</th>
+                    <th>Role</th>
+                    <th class="text-right">Set as</th>
+                </tr>
+                {% for member in members %}
+                    <tr>
+                        <td>
+                            {{ loop.index }}
+                        </td>
+                        <td>
+                            {{member.employeeName}}
+                        </td>
+                        <td>
+                            {{member.jabberName}}
+                        </td>
+                        <td>
+                            {{member.affiliation}}
+                        </td>
+                        <td>
+                            {{member.role}}
+                        </td>
+                        <td class="text-right">
+                            {% if group.groupType.groupTypeCode == "DEFAULT" %}
+                                <button class="btn btn-xs btn-primary btn-grp-manage" data-toggle="confirmation" data-migid="{{ member.id}}" data-migtype="DGA" data-set-path="{{ path('portal_grp_attr') }}">Group Admin</button>
+                                <button class="btn btn-xs btn-primary btn-grp-manage" data-toggle="confirmation" data-migid="{{ member.id}}" data-migtype="DGM" data-set-path="{{ path('portal_grp_attr') }}">Group Member</button>
+                                {% elseif group.groupType.groupTypeCode == "LIST" %}
+                                <button class="btn btn-xs btn-primary btn-grp-manage" data-toggle="confirmation" data-migid="{{ member.id}}" data-migtype="LM" data-set-path="{{ path('portal_grp_attr') }}">List Member</button>
+                                {% else %}
+                                <button class="btn btn-xs btn-primary btn-grp-manage" data-toggle="confirmation" data-migid="{{ member.id}}" data-migtype="GM" data-set-path="{{ path('portal_grp_attr') }}">Group Member</button>
+                            {% endif %}
+                            <button class="btn btn-xs btn-danger btn-grp-remove-member" data-toggle="confirmation" data-eobjid="{{ member.eGuId}}" data-gobjid="{{group.guId}}" data-migtype="REMOVEIT" data-set-path="{{ path('portal_grp_remmfl') }}">Remove</button>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </section>
+    <input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}

@@ -1,0 +1,80 @@
+<div id="__filterContainer" class="collapse container-fluid">
+    <div class="row p-2" style="background-color: #eaeef2;">
+        <div class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <div class="form-inline align-items-center">
+                <div class="form-group">
+                    <label for="dfSelect" class="form-label mb-2 mr-sm-2">Filters</label>
+                    <select id="dfSelect" class="form-control form-control-sm  mb-2 mr-sm-2" name="filterField">
+                        <option value="">-- Select --</option>
+                        {% if dfConfig is defined %}
+                            {% for item in dfConfig %}
+                                <option data-type="{{item.input_type}}" value="{{ item.field_alias }}">{{ item.display_text }}</option>
+                            {% endfor %}
+                        {% endif %}
+                    </select>
+                    <div id="df-content"></div>
+                </div>
+                <input id="filterArray" class="refresh_pagination" type="hidden" data-path="{{listpath}}" data-list-path="{{listpath}}" value="">
+                {% if dfConfig is defined %}
+                    {% for item in dfConfig %}
+                        <div id="{{ item.field_alias }}" hidden>
+                            <div class="form-group   mb-2 mr-sm-2">
+                                <select id="operator-{{ item.field_alias }}" class="form-control form-control-sm mr-1">
+                                    {% for operator in item.operator_type %}
+                                        <option value="{{ operator }}"> {{ (operator =='ILIKE')?'contains':operator }}</option>
+                                    {% endfor %}
+                                </select>
+                                {% if item.input_type =='boolean'%}
+                                    <select id="value-{{ item.field_alias }}" class="form-control form-control-sm mr-1 {{item.input_type}}">
+                                        <option value="1">Yes</option>
+                                        <option value="0">No</option>
+                                    </select>
+                                {% elseif item.input_type =='sboolean'%}
+                                    <select id="value-{{ item.field_alias }}" class="form-control form-control-sm mr-1 {{item.input_type}}">
+                                        <option value="1">Yes</option>
+                                    </select>
+                                {% elseif item.input_type =='codefinder'%}
+                                    <div class="input-group mr-1">
+                                        <input type="text" style="width:8rem" id="value-{{ item.field_alias }}" data-use="{{item.input_schema is defined?item.input_schema:''}}" class="form-control form-control-sm {{item.input_type}}">
+                                        <span class="input-group-btn">
+                                            <button type="button" title="Clear data"  class="btn btn-secondary btn-flat text-bold clearCFData">
+                                                <i class="fa fa-eraser"></i>
+                                            </button>
+                                            <button type="button" data-use="{{item.input_schema is defined?item.input_schema:''}}" class="btn btn-sm btn-info btn-flat text-bold codeFinderAction">
+                                                <i class="fa fa-search"></i>
+                                            </button>
+                                        </span>
+                                    </div>
+                                {% elseif item.input_type =='date'%}
+                                    <input id="value-{{ item.field_alias }}" type="text" style="width:8rem" placeholder="" class="form-control form-control-sm mr-1 datePicker"/>
+                                {% elseif item.input_type =='daterange'%}
+                                    <input id="value-{{ item.field_alias }}" type="text" style="width:8rem" placeholder="" class="form-control form-control-sm mr-1 input-daterange"/>
+                                {% elseif item.input_type =='choice'%}
+                                    <select id="value-{{ item.field_alias }}" {% if item.choices is defined  and item.choices is not iterable%}data-choice-path ="{{path(item.choices)}}"{% endif %} class="form-control form-control-sm mr-1 {{item.input_type}}">
+                                        {% if item.choices is defined  and item.choices is iterable%}
+                                            {% for k,v in item.choices %}
+                                                <option value="{{ k }}">{{ v }}</option>
+                                            {% endfor %}
+                                        {% endif %}
+                                    </select>
+                                {% else %}
+                                    <input id="value-{{ item.field_alias }}" type="text" style="width:8rem" {% if item.maxlength is defined %} maxlength="{{item.maxlength}}" {% endif %} placeholder="" class="form-control form-control-sm mr-1"/>
+                                {% endif %}
+                                <button type="button" data-alias="{{ item.field_alias }}" class="btn btn-xs btn-secondary addFilter mr-1">+ Add</button>
+                                <button type="button" data-alias="{{ item.field_alias }}" class="btn btn-xs btn-secondary addApplyFilter mr-1">+ Add&Apply</button>
+                            </div>
+                        </div>
+                    {% endfor %}
+                {% endif %}
+            </div>
+        </div>
+        <div id="df-tags-container" class="col-xl-6 col-lg-6 col-md-12 col-sm-12 col-xs-12">
+            <div class="row text-right">
+                <div id="dfTags"></div>
+                <div class="p-1">
+                    <button class="btn btn-primary btn-xs df-filter-button invisible hidden">Apply Filter</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

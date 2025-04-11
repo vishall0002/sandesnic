@@ -1,0 +1,10 @@
+{% extends '/bases/base_dashboard.html.twig' %}
+{% block content %}
+	<h1>Downloads</h1>
+    <hr/>
+	<ul>
+		<li><a class="fs-16e m-1" href="{{ asset('resources/downloads/sandes_org_onboarding_form.docx') }}" >Organisation onboarding form<i class="fa fa-download m-2"></i><i class="fa fa-file-word-o "></i></a></li>
+		<li><a class="fs-16e m-1" href="{{ asset('resources/downloads/sandes_employee_onboarding_template.csv') }}" >Employee onboarding schema<i class="fa fa-download  m-2"></i><i class="fa fa-file-excel-o "></i></a></li>
+		<li><a class="fs-16e m-1" href="{{ asset('resources/downloads/sandes_egov_app_integration_form.docx') }}" >eGov app integration form<i class="fa fa-download m-2"></i><i class="fa fa-file-word-o "></i></a></li>
+	</ul>
+{% endblock %}

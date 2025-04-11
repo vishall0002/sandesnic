@@ -1,0 +1,197 @@
+{% extends 'AppBundle:Ads/Default:master.html.twig' %}
+{% block css %}
+    {{ parent() }}
+{% endblock %}
+{% block mastercontent %}
+    <div class="box box-sm box-primary">
+        <div class="box-header with-border">
+            <h4 class="modal-title text-bold">{{ 'email_mobile_not_verified_dashboard.pageheading' | trans({}, 'general') }}</h4>
+        </div>
+        {# <a target="_blank" href="{{path('app_emailer_test_mail_view')}}" class="btn btn-primary">Test Mail View</a>  #}
+        <div class="box-body">
+            <div class="row">
+                <div class="col-md-12">
+                    
+
+                    {{ 'email_mobile_not_verified_dashboard.verify_email_text' | trans({}, 'general') }}
+                    <b>{{ email }}</b>
+                    <div class="col-md-9 emailBtnAction pull-right">
+                        {% if user and(user.isEmailVerified == false and(emailSentStatus == false or emailSentStatus == '')) %}
+                            <button class="btn btn-xs btn-primary verifyEmailAction">
+                                {{ 'email_mobile_not_verified_dashboard.verify_email' | trans({}, 'general') }}</button>
+                            {% elseif emailSentStatus == true and user.isEmailVerified == false %}
+                            <span>
+                                Please Check your Registered E-Mail.
+                            </span>
+                            <button class="btn btn-xs btn-primary verifyEmailAction">
+                                <i class="fa fa-repeat"></i>&nbsp;
+                                {{ 'email_mobile_not_verified_dashboard.resend_verify_email' | trans({}, 'general') }}</button>
+                            {% else %}
+                            <span>
+                                Email Verified
+                                <i class="fa fa-thumbs-up"></i>
+                            </span>
+                        {% endif %}
+                        <a class="pull-right" href="{{path('update_email_mobile')}}">{{ 'email_mobile_not_verified_dashboard.update_email' | trans({}, 'general') }}</a>
+                    </div>
+                </div>
+
+                <div class="col-md-12 mrg10T">
+                    {{ 'email_mobile_not_verified_dashboard.verify_mobile_text' | trans({}, 'general') }}
+                    <b>{{ mobile }}</b>
+                    <div class="col-md-9 mobileBtnAction pull-right">
+                        {% if user and user.isMobileVerified == false and(smsSentStatus == false or smsSentStatus == '') %}
+                            <button id="OTP" class="btn btn-xs btn-primary verifyMobileAction">
+                                {{ 'email_mobile_not_verified_dashboard.verify_mobile' | trans({}, 'general') }}</button>
+                            <div class="otpForm hidden">
+                                {{form_start(form,{'attr' : {'id' : 'otpForm'}})}}
+                                <div class="form-group">
+                                    <div class="col-sm-6 otpDiv no-padding">
+                                        <div class="input-group input-group-sm">
+                                            {{form_label(form.otp)}}
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            {{ form_widget(form.otp) }}
+                                            <div class="has-error">
+                                                {{ form_errors(form.otp) }}
+                                            </div>
+                                            <span class="input-group-btn">
+                                                <button id="validateOTP" data-guid="{{guId}}" class="btn btn-primary btn-flat">Validate</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{form_end(form)}}
+                            </div>
+                        {% elseif smsSentStatus == true and user.isMobileVerified == false %}
+                            <button id="OTP" class="btn btn-xs btn-primary verifyMobileAction">
+                                <i class="fa fa-repeat"></i>&nbsp;
+                                {{ 'email_mobile_not_verified_dashboard.resend_otp' | trans({}, 'general') }}</button>
+                            <div class="otpForm">
+                                {{form_start(form,{'attr' : {'id' : 'otpForm'}})}}
+                                <div class="form-group">
+                                    <div class="col-sm-6 otpDiv no-padding">
+                                        <div class="input-group input-group-sm">
+                                            {{form_label(form.otp)}}
+                                        </div>
+                                        <div class="input-group input-group-sm">
+                                            {{ form_widget(form.otp) }}
+                                            <div class="has-error">
+                                                {{ form_errors(form.otp) }}
+                                            </div>
+                                            <span class="input-group-btn">
+                                                <button id="validateOTP" data-guid="{{guId}}" class="btn btn-primary btn-flat">Validate</button>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                {{form_end(form)}}
+                            </div>
+                        {% else %}
+                            <span>
+                                Mobile Verified
+                                <i class="fa fa-thumbs-up"></i>
+                            </span>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="box-footer with-border">
+            <div class="col-md-12">
+                {% if user and (user.isMobileVerified == false or user.isEmailVerified == false) %}
+                    <a href="{{path('app_dashboard_verification')}}" class="btn btn-xs btn-primary pull-right no-margin">
+                        Verify Later &nbsp;
+                        <i class="fa fa-forward"></i>
+                    </a>
+                {% else %}
+                    <a href="{{path('app_dashboard_verification')}}" class="btn btn-xs btn-primary pull-right no-margin">
+                        Continue &nbsp;
+                        <i class="fa fa-forward"></i>
+                    </a>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block jsInPages %}
+    <script>
+        $('.verifyEmailAction').off('click').on('click', function (e) {
+            e.preventDefault();
+            var path = '{{ path('app_emailer_send') }}';
+            $.ajax({
+                url: path,
+                type: "POST",
+                beforeSend: function () {
+                    $(".box").append('<div class="overlay" style="padding:10px"><span class="fa fa-refresh fa-spin fa-2x"></span></div>');
+                },
+                success: function (data) {
+                    if (data.type === 'success') {
+                        $('.emailBtnAction').html("Please Check Your Registered E-Mail");
+                        window.setTimeout(function () {
+                            location.reload()
+                        }, 1000)
+                    }
+                },
+                complete: function () {
+                    $(".box").find(".overlay").remove();
+                }
+            });
+        });
+
+        $('.verifyMobileAction').off('click').on('click', function (e) {
+            e.preventDefault();
+            var path = '{{ path('app_sms_send') }}';
+            var html = 'Resend OTP';
+            $.ajax({
+                url: path,
+                type: "POST",
+                beforeSend: function () {
+                    $(".box").append('<div class="overlay" style="padding:10px"><span class="fa fa-refresh fa-spin fa-2x"></span></div>');
+                },
+                success: function (data) {
+                    if (data.type === 'success') {
+                        $('#OTP').html(html);
+                        $('.otpForm').removeClass('hidden');
+                    }
+                },
+                complete: function () {
+                    $(".box").find(".overlay").remove();
+                }
+            });
+        });
+
+        $('#validateOTP').off('click').on('click', function (e) {
+            e.preventDefault()
+            var form = $('#otpForm');
+            var path = form.attr('action');
+            var guId = $(this).data('guid');
+            var data = form.serialize() + "&guId=" + guId;
+            var html = '<span> Mobile Verified <i class="fa fa-thumbs-up"></i></span>';
+            $.ajax({
+                url: path,
+                data: data,
+                type: "POST",
+                dataType: "JSON",
+                beforeSend: function () {
+                    $(".box").append('<div class="overlay" style="padding:10px"><span class="fa fa-refresh fa-spin fa-2x"></span></div>');
+                },
+                success: function (data) {
+                    if (data.type === 'success') {
+                        $('.mobileBtnAction').html(html);
+                        addMsg(data.type, data.msg);
+                        window.setTimeout(function () {
+                            location.reload()
+                        }, 1000)
+                    } else {
+                        $('.otpDiv').closest(".form-group").find('.input-group-sm').removeClass("has-success").addClass("has-error");
+                        addMsg(data.type, data.msg);
+                    }
+                },
+                complete: function () {
+                    $(".box").find(".overlay").remove();
+                }
+            });
+        });
+    </script>
+{% endblock %}

@@ -1,0 +1,13 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	FMT Originator
+{% endblock %}
+{% block modalContent %}
+	{{ dump(fmt)}}
+	
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}

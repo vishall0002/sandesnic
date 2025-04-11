@@ -1,0 +1,74 @@
+# https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
+parameters:
+    locale: 'en'
+
+services:
+    _defaults:
+        autowire: true      # Automatically injects dependencies in your services.
+        autoconfigure: true # Automatically registers your services as commands, event subscribers, etc.
+        public: false       # Allows optimizing the container by removing unused services; this also means
+                            # fetching services directly from the container via $container->get() won't work.
+                            # The best practice is to be explicit about your dependencies anyway.
+
+    App\:
+        resource: '../src/*'
+        exclude: '../src/{DependencyInjection,Entity,Migrations,Tests,Kernel.php}'
+        
+    App\Controller\:
+        resource: '../src/Controller'
+        tags: ['controller.service_arguments']
+
+    App\EventListener\ExceptionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception }
+    
+    App\EventListener\ResponseListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.response, method: onKernelResponse }
+
+    App\EventListener\RequestListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    # App\EventListener\MultiLoginBlocker:
+    #     tags:
+    #         - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest }
+
+    App\EventListener\LoginListener:
+        arguments: ["@doctrine", "@session", "@security.authorization_checker", "%REDIS_HOST%"]
+        tags: 
+            - { name: kernel.event_listener, event: security.interactive_login, method: onSecurityInteractiveLogin, priority: 255 }
+                
+    App\EventListener\ActionListener:
+        tags:
+            - { name: kernel.event_listener, event: kernel.controller, method: onKernelController }
+    
+    App\Security\Firewall\OWASPLoginFormAuthenticator:
+        arguments: 
+            - "%env(int:LOGIN_INVALID_ATTEMPTS)%"
+            - "%env(int:LOGIN_UNLOCK_TIME_MINUTES)%"
+
+    App\EventListener\SessionListener:
+        arguments: ["%env(int:SESSION_TIMEOUT_MINUTES)%"]
+        tags:
+            - { name: kernel.event_listener, event: kernel.request, method: onKernelRequest, priority: 9 }
+    
+    Gregwar\CaptchaBundle\Controller\CaptchaController:
+        public: true
+        alias: 'gregwar_captcha.controller'
+
+    Redis:
+        class: Redis
+        calls:
+            - method: connect
+              arguments:
+                  - '%env(REDIS_HOST)%'
+                  - '%env(int:REDIS_PORT)%'
+
+    Predis\Client:
+        arguments:
+            - '%env(REDIS_URL)%'
+                  
+    Symfony\Component\HttpFoundation\Session\Storage\Handler\RedisSessionHandler:
+        arguments:
+            - '@Redis'

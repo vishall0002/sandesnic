@@ -1,0 +1,9 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+    <div id="__listContainer">
+        {{ render(controller('App\\Controller\\Portal\\EmployeeLevelController::list')) }}
+    </div>
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('build/js/generic.js') }}"></script>
+{% endblock %}

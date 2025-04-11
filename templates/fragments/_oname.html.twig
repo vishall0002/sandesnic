@@ -1,0 +1,3 @@
+{% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+	<button class="btn btn-xs btn-primary sendMessage data-objid"  data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-type="o" data-objid=""><i class="fa fa-envelope"></i>Message</button>
+{% endif %}

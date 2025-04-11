@@ -1,0 +1,33 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Item Details
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		<div class="row">
+			<div class="col text-left">
+				<h3 class="font-weight-bold">{{Item.itemName}}</h3>
+			</div>
+		</div>
+		<table class="table table-sm table-striped table-bordered table-hover table-condensed">
+			<thead>
+                <tr>
+                    <td class="text-center">Item Text</td>
+                </tr>
+            </thead>
+            <tbody>
+				<tr>
+					<td class="font-weight-bold badge-medium">{{ Item.itemText | raw }}</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+	    {% if action %}
+		<button class="btn btn-sm btn-primary btn-action-delete" data-delete-path="{{path('portal_item_delete_confirm')}}" data-objid = "{{Item.guid}}">Delete Confirm</button>
+		{% endif %}	
+	</div>
+{% endblock %}

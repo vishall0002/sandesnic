@@ -1,0 +1,82 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Employee Profile
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		<div class="row">
+			<div class="col text-right">
+				<img style="height: 170px;" alt="Employee Photo" src="data:image/png;base64,{{ photo }}"/>
+			</div>
+			<div class="col text-left">
+				<h3 class="font-weight-bold">{{employee.employeeName}}</h3>
+				<h4 class="font-weight-bold">{{employee.designation.designationName}}</h4>
+				{% if employee.isRegistered == 'Y'%}
+					<span class="badge bg-success badge-medium">Registered</span>
+				{% else %}
+					<span class="badge bg-danger badge-medium">Not Registered</span>
+				{% endif %}
+				{% if employee.isActive == 'Y' %}
+					<span class="badge bg-success badge-medium">Active</span>
+				{% else %}
+					<span class="badge bg-danger badge-medium">In-Active</span>
+				{% endif %}
+			</div>
+		</div>
+		<table class="table table-sm table-striped table-bordered table-hover table-condensed">
+			<tbody>
+				<tr>
+					<td class="text-right">Employee Code</td>
+					<td class="font-weight-bold display-5">{{employee.employeeCode}}</td>
+					<td class="text-right"></td>
+					<td class="font-weight-bold display-5"></td>
+				</tr>
+				<tr>
+					<td class="text-right">Organization</td>
+					<td class="font-weight-bold display-5">{{employee.organizationUnit.organization.organizationName}}</td>
+					<td class="text-right">Organization Unit</td>
+					<td class="font-weight-bold display-5">{{employee.organizationUnit.OUName}}</td>
+				</tr>
+				<tr>
+					<td class="text-right">Gender</td>
+					{% if employee.gender.gender is defined %}
+						<td class="font-weight-bold display-5">{{employee.gender.gender}}</td>
+					{% else %}
+						<td class="font-weight-bold display-5 bg-danger">Not updated</td>
+					{% endif %}
+					<td class="text-right">E-Mail</td>
+					<td class="font-weight-bold display-5">{{employee.emailAddress}}
+						{% if employee.alternateEmailAddress is not null %}
+							{% set alternateEmailAddress=  '/' ~ employee.alternateEmailAddress %}
+						{% else %}
+							{% set alternateEmailAddress= '' %}
+						{% endif %}
+						{{alternateEmailAddress}}
+					</td>
+				</tr>
+				<tr>
+					<td class="text-right">Mobile Number</td>
+					<td class="font-weight-bold display-5">{{employee.mobileNumber}}</td>
+					<td class="text-right">Portal User Name</td>
+					<td class="font-weight-bold display-5">{{employee.user.username}}</td>
+				</tr>
+				<tr>
+					<td class="text-right">Host Name</td>
+					<td class="font-weight-bold display-5">{{employee.host}}</td>
+					<td class="text-right">Portal Roles</td>
+					<td class="font-weight-bold display-5">
+						{% for role in employee.user.getRoles %}
+							{{ role }}
+						{% endfor %}
+					</td>
+				</tr>
+			</tbody>
+		</table>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button type="button" class="btn btn-sm btn-danger btn-action-nfsubmit" data-action-path="{{ path('superadmin_remote_wipeout_confirm') }}" data-objid="{{ employee.guId }}">Confirm Wipeout</button>
+		<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+	</div>
+{% endblock %}

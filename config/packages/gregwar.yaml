@@ -1,0 +1,7 @@
+gregwar_captcha:
+   distortion: true
+   max_front_lines: 2
+   max_behind_lines: 2
+   charset: ABCDEFHJKMNPRSTUVWXYZabcdefhjkmnprstuvwxyz1234567890
+   ignore_all_effects: false
+   length: 6

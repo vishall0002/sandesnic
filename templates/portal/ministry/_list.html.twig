@@ -1,0 +1,42 @@
+{% if (pagination | length > 0) %}
+<table class="table table-striped table-bordered table-hover table-sm">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th {% if pagination.issorted('ministryName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Name', 'm.ministryName') }}</th>
+			<th {% if pagination.issorted('ministryCode') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Alias', 'm.ministryCode') }}</th>
+			<th class="text-right">Action</th>
+		</tr>
+	</thead>
+	{% set offset = pagination.getPaginationData.numItemsPerPage %}
+	{% set current = pagination.getPaginationData.current %}
+	{% for record in pagination %}
+		{% set badges = '' %}
+		<tr data-id="{{record.guId}}" class="btn-action-trmenu" data-objid="{{record.guId}}" data-popper-header="{{record.ministryName}}">
+			<td>{{ ((current-1)*offset)+loop.index }}</td>
+			<td>{{record.ministryName}}</td>
+			<td>{{record.ministryCode}}</td>
+			<td class="">
+				{% embed 'bases/__action_menu.html.twig' %}
+					{% block action_menu_header %}
+						<span>{{ record.ministryName }}</span>
+						{{ badges | raw }}
+					{% endblock %}
+					{% import "/bases/__action_menu_item.html.twig" as amenu %}
+					{% block action_menu %}
+						{{ amenu.gims(record.ministryName,record.guId,"ministry")}}
+						{{ amenu.divider() }}
+						{{ amenu.amenuitem("Edit", record.guId,  path('portal_ministry_edit'), "btn-action-view", "fa-edit", "primary")}}
+						{{ amenu.amenuitem("Delete", record.guId, path('portal_ministry_delete'),"btn-action-view", "fa-trash", "danger" )}}
+						{{ amenu.divider() }}
+						{{ amenu.amenuformitem("Organization wise statistics",record.guId,  path('app_dashboard_owise'),"frmMinLt","btn-primay", "fa-cubes")}}
+					{% endblock %}
+				{% endembed %}
+			</td>
+		</tr>
+	{% endfor %}
+</table>
+{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No more values</h4>
+{% endif %}

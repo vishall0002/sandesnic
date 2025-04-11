@@ -1,0 +1,10 @@
+{
+    "SubscriberGroup": {
+        "Parent1": {
+            "path": "App\\Controller\\Portal\\BroadcastController::getGroupByOu",
+            "Entity": "Portal\\Group",
+            "param": "groupTitle",
+            "label": "Group"
+        }
+    }
+}

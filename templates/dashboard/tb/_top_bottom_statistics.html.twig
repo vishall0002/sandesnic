@@ -1,0 +1,35 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col">
+			<h4> <strong>
+				{% if organization is defined %}
+                    Organization -
+					{{ organization.organizationName }}
+				{% else %}
+					Statistics
+				{% endif %}
+				</strong>
+			</h4>
+		</div>
+		<div class="col text-right">
+			<form action="{{ path('app_dashboard_top_bottom_statistics')}}" method="post">
+				<input type="hidden" name="objid" id="hdn-data-objid-tbr" value="{{organization.guId}}" />
+				<input type="text" name="input-daterange" class="input-daterange">
+				{# <input type="button" class="btn btn-xs btn-primary" id="search-list" data-path="{{ path('app_dashboard_top_users') }}" value="Go"/> #}
+                <input type="number" class="text_records" placeholder = "Number of records">
+                <input type="button" class="btn btn-xs btn-primary btn_top_bottom_statistics" data-path="{{ path('app_dashboard_top_bottom_statistics') }}" data-type="top" value="top"/>
+                <input type="button" class="btn btn-xs btn-primary btn_top_bottom_statistics" data-path="{{ path('app_dashboard_top_bottom_statistics') }}" data-type="bottom" value="Bottom"/>
+				{# <input type="submit" class="btn btn-xs btn-primary" value="Refresh"/> #}
+			</form>
+		</div>
+	</div>
+    <div id="states_list" class="row p-2" >
+    </div>
+    </br>
+    <div id="hog_list" class="row p-2">
+    </div>
+    </br>
+    <div id="usres_list" class="row p-2">
+    </div>
+{% endblock %}

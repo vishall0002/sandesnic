@@ -1,0 +1,41 @@
+{% if (pagination | length > 0) %}
+	<table class="table table-striped table-bordered table-hover table-sm">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th {% if pagination.issorted('ministryName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Ministry', 'm.ministryName') }}</th>
+				<th {% if pagination.issorted('organizationName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Organization', 'o.organizationName') }}</th>
+				<th {% if pagination.issorted('designationName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Designation', 'd.designationName') }}</th>
+				<th class="text-right">Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% set offset = pagination.getPaginationData.numItemsPerPage %}
+			{% set current = pagination.getPaginationData.current %}
+			{% for record in pagination %}
+				<tr data-id="{{record.guId}}">
+					<td>{{ ((current-1)*offset)+loop.index }}</td>
+					<td>{{record.ministryName}}</td>
+					<td>{{record.organizationName}}</td> 
+					<td>{{record.designationName}}</td>
+					<td class="">
+						{% embed 'bases/__action_menu.html.twig' %}
+							{% block action_menu_header %}
+								<span>{{ record.designationName }}</span>
+							{% endblock %}
+							{% import "/bases/__action_menu_item.html.twig" as amenu %}
+							{% block action_menu %}
+								{{ amenu.amenuitem("Edit", record.guId, path('portal_designation_edit'), "btn-action-view tooltipjs", "fa-edit", "primary" )}}
+								{{ amenu.amenuitem("Delete",record.guId,  path('portal_designation_delete'),"btn-action-view tooltipjs", "fa-trash", "danger")}}
+							{% endblock %}
+						{% endembed %}
+					</td>
+					
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No more values</h4>
+{% endif %}

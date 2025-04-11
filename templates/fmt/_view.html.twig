@@ -1,0 +1,50 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	FMT Information
+{% endblock %}
+{% block modalContent %}
+	<table class="table table-sm table-striped table-bordered table-hover table-condensed">
+		<tbody>
+			<tr>
+				<td class="text-right">Trace ID</td>
+				<td class="font-weight-bold display-5">{{ fmt.traceID }}</td>
+			</tr>
+			<tr>
+				<td class="text-right">Message Type</td>
+				<td class="font-weight-bold display-5">{{ fmt.messageType}}</td>
+			</tr>
+			<tr>
+				<td class="text-right">Sender</td>
+				<td class="font-weight-bold display-5">{{ appServices.getEmployeeByJabberID(fmt.senderID).employeeName ?? '' }}</td>
+			</tr>
+			<tr>
+				<td class="text-right">Receiver</td>
+				<td class="font-weight-bold display-5">
+                {% if (fmt.messageType == 'G') %}
+                {{ appServices.getGroupByJabberID(fmt.receiverID).groupTitle ?? '' }}
+                {% else  %}
+                {{ appServices.getEmployeeByJabberID(fmt.receiverID).employeeName ?? '' }}
+                {% endif %}
+                </td>
+			</tr>
+            <tr>
+            <td class="text-right">Message</td>
+            <td >{{fmt.Message}}</td>
+            </tr>
+			<tr>
+				<td class="text-right">Submitted By</td>
+				<td class="font-weight-bold display-5">{{ appServices.getUserByID(fmt.submittedBy).username ?? '' }}</td>
+            </tr>
+			<tr>
+				<td class="text-right">Submitted on</td>
+				<td class="font-weight-bold display-5">{{ fmt.submittedOn | date('d-M-y H:i:s') }}</td>
+			</tr>
+		</tbody>
+	</table>
+	
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}

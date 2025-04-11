@@ -1,0 +1,37 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    Set Password For Csv
+{% endblock %}
+{% block modalContent %}
+    <form id="frmCsvDownload" action="{{ arr['actionPath'] }}" method="post">
+        <div class="row">
+        <h4 class="text-danger">Some anti-virus softwares makes the downloaded file corrupted because of encryption. In such situation, try downloading by disabling the antivirus temporarily.</h4>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="csvDownload_new_password" class="required">New password</label>
+                    <input type="password" id="csvDownload_new_password" name="csvDownload[new_password]" required="required" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-12">
+                <div class="form-group">
+                    <label for="csvDownload_confirm_password" class="required">Confirm password</label>
+                    <input type="password" id="csvDownload_confirm_password" name="csvDownload[confirm_password]" required="required" class="form-control">
+                </div>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-sm btn-primary csv_download_generic_submit" type="submit">Submit</button>
+                <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+            </div>
+            <div class="col-md-3">
+                <input type="text" id="csvDownload_custom_filter_param" name="csvDownload[custom_filter_param]" class="form-control invisible " value="{{ arr['custom_filter_param'] }}">
+            </div>
+            {#<div class="col-md-3">
+                <input type="text" id="csvDownload_fvalue" name="csvDownload[fvalue]" class="form-control invisible" value="{{ arr['fvalue'] }}">
+            </div>#}
+            <div class="col-md-3">
+                <input type="text" id="csvDownload_cust_field_val" name="csvDownload[cust_field_val]" class="form-control invisible" value="{{ arr['cust_field_val'] }}">
+            </div>
+    </form>
+</div>
+{% endblock %}
+{% block modalFooter %}{% endblock %}

@@ -1,0 +1,10 @@
+10.247.138.162  portal2.gims
+#Gateway service access through VIP
+10.247.252.54   dwar1.gims.gov.in   
+10.247.252.91   webapi.gims.gov.in
+10.247.252.53   sadhan1.gims.gov.in
+
+10.247.138.136  portaldb.postgres.sandes.gov.in
+10.247.138.140  portaldb.redis.sandes.gov.in
+10.247.252.91   websession.sandes.gov.in
+10.247.252.57   internalapi.sandes.gov.in

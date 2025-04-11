@@ -1,0 +1,16 @@
+{
+    "Organization": {
+        "Parent1": {
+            "path": "App\\Controller\\Portal\\MinistryController::getMinistryByRole",
+            "param": "ministryName",
+            "label": "Ministry"
+        },
+        
+        "Parent2": {
+            "path": "get_organisations",
+            "param": "organizationName",
+            "label": "Organization",
+            "postParam": "ministryId"
+        }
+    }
+}

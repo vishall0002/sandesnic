@@ -1,0 +1,9 @@
+{
+    "ExternalApps": {
+        "Parent1": {
+             "Entity": "Portal\\ExternalApps",
+            "param": "appTitle",
+            "label": "External App"
+        }
+    }
+}

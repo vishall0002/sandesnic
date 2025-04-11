@@ -1,0 +1,50 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Update Organization
+{% endblock %}
+{% block formstart %}
+	{{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		{{ form_row(form.guId) }}
+		<div class="row">
+			<div class="col-md-6">
+				{% if is_granted("ROLE_SUPER_ADMIN") %}
+					{{form_row(form.ministry) }}
+				{% else %}
+					<div class="text-center pt-3">
+						<h3>
+							{{ministry.ministryName}}
+						</h3>
+					</div>
+				{% endif %}
+			</div>
+			<div class="col-md-6">
+				{{ form_row(form.organizationType) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.organizationCode) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.organizationName) }}</div>
+			{% if not is_granted("ROLE_O_ADMIN") %}
+				<div class="col-md-6">
+					{{ form_row(form.vhostId) }}</div>
+			{% endif %}
+			<div class="col-md-6">
+				{{ form_row(form.isOVisibility) }}</div>
+			<div class="col-md-6">
+				{{ form_row(form.isPublicVisibility) }}</div>
+
+		</div>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		{{ form_widget(form.btnUpdate, {attr: {class: 'btn btn-sm btn-primary btn-action-submit'} }) }}
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}
+	{{ form_row(form._token) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

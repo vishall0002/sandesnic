@@ -1,0 +1,30 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="col-6">
+			<h5>
+				Organization Admin Unveriified Employee List
+			</h5>
+		</div>
+		<div class="col-6 text-right">			
+			<button class="btn btn-xs btn-primary gims_message" data-gim-path="{{ path('portal_emp_gims_messages_rolewise_o') }}" data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-type="mfb">
+				<span class="d-none d-md-block">
+					Sandes Message
+				</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-comment"></i>
+			</button>
+			<button class="btn btn-xs  btn-primary csv_download" data-path="{{ path('dashboard_download_csv_generic') }}" data-action-path="{{ path('portal_verify_emp_csv')}}" type="button" data-original-title="" title="">
+				<span class="d-none d-md-block">
+					Download
+				</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-download"></i> 
+			</button>			
+		</div>
+	</div>	
+	<div id="__listContainer">
+		{{ render(controller('App\\Controller\\Portal\\VerifyEmployeeController::olist')) }}
+	</div>
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/employee.js') }}"></script>
+{% endblock %}

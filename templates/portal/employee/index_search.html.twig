@@ -1,0 +1,26 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+	<div class="row p-2">
+		<div class="col-6">
+			<h5>
+				Search member
+			</h5>
+		</div>
+		<div class="col-6 text-right">
+			<button class="d-none btn btn-xs btn-success btn-action-new text-white" data-list-path="{{ path('portal_emp_search_list' )}}">
+			</button>
+			<span class="text-dark">Mobile number</span>
+			<input class="__membersearch" autocomplete="off" type="text" id="__membersearch" name="__membersearch" placeholder="Enter mobile number" maxlength="12" required="required">
+			<button class="btn btn-xs btn-primary btn-member-search" data-path="{{ path('portal_emp_search_list')}}">
+			Search
+			</button>
+			<br/>
+			<span class="text-dark">Only members to be verified can be located using this option.</span>
+		</div>
+	</div>
+	<div id="__listContainer">
+	</div>
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/employee.js') }}"></script>
+{% endblock %}

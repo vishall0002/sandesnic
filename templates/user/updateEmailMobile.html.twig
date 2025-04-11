@@ -1,0 +1,152 @@
+{% extends 'AppBundle:Ads/Default:master.html.twig' %}
+
+{% block title %}
+   Sandes Portal, Government  Instant Messaging System, Government of India
+{% endblock %}
+{% block mastercontent %}
+
+    <div class="row col-md-6 col-md-offset-3">
+        <div class="box box-info  ">
+            <div class="box-header with-border">
+                <h3 class="box-title">{{ 'update_email.update_email' | trans({}, 'general') }}</h3>
+            </div>
+              {{form_start(form,{'attr' :{'id' : 'updateEmailMobileForm'}})}}
+                    <div class="box-body">
+                        {{form_row(form.email)}}
+                        <div class="mrg10T">
+                            {{form_row(form.mobileNumber, { 'attr': {'maxlength': '10'} })}}
+                        </div>
+                    </div>
+                    <div class="box-footer text-center with-border">
+                        <button id="updateEmail" class="btn btn-xs btn-primary"> Update </button>
+                    </div>
+              {{form_end(form)}}
+            </div>
+        </div>
+    {% endblock %}
+    {% block jsInPages %}
+        <script>
+            function IsEmail(email) {
+                var regex = /^([a-zA-Z0-9_\.\-\+])+\@(([a-zA-Z0-9\-])+\.)+([a-zA-Z0-9]{2,4})+$/;
+                if (!regex.test(email)) {
+                    return false;
+                } else {
+                    return true;
+                }
+            }
+
+            function showErrorAndSuccess(ob, type, msg = null) {
+                if (type === 'error') {
+                    ob.siblings(".help-block").remove();
+                    ob.closest(".form-group").removeClass("has-success has-success").addClass("has-error");
+                    ob.val('');
+                    ob.closest("div").append('<span id="{{form.email.vars.id}}-error" class="help-block">' + msg + '</span>');
+                } else {
+                    ob.closest(".form-group").removeClass("has-error has-success").addClass("has-success");
+                    ob.siblings(".help-block").remove();
+                }
+            }
+
+            $("#{{form.email.vars.id}}").focusout(function() {
+                var path = "{{ path('app_logins_check' ,{'type' : 'email','check':'__email__' } )}}";
+                var email = $(this).val();
+                path = path.replace('__email__', email);
+                if (email !== '') {
+                    var ob = $(this);
+                    var msg = '';
+                    var type = 'success';
+                    if (IsEmail(email) == true) {
+                        $.ajax({
+                            type: 'POST',
+                            url: path,
+                            success: function(result) {
+                                if (result.status === false) {
+                                    type = 'success';
+                                } else if (result.status === true) {
+                                    type = 'error';
+                                    msg = 'Email Id already exists!!';
+                                }
+                                showErrorAndSuccess(ob, type, msg);
+                            }
+                        });
+                    } else {
+                        type = 'error';
+                        msg = 'Enter proper e-mail id';
+                        showErrorAndSuccess(ob, type, msg);
+                    }
+                }
+                $("img#error").hide();
+            });
+
+            $("#{{form.mobileNumber.vars.id}}").focusout(function() {
+                var path = "{{ path('app_logins_check' ,{'type' : 'mobile','check':'__mobile__' } )}}";
+                var mobile = $(this).val();
+                var regex = /^\d{10}$/;
+                path = path.replace('__mobile__', mobile);
+                if (mobile !== '') {
+                    var ob = $(this);
+                    var msg = '';
+                    var type = 'success';
+                    if (!regex.test(mobile)) {
+                        type = 'error';
+                        msg = 'Enter proper mobile number';
+                        showErrorAndSuccess(ob, type, msg);
+                        return false;
+                    }
+                    $.ajax({
+                        type: 'POST',
+                        url: path,
+                        success: function(result) {
+                            if (result.status === false) {
+                                type = 'success';
+                            } else if (result.status === true) {
+                                type = 'error';
+                                msg = 'Mobile number already exists!!';
+                            }
+                            showErrorAndSuccess(ob, type, msg);
+                        }
+                    });
+                }
+                $("img#error").hide();
+            });
+
+            $('#updateEmail').off('click').on('click', function(e){
+                e.preventDefault();
+                var ob = $(this).parent().parent();
+                var form = $('#updateEmailMobileForm');
+                var path = form.attr('action');
+                var email = $("#{{form.email.vars.id}}").val();
+                var mobile = $("#{{form.mobileNumber.vars.id}}").val();
+                if (email !== '' || mobile !== '') {
+                  $.ajax({
+                      url: path,
+                      type: "POST",
+                      data: form.serialize(),
+                      dataType: "JSON",
+                      beforeSend: function () {
+                          $('.box').append('<div class="overlay"><i class="fa fa-refresh fa-spin"></i></div>');
+                      },
+                      success: function (response) {
+                          if(response.type === 'success'){
+                              $("#{{form.email.vars.id}}").val('');
+                              $("#{{form.mobileNumber.vars.id}}").val('');
+                              $('.form-group').removeClass('has-error has-success');
+                              addMsg(response.type, response.msg);
+                          }else{
+                              $("#{{form.email.vars.id}}").val('');
+                              $("#{{form.mobileNumber.vars.id}}").val('');
+                              addMsg(response.type, response.msg);
+                              showErrorAndSuccess(ob, response.type, response.msg);
+                          }
+                      },
+                      complete: function () {
+                          $('.box').find('.overlay').remove();
+                      }
+                  });
+                }else{
+                    addMsg('danger', 'Please input an email or mobile number before update');
+                    showErrorAndSuccess(ob, 'danger', 'Please input an email or mobile number before update');
+                }
+            });
+        </script>
+    {% endblock %}

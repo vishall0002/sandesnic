@@ -1,0 +1,43 @@
+{% if (pagination | length > 0) %}
+<table class="table table-striped table-bordered table-hover table-sm">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th{% if pagination.issorted('appName') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'App Name', 'e.appName') }}</th>
+			<th{% if pagination.issorted('appTitle') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'App Title', 'e.appTitle') }}</th>
+			<th>Description</th>			
+			<th>Client Id</th>		
+			<th class="text-right">Action</th>
+		</tr>
+	</thead>
+	{% set offset = pagination.getPaginationData.numItemsPerPage %}
+	{% set current = pagination.getPaginationData.current %}
+	{% for record in pagination %}
+		<tr data-id="{{record.clientId}}" class="btn-action-trmenu" data-objid="{{record.clientId}}" data-popper-header="{{record.appTitle}}">
+			<td>{{ ((current-1)*offset)+loop.index }}</td>
+			<td>{{record.appName}}</td>
+			<td>{{record.appTitle}}</td>
+			<td>{{record.appDescription}}</td>			
+			<td>{{record.clientId}}</td>
+			<td class="text-right align-middle">
+				{% embed 'bases/__action_menu.html.twig' %}
+					{% block action_menu_header %}
+						<span>{{ record.appTitle }}</span>
+					{% endblock %}
+					{% import "/bases/__action_menu_item.html.twig" as amenu %}
+					{% block action_menu %}
+						{{ amenu.amenuitem("App Info", record.clientId, path('portal_externalApp_info'), "btn-action-view tooltipjs", "fa-search", "primary" )}}
+						{{ amenu.amenuitem("Edit", record.clientId, path('portal_externalApp_edit'), "btn-action-view tooltipjs", "fa-edit", "primary" )}}
+						{{ amenu.amenuitem("Delete",record.clientId, path('portal_externalApp_delete'),"btn-action-view tooltipjs", "fa-trash", "danger")}}
+						{{ amenu.amenuitem("Deactivate/Activate", record.clientId, path('portal_externalApp_activate_deactivate'), "btn-action-view", "fa-podcast", "primary" )}}
+						{{ amenu.amenuitem("Modify Rate Limiter", record.clientId, path('portal_externalApp_rate_limiter'), "btn-action-view", "fa-edit", "primary" )}}
+					{% endblock %}
+				{% endembed %}
+			</td>
+		</tr>
+	{% endfor %}
+</table>
+{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No more values</h4>
+{% endif %}

@@ -1,0 +1,107 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	User Profile
+{% endblock %}
+{% block modalContent %}
+	{% if employee.designation is not null %}
+		{% if employee.organizationUnit is not null %}
+			<section class="form-block">
+				<div class="row">
+					<div class="col text-right">
+						<img style="height: 170px;" alt="Employee Photo" src="data:image/png;base64,{{ photo }}"/>
+					</div>
+					<div class="col text-left">
+						<h3 class="font-weight-bold">{{employee.employeeName}}</h3>
+						{% if employee.designation is not null %}
+							<h4 class="font-weight-bold">{{employee.designation.designationName}}</h4>
+						{% endif %}
+						{% if employee.gender.gender is defined %}
+							<td class="font-weight-bold display-5">{{employee.gender.gender}}</td>
+						{% else %}
+							<td class="font-weight-bold display-5 bg-danger">Not updated</td>
+						{% endif %}
+						<br/>
+						{% if employee.uidToken is not null %}
+							<span class="badge badge-secondary text-danger">User is Aadhaar linked</span>
+						{% else %}
+							<span class="badge badge-secondary text-green">User is not Aadhaar linked</span>
+						{% endif %}
+
+					</div>
+				</div>
+				<table class="table table-sm table-striped table-bordered table-hover table-condensed">
+					<tbody>
+						<tr>
+							<td class="text-right">Organization</td>
+							<td class="font-weight-bold display-5">{{employee.organizationUnit.organization.organizationName}}</td>
+							<td class="text-right">Organization Unit</td>
+							<td class="font-weight-bold display-5">{{employee.organizationUnit.OUName}}</td>
+						</tr>
+						<tr>
+							<td class="text-right">Mobile Number</td>
+							<td class="font-weight-bold display-5">
+								{% if employee.registrationMode == "MS" %}
+									<span class="badge badge-success fa-2x">{{employee.mobileNumber}}</span>
+								{% else %}
+									{{employee.mobileNumber}}
+								{% endif %}
+							</td>
+							<td class="text-right">E-Mail</td>
+							<td class="font-weight-bold display-5">
+								{% if employee.registrationMode == "ES" %}
+									<span class="badge badge-success fa-2x">{{employee.emailAddress}}</span>
+								{% else %}
+									{{employee.emailAddress}}
+								{% endif %}
+								{% if employee.alternateEmailAddress is not null %}
+									{% set alternateEmailAddress=  '/' ~ employee.alternateEmailAddress %}
+								{% else %}
+									{% set alternateEmailAddress= '' %}
+								{% endif %}
+								{{alternateEmailAddress}}
+							</td>
+						</tr>
+						<tr>
+							<td class="text-right">Jabber ID</td>
+							<td class="font-weight-bold display-5">{{employee.jabberID}}</td>
+							<td class="text-right">Jabber Name</td>
+							<td class="font-weight-bold display-5">{{employee.jabberName}}</td>
+						</tr>
+					</tbody>
+				</table>
+				<div class="form-group">
+					<label for="verify-remarks">Remarks</label><input type="text" id="verify-remarks" name="verify-remarks" required="required" class="form-control verify-remarks" value="OK Verified"></div>
+			</section>
+			{% if employee.registrationMode == "ES" %}
+				<p>The email
+					<span class="text-danger">{{employee.emailAddress}}</span>
+					was used by the user for registration and the same has been verified using OTP</p>
+				<h2 class="text-danger">Verified that the email
+					{{employee.emailAddress}}
+					belongs to the official</h2>
+			{% elseif employee.registrationMode == "MS" %}
+				<p>The mobile
+					<span class="text-danger">{{employee.mobileNumber}}</span>
+					was used by the user for registration and the same has been verified using OTP</p>
+				<h2 class="text-danger">Verified that the mobile
+					{{employee.mobileNumber}}
+					belongs to the official</h2>
+			{% endif %}
+		{% else %}
+			<h4>Proper organization unit must be assigned before verification</h4>
+		{% endif %}
+	{% else %}
+		<h4>Proper designation must be assigned before verification</h4>
+	{% endif %}
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		{% if employee.designation is not null %}
+			{% if employee.organizationUnit is not null %}
+				<button type="button" class="btn btn-sm btn-success btn-emp-verify-confirm" data-path="{{ path('portal_verify_emp_verify_confirm') }}" data-objid="{{ employee.guId }}" data-dismiss="modal">Confirm Verification</button>
+				<button type="button" class="btn btn-sm btn-danger btn-emp-reject-confirm" data-path="{{ path('portal_verify_emp_reject_confirm') }}" data-objid="{{ employee.guId }}" data-dismiss="modal">Reject</button>
+			{% endif %}
+		{% endif %}
+		<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+	</div>
+{% endblock %}

@@ -1,0 +1,35 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+	<div class="row">
+{% if (not is_granted("ROLE_OU_ADMIN") ) %}
+		<div class="col-6">
+			<h5>
+				Manage Organization
+			</h5>
+		</div>
+		<div class="col-6 text-right">
+			<button class="btn btn-xs btn-primary" data-toggle="collapse" data-target="#__filterContainer" aria-expanded="false" aria-controls="__filterContainer">
+				<span class="d-none d-md-block">Filter</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-search"></i>
+			</button>
+			<button class="btn btn-xs btn-success btn-action-new text-white" data-list-path="{{ path('portal_o_list' )}}" data-new-path="{{ path('portal_o_new' )}}" title="Add a new organization">
+				<span class="d-none d-md-block">
+					+ New
+				</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-plus"></i>
+			</button>
+		</div>
+	</div>
+	{% include '/portal/generic/_dynamic_filter.html.twig' with {'listpath':path('portal_o_list')} %}
+	<div id="__listContainer">
+		{{ render(controller('App\\Controller\\Portal\\OrganizationController::list')) }}
+	</div>
+	{% else %}
+<div class="col-12">
+<h4 class="alert alert-info">UNAUTHORIZED ACCESS</h4>
+</div>
+{% endif %}
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/generic.js') }}"></script>
+{% endblock %}

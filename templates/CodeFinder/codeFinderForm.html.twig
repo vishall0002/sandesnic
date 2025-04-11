@@ -1,0 +1,139 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalContent %}
+
+
+    <div class="col-md-12" id="modelV">
+        <div class="form-group">
+            <label class="control-label sbParent1Label">{{ fileContentsArr[jsonFilePrefixName]['Parent1']['label'] }}</label>
+
+            {% set param = fileContentsArr[jsonFilePrefixName]['Parent1']['param'] %}
+            {% if fileContentsArr[jsonFilePrefixName]['Parent1']['path'] is defined %}
+                {{ render(controller(fileContentsArr[jsonFilePrefixName]['Parent1']['path'],{'param' : param})) }}
+            {% else %}
+                <select 
+                    id="sbParent1" 
+                    {%if fileContentsArr[jsonFilePrefixName]['Parent2'] is not defined %}{{selectType}}{% endif %} 
+                    class="form-control dropdownSearch  cfParent" 
+                    data-parentlevel ="2"
+                    name="masterEntityList">
+                    <option value="">-- Select --</option>
+                    {% for item in masterEntity %}
+                        <option value="{{ item.id }}">{{ attribute(item,param) }}</option>
+                    {% endfor %}
+                </select>
+            {% endif %}
+        </div>
+
+        {% if fileContentsArr[jsonFilePrefixName]['Parent2'] is defined %}
+
+            <div class="form-group">
+                <label class="control-label sbParent2Label">{{ fileContentsArr[jsonFilePrefixName]['Parent2']['label'] }}</label>
+                <select
+                    id="sbParent2"
+                    {%if fileContentsArr[jsonFilePrefixName]['Parent3'] is not defined %}{{selectType}} {% endif %}
+                    class="form-control dropdownSearch cfParent"
+                    data-parentlevel ="3"
+                    data-param="{{ fileContentsArr[jsonFilePrefixName]['Parent2']['param'] }}"
+                    data-path="{{path(fileContentsArr[jsonFilePrefixName]['Parent2']['path'])}}"
+                    data-postparam="{{ fileContentsArr[jsonFilePrefixName]['Parent2']['postParam'] }}">
+                    <option value="">-- Select --</option>
+                </select>
+            </div>
+
+            {% if fileContentsArr[jsonFilePrefixName]['Parent3'] is defined %}
+                <div class="form-group">
+                    <label class="control-label sbParent3Label">{{ fileContentsArr[jsonFilePrefixName]['Parent3']['label'] }}</label>
+                    <select
+                        id="sbParent3"
+                        {%if fileContentsArr[jsonFilePrefixName]['Parent4'] is not defined %}{{selectType}} {% endif %}
+                        class="form-control dropdownSearch cfParent"
+                        data-parentlevel ="4"
+                        data-param="{{ fileContentsArr[jsonFilePrefixName]['Parent3']['param'] }}"
+                        data-postparam="{{ fileContentsArr[jsonFilePrefixName]['Parent3']['postParam'] }}"
+                        data-path="{{path(fileContentsArr[jsonFilePrefixName]['Parent3']['path'])}}">
+                        <option value="">-- Select --</option>
+                    </select>
+                </div>
+
+                {% if fileContentsArr[jsonFilePrefixName]['Parent4'] is defined %}
+                    <div class="form-group">
+                        <label class="control-label sbParent4Label">{{ fileContentsArr[jsonFilePrefixName]['Parent4']['label'] }}</label>
+                        <select
+                            id="sbParent4"
+                            {%if fileContentsArr[jsonFilePrefixName]['Parent5'] is not defined %}{{selectType}} {% endif %}
+                            class="form-control dropdownSearch cfParent"
+                            data-parentlevel ="5"
+                            data-param="{{ fileContentsArr[jsonFilePrefixName]['Parent4']['param'] }}"
+                            data-postparam="{{ fileContentsArr[jsonFilePrefixName]['Parent4']['postParam'] }}"
+                            data-path="{{path(fileContentsArr[jsonFilePrefixName]['Parent4']['path'])}}">
+                            <option value="">-- Select --</option>
+                        </select>
+                    </div>
+                    {% if fileContentsArr[jsonFilePrefixName]['Parent5'] is defined %}
+                        <div class="form-group">
+                            <label class="control-label sbParent5Label">{{ fileContentsArr[jsonFilePrefixName]['Parent5']['label'] }}</label>
+                            <select
+                                id="sbParent5"
+                                {%if fileContentsArr[jsonFilePrefixName]['Parent6'] is not defined %}{{selectType}} {% endif %}
+                                class="form-control dropdownSearch cfParent"
+                                data-parentlevel ="6"
+                                data-param="{{ fileContentsArr[jsonFilePrefixName]['Parent5']['param'] }}"
+                                data-postparam="{{ fileContentsArr[jsonFilePrefixName]['Parent5']['postParam'] }}"
+                                data-path="{{path(fileContentsArr[jsonFilePrefixName]['Parent5']['path'])}}">
+                                <option value="">-- Select --</option>
+                            </select>
+                        </div>
+                    {% endif %}
+                {% endif %}
+            {% endif %}
+        {% endif %}
+        <input type="hidden" id="depthCount" value="{{depthCount}}"/>
+        <input type="hidden" id="jsonFilePrefixName" value="{{ jsonFilePrefixName }}"/>
+        <input type="hidden" id="selectType" value="{{selectType}}"/>
+        <input type="hidden" id="selectFor" value="{{selectFor}}"/>
+        <input type="hidden" id="custFunctionName" value="{{custFunctionName}}"/>
+        <input type="hidden" id="cfSelectedValue" value=""/>
+    </div>
+    {#  <div class="col-md-12 col-md-offset-5">
+          <button class="btn btn-primary btn-xs selectCode col-md-1 pull-left">
+              OK
+          </button>
+      </div>#}
+{% endblock %}
+{% block modalFooter %}
+    {# <button type="button" id="district_btnInsert" name="district[btnInsert]" class="btn btn-sm btn-primary btn_portal_submit btn">OK</button>
+    <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button> #}
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="{{asset('build/js/codeFinder.js')}}"></script>
+<script>
+$(document).ready(function() {
+    $('#modelV').on('hidden.bs.modal', function () {
+        $(this).find('form')[0].reset();  // Reset form fields
+        $(this).find('.modal-body').html($(this).find('.modal-body').html()); // Reset dynamic content
+    });
+});
+</script>
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>
+
+<script>
+$(document).ready(function () {
+    function initializeChosen() {
+        $(".dropdownSearch").chosen({ width: "100%" });
+    }
+
+   //re load when model show 
+    $("#cf_modal_body").on("shown.bs.modal", function () {
+        initializeChosen();
+    });
+    // Run it once for normal load
+    initializeChosen(); 
+});
+
+</script>
+
+
+
+
+{% endblock %}

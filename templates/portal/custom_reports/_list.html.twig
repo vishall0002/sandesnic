@@ -1,0 +1,71 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+	<div class="row border-b1">
+		<div class="col">
+			<div style="height: 42px; width: 42px;" class="float-left">
+				<svg xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24" stroke="#00AACE">
+					<path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-3 7h3m-3 4h3m-6-4h.01M9 16h.01"/>
+				</svg>
+			</div>
+			<h5 class="font-weight-bold text-primary mt-2">
+				Custom Reports
+			</h5>
+		</div>
+	</div>
+    <hr/>
+
+    <form action="{{path('sadmin_custom_report_generate')}}" method="post" name="frmGoG">
+        <div class="row mb-2">
+            <div class="col-8 mt-2">
+                <label>Choose Report</lable>
+            </div>
+            <div class="col-8">
+                <select id="filterArray" class="searchable" name="sbox_custom_report">
+                    <option value="">Select Report</option>
+                    {% for custom_report in custom_reports %}
+                        {% if selected_custom_report %}
+                            {% if custom_report.id == selected_custom_report.id %}
+                                <option value="{{ custom_report.guId }}" selected>{{ custom_report.reportName }}</option>
+                            {% else %}
+                                <option value="{{ custom_report.guId }}">{{ custom_report.reportName }}</option>
+                            {% endif %}
+                        {% else %}
+                            <option value="{{ custom_report.guId }}">{{ custom_report.reportName }}</option>
+                        {% endif %}
+                    {% endfor %}
+                </select>
+            </div>
+            <div class="col-4">
+                <div class="row">
+                        <button class="btn btn-sm btn-primary" type="submit" >Report</button>
+                    {% if (selected_custom_report and result | length > 0) or (is_download_only == true) %}
+                        <button class="btn btn-info btn-xs btn btn-info csv_download ml-3" data-path="{{ path('dashboard_download_csv_generic') }}" data-action-path="{{ path('sadmin_custom_report_download')}}" type="button" data-original-title="" title="">
+                            <span class="d-none d-md-block"><i class="fa fa-download"></i>Download</span>
+                            <i class="d-sm-block d-md-none d-lg-none fa fa-download"></i>
+                        </button>
+                    {% endif %}
+                </div>
+                {% if is_download_only == true %}
+                    <span class="text-danger"><strong>Please click on Download button for downloading the report!</strong></span>
+                {% endif %}
+            </div>
+        </div>
+    </form>
+    <hr class="m-1"/>
+    <div id="__listContainer">
+        {% if (result | length > 0) and is_download_only == false %}
+            <h5 class="text-primary">Report</h5>
+            <div class="table-responsive-sm">
+                {% if result_html is defined %}
+                    {{ result_html | raw}}
+                {% endif %}
+            </div>
+        {% else %}
+            {% if is_download_only == true %}
+                {# <span class="text-danger"><strong>Please click on Download button for downloading the report!</strong></span> #}
+            {% else %}
+                <div class="btn btn-social btn-info text-center col-md-12">No More Items!</div>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

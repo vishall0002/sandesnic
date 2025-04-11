@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, initial-scale=1" name="viewport"/>
+		<title>
+			SANDES Portal
+		</title>
+		<link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="#">
+		<link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+		<link rel="icon" type="image/x-icon" href="{{ asset('img/logo_app.png') }}"/>
+	</head>
+	<body>
+		<div class="container pt-5">
+			<div class="row" style="height: 60vh">
+				<div class="col-12 text-center">
+					<img src="{{ asset('img/logo.png') }}"/>
+				</div>
+				<div class="col-12 text-center">
+					<h1 style="color: white;font-family: Metropolis; font-weight: bolder; font-size: 3em;">SANDES</h1><br/>
+					<h3 class="text-primary" style="font-family: Metropolis; font-weight: bolder; font-size: 2em;">Government Instant Messaging System</h3>
+				</div>
+				<div class="col-12 text-center">
+					<a href="{{ path('app_login_native') }}" class="btn btn-sm btn-outline-primary m-1">
+						Sign In - Native</a>
+				</div>
+			</div>
+
+			<div class="container">
+				<div class="row">
+					<div class="col-12 text-center p-2">
+						<img alt="Digital India Logo" src="/img/logos/di/white.svg" width="125px"/>
+						<a class="m-3" href="http://www.nic.in" rel="noopener noreferrer" target="_blank">
+							<img src="{{ asset('img/logos/nic/Nic_logo3-01.svg') }}" width="125px" class="left" alt=""></a>
+					</div>
+					<div class="col-12 text-center p-2">
+						<a class="m-3" href="https://twitter.com/NICMeity" style="text-decoration: none;">
+							<i class="fa fa-2x fa-twitter-square m-0"></i>
+							<span class="">Twitter</span>
+						</a>
+						<a class="m-3" href="https://facebook.com/NICIndia" style="text-decoration: none;">
+							<i class="fa fa-2x fa-facebook-square m-0"></i>
+							<span class="">Facebook</span>
+						</a>
+						<a class="m-3" href="https://linkedin.com/company/national-informatics-centre" style="text-decoration: none;">
+							<i class="fa fa-2x fa-linkedin-square m-0"></i>
+							<span class="">Linkedin</span>
+						</a>
+						<a class="m-3" href="#">
+							<i class="fa fa-2x fa-comment m-0"></i>
+							support-sandes[at]nic.in
+						</a>
+						<a class="m-3" href="https://www.nic.in">
+							<i class="fa fa-2x fa-globe m-0"></i>
+							www.nic.in</a>
+					</div>
+					<div class="col-md-12 text-center p-2">
+						<small class="text-center">
+							<span class="text-success">{{ 'GO GREEN  Version: ' ~ appversion  }}</span>
+							|
+							<span id="timeShow" style="color: #718a83;" data-time="{{ appServices.getUnixTimeStamp()}}"></span>
+						</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</body>
+</html>

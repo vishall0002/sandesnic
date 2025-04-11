@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="{{ app.request.locale }}">
+	<head>
+		<meta charset="UTF-8"/>
+		<meta content="width=device-width, user-scalable=no" name="viewport">
+		<title>
+			{% block title %}Sandes Portal, Government  Instant Messaging System, Government of India
+			{% endblock %}
+		</title>
+		<link rel="alternate" type="application/rss+xml" title="{{ 'rss.title'|trans }}" href="#">
+		{% block stylesheets %}
+			<link rel="stylesheet" href="{{ asset('build/css/app.css') }}">
+			<style>
+				.carousel-inner > .carousel-item > img {
+					margin: 0 auto;
+				}
+				@media print {
+					#printBtn {
+						display: none;
+					}
+				}
+			</style>
+		{% endblock %}
+		<link rel="icon" type="image/x-icon" href="{{ asset('img/logo_app.png') }}"/>
+	</head>
+	<body id="{% block body_id %}{% endblock %}"> {% block header %}{% endblock %}{% block body %}{% endblock %}
+		{% set items = [] %}
+		{% for type, messages in app.flashes %}
+			{% for message in messages %}
+				{% set item = {
+                    (type): message
+                } %}
+				{% set items = items | merge(item) %}
+			{% endfor %}
+		{% endfor %}
+		<input type="hidden" id="server-flash-messages" value="{{items | json_encode()}}"/>
+		{# 
+						These commented code disable display of unread messages
+						<div id="__dvGIMS" class="__dvGIMS card border-primary p-0" style="height:350px;display:none;" data-umurs-path="{{path('user_message_unread_status')}}">
+							<div class="card-header  bg-primary text-white" style="height: 50px;">
+								<h4 class="float-left">Sandes unread messages</h4>
+								<button class="close popup-close text-dark float-right" aria-hidden="true" type="button">×</button>
+							</div>
+							<div class="card-body __dvGIMSBody p-0"></div>
+						</div> #}
+		{# <div class="popIcon btn btn-lg btn-secondary" id="popIcon_id" style="display:none;"><small class="gimsOV badge badge-success"  style="font-size: 1em; position: absolute;top: 0%;right: 0px;transform: translate(-50%, -50%);"></small>
+						<img src="{{ asset('img/logo_app64.png') }}" alt="" width="60" height="60">
+						</div> #}
+			<div aria-hidden="true" aria-labelledby="base_modalLabel" class="modal fade" id="base_modal" role="dialog" tabindex="-1"> <div class="modal-dialog modal-lg" role="document">
+				<div class="modal-content" id="base_modal_body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="base_modalLabel">Modal title</h5>
+						<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="itsloading bg-secondary" hidden="hidden" style="width: 100%; height: 100%;"></div>
+						<div id="base_modal_content"></div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div aria-hidden="true" aria-labelledby="mini_base_modalLabel" class="modal  fade" id="mini_base_modal" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-lg" style="width:50%;" role="document">
+				<div class="modal-content" id="mini_base_modal_body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="mini_base_modalLabel">Modal title</h5>
+						<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="itsloading bg-secondary" hidden="hidden" style="width: 100%; height: 100%;"></div>
+						<div id="mini_base_modal_content"></div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+
+		<span id="cfPath" data-path="{{ path('app_code_finder_show_form_for_code_finder') }}"></span>
+		<div aria-hidden="true" aria-labelledby="cf_modalLabel" class="modal fade" id="cf_modal" role="dialog" tabindex="-1">
+			<div class="modal-dialog modal-lg" role="document" style="width: 40%; min-height: 50%;">
+				<div class="modal-content" id="cf_modal_body">
+					<div class="modal-header">
+						<h5 class="modal-title" id="cf_modalLabel">Modal title</h5>
+						<button aria-label="Close" class="close" data-dismiss="modal" type="button">
+							<span aria-hidden="true">&times;</span>
+						</button>
+					</div>
+					<div class="modal-body">
+						<div class="itsloading bg-secondary" hidden="hidden"></div>
+						<div id="cf_modal_content"></div>
+					</div>
+					<div class="modal-footer">
+						<button class="btn btn-primary btn selectCode">OK</button>
+						<button class="btn btn-secondary" data-dismiss="modal" type="button">Close</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		{% block footer %}
+			<footer class="" style="margin-left: 0px;">
+				<div class="container">
+					<div class="row">
+						<div class="col-12 text-center p-2">
+							<img alt="Digital India Logo" src="/img/logos/di/white.svg" width="125px"/>
+							<a class="m-3" href="http://www.nic.in" rel="noopener noreferrer" target="_blank">
+								<img src="{{ asset('img/logos/nic/Nic_logo3-01.svg') }}" width="125px" class="left" alt=""></a>
+						</div>
+						<div class="col-12 text-center p-2">
+							<a class="m-3" href="https://twitter.com/NICMeity" style="text-decoration: none; overflow-wrap: normal;">
+								<i class="fa fa-2x fa-twitter-square m-0"></i>
+								Twitter
+							</a>
+							<a class="m-3" href="https://facebook.com/NICIndia" style="text-decoration: none; overflow-wrap: normal;">
+								<i class="fa fa-2x fa-facebook-square m-0"></i>
+								Facebook
+							</a>
+							<a class="m-3" href="https://linkedin.com/company/national-informatics-centre" style="text-decoration: none; overflow-wrap: normal;">
+								<i class="fa fa-2x fa-linkedin-square m-0"></i>
+								Linkedin
+							</a>
+							<a class="m-3" href="#" style="text-decoration: none; overflow-wrap: normal;">
+								<i class="fa fa-2x fa-comment m-0"></i>
+								support-sandes[at]nic.in
+							</a>
+							<a class="m-3" href="https://www.nic.in" style="text-decoration: none; overflow-wrap: normal;">
+								<i class="fa fa-2x fa-globe m-0"></i>
+								www.nic.in
+							</a>
+							<a class="m-3" href="#" style="text-decoration: none; overflow-wrap: normal;">
+								<i class="fa fa-2x fa-info-circle m-0"></i>
+								{{ defValue.getDefaultValue('WEB_INFO_MANAGER') }}</a>
+						</div>
+						<div class="col-md-12 text-center p-2">
+							<small class="text-center">
+								<span class="text-success">{{ 'GO GREEN  Version: ' ~ appversion  }}</span>
+								|
+								<span id="timeShow" style="color: #718a83;" data-time="{{ appServices.getUnixTimeStamp()}}"></span>
+							</small>
+						</div>
+					</div>
+				</div>
+			</footer>
+		{% endblock %}
+		{% block javascripts %}
+			<script src="{{ asset('build/manifest.js') }}"></script>
+			<script src="{{ asset('build/js/common.js') }}"></script>
+		{% endblock %}
+	</body>
+</html>

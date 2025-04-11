@@ -1,0 +1,66 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    Upload Photo
+{% endblock %}
+{% block modalContent %}
+    {% import "portal/group/_photo_widget.html.twig" as app_widget %}
+    <style type="text/css">
+        .cropit-preview {
+            background-color: #f8f8f8;
+            background-size: cover;
+            border: 5px solid #ccc;
+            border-radius: 3px;
+            width: 200px !important;
+            height: 200px !important;
+        }
+        .cropit-preview-image-container {
+        .cropit-preview-height-container {
+            cursor: move;
+        }
+        .cropit-preview-background {
+            opacity: 0.2;
+            cursor: auto;
+        }
+        .btn-custom input[type="file"] {
+            position: fixed;
+            top: -1000px;
+
+        }
+        .btn-custom {
+            display: inline-block;
+        }
+    </style>
+    <div class="row" id="photoUploadModal">
+        <div class="col text-center">
+            <div class="image-editor">
+                <div class="cropit-preview" style="margin: auto; width: 200px;">
+                    <div class="spinner1 cropit-image-loading">
+                        <div class="spinner-dot"></div>
+                        <div class="spinner-dot"></div>
+                        <div class="spinner-dot"></div>
+                    </div>
+                </div>
+                {{ app_widget.cropper_controlls() }}
+                <div class="btns">
+                    {{ app_widget.cropper_browse(groupPhoto?'Change':'Browse') }}
+                </div>
+            </div>
+            <input type="hidden" id="groupPhoto" value="{{groupPhoto}}" data-blank-image-path="{{ asset('img/profile.jpg')}}">
+            <input type="hidden" id="groupGuId" value="{{groupGuId}}" data-photo-upload-path="{{path('portal_grp_photo_upload')}}">
+            <input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+        </div>
+        <div class="col">
+            <h4>
+                <i class="fa fa-info-circle"></i>
+                Image Upload Specifications</h4>
+            <ol>
+                <li>Image should be of the format jpg, jpeg
+                </li>
+
+                <li>Click browse button to choose image</li>
+                <li>Move the image to adjust</li>
+                <li>Click Browse/Change button to upload/change image</li>
+            </ol>
+        </div>
+    </div>
+{% endblock %}

@@ -1,0 +1,31 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Sandes Messaging Gateway - Update App Registration
+{% endblock %}
+{% block formstart %}
+	{{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		{{ form_row(form.clientId) }}
+		<div class="row">
+			<div class="col-md-6"> {{ form_row(form.appTitle) }}</div>
+			<div class="col-md-6"> {{ form_row(form.appName) }}</div>
+			<div class="col-md-6"> {{ form_row(form.appDescription) }}</div>
+			{# <div class="col-md-6"> {{ form_row(form.clientId) }}</div>	 #}
+			<div class="col-md-6"> {{ form_row(form.hmacKey) }}</div>	
+			<div class="col-md-6"> {{ form_row(form.ipWhiteList) }}</div>	
+			<div class="col-md-6"> {{ form_row(form.mobileNumber) }}</div>	
+		</div>	
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		{{ form_widget(form.btnUpdate, {attr: {class: 'btn btn-sm btn-primary btn-action-submit'} }) }}
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}
+	{{ form_row(form._token) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

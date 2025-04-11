@@ -1,0 +1,62 @@
+[
+    {
+        "month": "2020-07",
+        "organization": 721878,
+        "egovapp": 172762
+    },
+    {
+        "month": "2020-06",
+        "organization": 554039,
+        "egovapp": 165565
+    },
+    {
+        "month": "2020-05",
+        "organization": 791606,
+        "egovapp": 212928
+    },
+    {
+        "month": "2020-04",
+        "organization": 907883,
+        "egovapp": 64258
+    },
+    {
+        "month": "2020-03",
+        "organization": 1353066,
+        "egovapp": 134483
+    },
+    {
+        "month": "2020-02",
+        "organization": 716033,
+        "egovapp": 191813
+    },
+    {
+        "month": "2020-01",
+        "organization": 446586,
+        "egovapp": 259638
+    },
+    {
+        "month": "2019-12",
+        "organization": 389166,
+        "egovapp": 206619
+    },
+    {
+        "month": "2019-11",
+        "organization": 799773,
+        "egovapp": 61608
+    },
+    {
+        "month": "2019-10",
+        "organization": 223329,
+        "egovapp": 13242
+    },
+    {
+        "month": "2019-09",
+        "organization": 120847,
+        "egovapp": 24
+    },
+    {
+        "month": "2019-08",
+        "organization": 84438,
+        "egovapp": 11
+    }
+]

@@ -1,0 +1,159 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Register Members
+{% endblock %}
+{% block formstart %}
+	{{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+	{{ form_row(form.guId) }}
+	<div class="row">
+		<div class="col-4">
+			<div class="card">
+				<div class="card-header">Instructions</div>
+				<div class="card-title">
+					<ul class="m-2">
+						<li>
+							Administrative privileges may be assigned using Role Management available in Action Menu of Members List
+						</li>
+						<li>
+							Profile photos may be updated using photo Action Menu available in  Members List
+						</li>
+					</ul>
+				</div>
+			</div>
+		</div>
+		<div class="col-8">
+			<div class="row">
+				{% if is_granted("ROLE_SUPER_ADMIN") %}
+					<div class="w-100 border-bottom" style="background-color: #f0f0f0 !important;">
+						<div class="border-primary rounded-circle number-circle text-primary text-center fs-22 float-left m-1">
+							<strong class="fs-16e">1</strong>
+						</div>
+						<strong class="text-dark fs-16e m-2 float-left">Organization Details</strong>
+					</div>
+					<div class="col-md-6">
+						{{form_row(form.ministry) }}
+					</div>
+					<div class="col-md-6">
+						{{form_row(form.organization) }}
+					</div>
+					<div class="col-md-6">
+						{{form_row(form.organizationUnit) }}
+					</div>
+
+				{% elseif is_granted("ROLE_MINISTRY_ADMIN") %}
+					<div class="w-100 border-bottom" style="background-color: #f0f0f0 !important;">
+						<div class="border-primary rounded-circle number-circle text-primary text-center fs-22 float-left m-1">
+							<strong class="fs-16e">1</strong>
+						</div>
+						<strong class="text-dark fs-16e m-2 float-left">Organization Details -
+							{{profile.ministry.ministryName}}</strong>
+					</div>
+					<div class="col-md-6">
+						{{form_row(form.organization) }}
+					</div>
+					<div class="col-md-6">
+						{{form_row(form.organizationUnit) }}
+					</div>
+				{% elseif is_granted("ROLE_O_ADMIN") %}
+					<div class="w-100 border-bottom" style="background-color: #f0f0f0 !important;">
+						<div class="border-primary rounded-circle number-circle text-primary text-center fs-22 float-left m-1">
+							<strong class="fs-16e">1</strong>
+						</div>
+						<strong class="text-dark fs-16e m-2 float-left" title="Ministry is {{profile.ministry.ministryName}}">Organization Details -
+							{{profile.organization.organizationName}}</strong>
+					</div>
+					<div class="col-md-6">
+						{{form_row(form.organizationUnit) }}
+					</div>
+				{% elseif is_granted("ROLE_OU_ADMIN") %}
+					<div class="w-100 border-bottom" style="background-color: #f0f0f0 !important;">
+						<div class="border-primary rounded-circle number-circle text-primary text-center fs-22 float-left m-1">
+							<strong class="fs-16e">1</strong>
+						</div>
+						<strong class="text-dark fs-16e m-2 float-left" title="Ministry is {{profile.ministry.ministryName ~ ' Organization ' ~ profile.organization.organizationName}}">Organization Details -
+							{{profile.organizationUnit.OUName}}
+						</strong>
+					</div>
+					<input class="oubox" type="hidden" data-prefix="{{profile.organizationUnit.OUCode}}"/>
+			{% endif %}
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-6">
+						{{form_row(form.state) }}
+					</div>
+					<div class="col-md-6">
+						{{form_row(form.district) }}
+					</div>
+				</div>
+			</div>
+			<div class="w-100 border-bottom" style="background-color: #f0f0f0 !important;">
+				<div class="border-primary rounded-circle number-circle text-primary text-center fs-22 float-left m-1">
+					<strong class="fs-16e">2</strong>
+				</div>
+				<strong class="text-dark fs-16e m-2 float-left">Basic Details</strong>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-6 p-0">
+					{{ form_label(form.employeeCode) }}
+					{{ form_widget(form.employeeCode, { 'attr': {'class': 'txt-member-code','data-verify-path':  path('user_exists_by_name', {'username' : '____' } ) } }) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-10 p-0">
+					{{ form_row(form.employeeName) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-6 p-0">
+					{{ form_row(form.designation) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-6 p-0">
+					{{ form_row(form.gender) }}
+				</div>
+			</div>
+			<div class="w-100 border-bottom" style="background-color: #f0f0f0 !important;">
+				<div class="border-primary rounded-circle number-circle text-primary text-center fs-22 float-left m-1">
+					<strong class="fs-16e">3</strong>
+				</div>
+				<strong class="text-dark fs-16e m-2 float-left">Contact Details</strong>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-10 p-0">
+					{{ form_label(form.emailAddress) }}
+					{{ form_widget(form.emailAddress, { 'attr': {'class': 'txt-member-email','data-verify-path':  path('user_exists_by_email', {'email' : '____' } ) } }) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="col-md-10 p-0">
+					{{ form_row(form.alternateEmailAddress, { 'attr': {'class': 'txt-member-email','data-verify-path':  path('user_exists_by_email', {'email' : '____' } ) } }) }}
+				</div>
+			</div>
+			<div class="col-md-6">
+				<div class="row">
+					<div class="col-md-4">
+						{{ form_row(form.country) }}
+					</div>
+					<div class="col-md-8">
+						{# {{ form_row(form.mobileNumber) }} #}
+						{{ form_label(form.mobileNumber) }}
+						{{ form_widget(form.mobileNumber, { 'attr': {'class': 'txt-member-mobile','data-verify-path':  path('user_exists_by_mobile', {'mobile' : '____' } ) } }) }}
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block modalFooter %}
+	<div class="row text-right">
+		{{ form_widget(form.btnInsert, {attr: {class: 'btn btn-sm btn-primary btn-action-submit m-1'} }) }}
+		<button class="btn btn-sm btn-secondary m-1" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}
+	{{ form_row(form._token) }}
+	{{ form_end(form, {'render_rest': false}) }}
+{% endblock %}

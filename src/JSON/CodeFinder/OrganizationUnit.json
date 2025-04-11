@@ -1,0 +1,21 @@
+{
+    "OrganizationUnit": {
+        "Parent1": {
+            "path": "App\\Controller\\Portal\\MinistryController::getMinistryByRole",
+            "param": "ministryName",
+            "label": "Ministry"
+        },
+        "Parent2": {
+            "path": "get_organisations",
+            "param": "organizationName",
+            "label": "Organization",
+            "postParam": "ministryId"
+        },
+        "Parent3": {
+            "path": "get_organisation_units",
+            "param": "OUName",
+            "label": "Organization Unit",
+            "postParam": "orgId"
+        }
+    }
+}

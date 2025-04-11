@@ -1,0 +1,52 @@
+{% if (pagination | length > 0) %}
+	<table class="table table-striped table-bordered table-hover table-sm table-responsive-xl">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th {% if pagination.issorted('e.employeeName') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'Name', 'e.employeeName') }}</th>
+				<th {% if pagination.issorted('e.employeeCode') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'Code', 'e.employeeCode') }}</th>
+				<th {% if pagination.issorted('d.designationName') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'Designation', 'd.designationName') }}</th>
+				<th>Email</th>
+				<th>Mobile</th>
+				<th {% if pagination.issorted('ou.OUName') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'OU', 'ou.OUName') }}</th>				
+			</tr>
+		</thead>
+		<tbody>
+			{% set offset = pagination.getPaginationData.numItemsPerPage %}
+			{% set current = pagination.getPaginationData.current %}
+			{% for record in pagination %}
+				{% set badges = '' %}
+				<tr>
+					<td>
+						{{ ((current-1)*offset)+loop.index }}
+					</td>
+					<td class="data">
+						{{record.employeeName}}
+					</td>
+					<td class="data">
+						{{record.employeeCode}}
+					</td>
+					<td class="data">
+						{{record.designationName}}
+					</td>
+					<td class="data">
+						{{record.emailAddress}}
+					</td>
+					<td class="data">
+						{{record.mobileNumber}}
+					</td>
+					<td class="data">
+						{{record.OUName | upper}}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No Employees found</h4>
+{% endif %}

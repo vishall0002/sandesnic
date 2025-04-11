@@ -1,0 +1,10 @@
+{
+    "SubscriberUser": {
+        "Parent1": {
+            "path": "App\\Controller\\Portal\\EmployeeController::getEmployeeByOu",
+            "Entity": "Portal\\Employee",
+            "param": "employeeName",
+            "label": "User"
+        }
+    }
+}

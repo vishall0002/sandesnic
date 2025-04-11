@@ -1,0 +1,55 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    Manage Employee Groups
+{% endblock %}
+{% block modalContent %}
+    {% set availableGroups = groupStatus.availableGroups %}
+    {% set assignedGroups = groupStatus.assignedGroups %}
+    <section class="form-block">
+        <div class="row">
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Groups Available</h5>
+                        <p class="card-text">Following are the available groups which are not assigned to the user</p>
+                        {% for avgroup in availableGroups %}
+                            <h3>
+                                <a href="#" data-toggle="confirmation" class="badge badge-pill badge-secondary btn-emp-groups-add m-1" data-objid="{{ employee.guId }}" data-group="{{ avgroup.guId }}" data-group-add-path="{{ path('portal_emp_groups_add') }}">
+                                    <i class="fa fa-plus" style="color: green"></i>
+                                    <small>
+                                        {{avgroup.groupTitle}}
+                                    </small>
+                                </a>
+                            </h3>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+            <div class="col-6">
+                <div class="card">
+                    <div class="card-body">
+                        <h5 class="card-title">Groups Assigned</h5>
+                        <p class="card-text">Following are the groups which are already assigned to the user</p>
+                        {% for asgroup in assignedGroups %}
+                            <h3>
+                                <a href="#" data-toggle="confirmation" class="badge badge-pill badge-secondary btn-emp-groups-remove m-1" data-objid="{{ employee.guId }}" data-group="{{ asgroup.group.guId }}" data-group-remove-path="{{ path('portal_emp_groups_remove') }}">
+                                    <i class="fa fa-close" style="color: red"></i>
+                                    <small>
+                                        {{asgroup.group.groupTitle}}
+                                    </small>
+                                </a>
+                            </h3>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}
+{% block formend %}{% endblock %}

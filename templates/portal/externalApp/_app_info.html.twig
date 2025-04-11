@@ -1,0 +1,58 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+   {{label}}
+   {% if ExternalApps.active == true %}
+        <span class="badge bg-success badge-medium">Active</span>
+    {% else %}
+        <span class="badge bg-danger badge-medium">In-Active</span>
+    {% endif %}
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        <table class="table table-sm table-striped table-bordered table-hover table-condensed">
+			<tbody>
+				<tr>
+					<td class="text-right">App Name</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.AppName}}</td>
+					<td class="text-right">App Title</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.appTitle}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">App Description</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.appDescription}}</td>
+					<td class="text-right">App Version</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.appVersion}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">Ip WhiteList</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.ipWhiteList}}</td>
+					<td class="text-right">App Logo Id</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.appLogoId}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">Home Url</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.homeURL}}</td>
+					<td class="text-right">Private Policy Link</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.privatePolicyLink}}</td>
+				</tr>
+                <tr>
+					<td class="text-right">Integration Scope</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.integrationScope}}</td>
+					<td class="text-right">App Category Id</td>
+					<td class="font-weight-bold display-5">{{ExternalApps.appCategoryId}}</td>
+				</tr>
+            </tbody>
+        </table>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+		{% if label == 'Activate Or Deactivate Apps' %}
+			{% if ExternalApps.active == true %}
+				<button class="btn btn-sm btn-primary btn-action-nfsubmit" data-objid="{{ExternalApps.clientId}}" data-action-path="{{path('portal_externalApp_deactivate')}}"> Deactivate</button>
+			{% elseif ExternalApps.active == false  %}
+				<button class="btn btn-sm btn-primary"> Activate</button>
+			{% endif %}
+		{% endif %}
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}

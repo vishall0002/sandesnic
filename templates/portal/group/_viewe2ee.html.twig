@@ -1,0 +1,100 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Group Profile - E2ee
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		<div class="row">
+			<div class="col text-right">
+				<img style="height: 170px;" alt="Group Photo" src="data:image/png;base64,{{ photo }}"/>
+			</div>
+			<div class="col text-left">
+				<h3 class="font-weight-bold">{{group.groupTitle}}</h3>
+				{% if group.isHidden %}
+					<span class="badge bg-success m-1 badge-medium">Hidden</span>
+				{% else %}
+					<span class="badge bg-secondary m-1 badge-medium">Hidden</span>
+				{% endif %}
+				{% if group.isMemberOnly %}
+					<span class="badge bg-success m-1 badge-medium">Member Only</span>
+				{% else %}
+					<span class="badge bg-secondary m-1 badge-medium">Member Only</span>
+				{% endif %}
+				{% if group.isModerated %}
+					<span class="badge bg-success m-1 badge-medium">Moderated</span>
+				{% else %}
+					<span class="badge bg-secondary m-1 badge-medium">Moderated</span>
+				{% endif %}
+				{% if group.isPasswordProtected %}
+					<span class="badge bg-success m-1 badge-medium">Password Protected</span>
+				{% else %}
+					<span class="badge bg-secondary m-1 badge-medium">Password Protected</span>
+				{% endif %}
+			</div>
+		</div>
+		<table class="table table-sm table-striped table-bordered table-hover table-condensed">
+			<tbody>
+				<tr>
+					<td class="text-right">Organization</td>
+					<td class="font-weight-bold badge-medium">{{group.organizationUnit.organization.organizationName}}</td>
+					<td class="text-right">Organization Unit</td>
+					<td class="font-weight-bold display-5">{{group.organizationUnit.OUName}}</td>
+				</tr>
+				<tr>
+					<td class="text-right">Group Title</td>
+					<td class="font-weight-bold display-5">{{group.groupTitle}}</td>
+					<td class="text-right">Group Description</td>
+					<td class="font-weight-bold display-5">{{group.groupDescription}}</td>
+				</tr>
+				<tr>
+					<td class="text-right">Group Type</td>
+					<td class="font-weight-bold display-5">{{group.groupType ? group.groupType.groupTypeName : 'Not set'}}</td>
+					<td class="text-right">Group Purpose</td>
+					<td class="font-weight-bold display-5">{{group.groupPurpose ? group.groupPurpose.groupPurposeName : 'Not set'}}</td>
+				</tr>
+				<tr>
+					<td class="text-right">Group Creation Mode</td>
+					<td class="font-weight-bold display-5">{{group.groupCreation ? group.groupCreation.groupCreationName : 'Not set'}}</td>
+					<td class="text-right">Host Name</td>
+					<td class="font-weight-bold display-5">{{group.xmppHost}}</td>
+
+				</tr>
+			</tbody>
+		</table>
+		{# {{dump(insertMetaData)}} #}
+		{% if insertMetaData is not null %}
+			<p>Group created on
+				{{insertMetaData.transactionDateTime|date('d-m-Y')}}
+			</p>
+		{% endif %}
+		{% if insertEmployee is not null %}
+			<p>Group created by
+				{{insertEmployee.employeeName}}
+			</p>
+		{% endif %}
+		{# {{dump(updateMetaData)}} #}
+		{% if updateMetaData is not null %}
+			<p>Group details updated on
+				{{updateMetaData.transactionDateTime|date('d-m-Y')}}
+			</p>
+		{% endif %}
+		{% if updateEmployee is not null %}
+			<p>Group details updated by
+				{{updateEmployee.employeeName}}
+			</p>
+		{% endif %}
+
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		{% if group.e2ee is not null %}
+			<span class="badge bg-success m-1 badge-medium">Group is E2EE enabled</span>
+		{% else %}
+			<button type="button" class="btn btn-sm btn-primary btn-action-nfsubmit" data-view-path="{{ path('portal_grp_view_e2ee_confirm') }}" data-objid="{{ group.guId }}">
+				Confirm E2EE</button>
+		{% endif %}	
+		<button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button>
+	</div>
+{% endblock %}
+

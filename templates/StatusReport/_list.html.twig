@@ -1,0 +1,78 @@
+<div class="row">
+	<div class="col-12">
+		<h5>
+			Broadcast Logs
+		</h5>
+	</div>
+</div>
+<div class="row mb-2">
+	<div class="col-6">
+		{{form_start(form)}}
+		{{form_widget(form.filters, {'value' :filter })}}
+		{{form_end(form)}}
+	</div>
+	<div class="col-5">
+		{{ knp_pagination_filter(pagination, {
+             'applog.req_date': 'Request Date'
+            }) }}
+	</div>
+</div>
+<div id="replc_div">
+	{% if (pagination | length > 0) %}
+		<table id="redirectPath" class="table table-striped table-bordered table-hover table-sm">
+			<thead>
+				<tr>
+					<th>#</th>
+					<th>Message</th>
+					<th>Title</th>
+					<th {% if pagination.issorted('req_date') %} class="sorted" {% endif %}>
+						{{ knp_pagination_sortable(pagination, 'Request Date', '[req_date]') }}
+					</th>
+					<th {% if pagination.issorted('dispatched_count') %} class="sorted" {% endif %}>
+						{{ knp_pagination_sortable(pagination, 'Dispatched Count', '[dispatched_count]') }}
+					</th>
+					<th {% if pagination.issorted('delivered_count') %} class="sorted" {% endif %}>
+						{{ knp_pagination_sortable(pagination, 'Delivered Count', '[delivered_count]') }}
+					</th>
+					<th {% if pagination.issorted('read_count') %} class="sorted" {% endif %}>
+						{{ knp_pagination_sortable(pagination, 'Read Count', '[read_count]') }}
+					</th>
+				</tr>
+			</thead>
+			<tbody>
+				{% set offset = pagination.getPaginationData.numItemsPerPage %}
+				{% set current = pagination.getPaginationData.current %}
+				{% for record in pagination %}
+					<tr class="btn-action-trmenu">
+						<td>
+							{{ ((current-1)*offset)+loop.index }}
+						</td>
+						<td class="data">
+							{{ record.message | raw }}
+						</td>
+						<td class="data">
+							{{ record.title  | raw }}
+						</td>
+						<td class="data">
+							{{record.req_date}}
+						</td>
+						<td class="data">
+							{{record.dispatched_count}}
+						</td>
+						<td class="data">
+							{{record.delivered_count}}
+						</td>
+						<td class="data">
+							{{record.read_count}}
+						</td>
+
+					</tr>
+				{% endfor %}
+			</tbody>
+		</table>
+		{{ knp_pagination_render(pagination) }}
+		<div id="custom_filter_param" data-param-value="{{filter}}"></div>
+	</div>
+{% else %}
+	<h4 class="alert alert-info">No Records found</h4>
+{% endif %}

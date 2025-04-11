@@ -1,0 +1,95 @@
+security:
+    encoders:
+        App\Entity\Portal\User:
+            id: App\Security\Encoder\SecuredLoginPasswordEncoder
+
+    role_hierarchy:
+    providers:
+        database_users:
+            entity: { class: App\Entity\Portal\User, property: username }
+
+    firewalls:
+        dev:
+            pattern: ^/(_(profiler|wdt)|css|images|js)/
+            security: false
+        main:
+            pattern: ^/
+            form-login:
+                login_path:    app_login_gimsotp
+                check_path:    app_login_native
+                csrf_token_generator: security.csrf.token_manager
+                default_target_path: app_dashboard
+                username_parameter: _peru
+                password_parameter: _thakol
+            guard:
+                authenticators: 
+                    - App\Security\Firewall\OWASPLoginFormAuthenticator
+            logout:
+                # path:   /parichay/logout
+                target: /
+            anonymous:   true
+            switch_user: { role: ROLE_SUPER_ADMIN }
+
+    access_control:
+         - { path: ^/$, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/download, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/downloads, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/parichay, roles: [IS_AUTHENTICATED_ANONYMOUSLY, IS_AUTHENTICATED_FULLY] }
+         - { path: ^/auth, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN, IS_AUTHENTICATED_ANONYMOUSLY] }
+         - { path: ^/usr/llogin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/usr/nlogin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/usr/glogin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/report/organisation, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/reports/organization, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/usr/prelogin, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/generate-captcha, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/msr, roles: [ROLE_SUPER_ADMIN, ROLE_SUPERVISOR] }
+         - { path: ^/sadmin, roles: [ROLE_SUPER_ADMIN] }
+         - { path: ^/portal/emp/photo, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/portal/ou, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+         - { path: ^/portal/dsg, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+         - { path: ^/portal/emplvl, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+         - { path: ^/portal/o/getosbyministry , roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+         - { path: ^/portal/o, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN] }
+         - { path: ^/portal/bl, roles: [ROLE_SYSTEM_ADMIN] }
+         - { path: ^/portal/emp, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+         - { path: ^/portal/grp, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN,ROLE_GROUP_ADMIN] }
+         - { path: ^/portal/importEmployee/,  roles: [ROLE_SUPER_ADMIN, ROLE_OU_ADMIN,  ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN]}
+         - { path: ^/portal/min/,  roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN]}
+         - { path: ^/portal/upload/,  roles: [ROLE_SUPER_ADMIN]}
+         - { path: ^/portal, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN,  ROLE_SUPERVISOR, ROLE_SYSTEM_ADMIN]  }
+         - { path: ^/dash/email, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/tbsp, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+        #  - { path: ^/dash/dbdatachats, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+        #  - { path: ^/dash/gdau, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+        #  - { path: ^/dash/gdchats, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+        #  - { path: ^/dash/gddwchats, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+        #  - { path: ^/dash/gddwonline, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+        #  - { path: ^/dash/gdonline, roles: [ROLE_SUPER_ADMIN, ROLE_MINISTRY_ADMIN, ROLE_O_ADMIN, ROLE_OU_ADMIN] }
+         - { path: ^/dash/gd, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/db, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/dashboard, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/dash/dlink, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/psl, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/clink, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/beta/dlink, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/get, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/beta/clink, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/download, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/dash/uphoto, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/dash, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/releasenotes, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/public, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/android, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/mobile, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/ios, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/rn, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/privacy, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/support, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/terms, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/api/tbsp, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/list, roles: [IS_AUTHENTICATED_ANONYMOUSLY] }
+         - { path: ^/umurs, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/onboard, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+         - { path: ^/, roles: IS_AUTHENTICATED_FULLY }
+         - { path: ^/build, roles: ROLE_SUPER_ADMIN }

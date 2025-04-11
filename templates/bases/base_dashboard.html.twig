@@ -1,0 +1,17 @@
+{% extends 'bases/base.html.twig' %}
+{% block header %}
+	{% include '/bases/_header_big.html.twig' %}
+{% endblock %}
+{% block body %}
+	<div class="container-fluid body-container">
+		<div class="jumbotron pt-3 ">
+			{% block content %}{% endblock %}
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+	{{ parent() }}
+	<script src="{{ asset('build/js/generic.js') }}"></script>
+	<script src="{{ asset('build/js/session.js') }}"></script>
+	{% block js %}{% endblock %}
+{% endblock %}

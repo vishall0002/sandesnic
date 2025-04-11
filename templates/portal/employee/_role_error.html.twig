@@ -1,0 +1,21 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+	Manage Employee Roles
+{% endblock %}
+{% block modalContent %}
+	<section class="form-block">
+		<div class="row">
+			<div class="col-md-12">
+				<h3 class="text-danger">
+					{{ message }}
+				</h3>
+			</div>
+		</div>
+	</section>
+{% endblock %}
+{% block modalFooter %}
+	<div class="col-md-12">
+		<button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+	</div>
+{% endblock %}
+{% block formend %}{% endblock %}

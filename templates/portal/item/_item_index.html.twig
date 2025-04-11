@@ -1,0 +1,8 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% import 'bases/__responsive_web_text.html.twig' as makris %}
+{% block content %}
+	<div id="__listContainer">
+	<h3>{{ item.itemName }} - {{ item.itemType }}</h3>
+		{{ item.itemText | raw }}
+	</div>
+{% endblock %}

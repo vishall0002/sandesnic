@@ -1,0 +1,36 @@
+{% extends 'bases/base_public.html.twig' %}
+{% block content %}
+	<h3>Choose the service</h3>
+	<div class="row">
+		<div class="col-sm-6">
+			<div class="card mb-3">
+				<div class="card-body text-center ">
+					<i class="fa fa-table fa-4x"></i>
+					<h3 class="card-title">Launch Sandes Portal
+					</h3>
+					<a class="btn btn-primary btn-lg" href="{{ path('app_dashboard') }}" role="button">Sandes Portal</a>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-6">
+			<div class="card mb-3">
+				<div class="card-body text-center ">
+					<i class="fa fa-globe fa-4x"></i>
+					<h3 class="card-title">Launch Sandes Web
+					</h3>
+					<a class="btn btn-primary btn-lg" href="{{ path('app_gims_web_start') }}" role="button">Sandes Web
+					</a>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+		document.addEventListener("DOMContentLoaded", function(event) { 
+			window.setTimeout(function(){
+			window.location.href = "{{ path('app_gims_web_start')}}";
+		}, 3000);
+		});
+    </script>
+{% endblock %}

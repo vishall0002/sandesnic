@@ -1,0 +1,31 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% import 'bases/__responsive_web_text.html.twig' as makris %}
+{% block content %}
+	<div class="row">
+		<div class="col-6">
+			<span style="font-family: Metropolis; font-weight: bolder; font-size: 20px;">
+				Group Management
+			</span>
+		</div>
+		<div class="col-6 text-right">
+			<button class="btn btn-xs btn-primary" data-toggle="collapse" data-target="#__filterContainer" aria-expanded="false" aria-controls="__filterContainer">
+				<span class="d-none d-md-block">Filter</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-search"></i>
+			</button>
+			<button class="btn btn-xs btn-success btn-action-new text-white" data-list-path="{{ path('portal_grp_list' )}}" data-new-path="{{ path('portal_grp_new' )}}" title="Add a new group">
+				<span class="d-none d-md-block">
+					+ New
+				</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-plus"></i>
+			</button>
+		</div>
+	</div>
+	{% include '/portal/generic/_dynamic_filter.html.twig' with {'listpath':path('portal_grp_list')} %}
+	<div id="__listContainer">
+		{{ render(controller('App\\Controller\\Portal\\GroupController::list')) }}
+	</div>
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/group.js') }}"></script>
+	<script src="{{ asset('build/js/upload.js') }}"></script>
+{% endblock %}

@@ -1,0 +1,52 @@
+<div class="row">
+    <div class="col-4 p-0">
+        <h5 class="display-5">
+            Manage Employee Level
+        </h5>
+    </div>
+    <div class="col-5 p-0">
+        {{ knp_pagination_filter(paged_records, {'d.employeeLevelName': 'Employee Level Name','d.employeeLevelCode': 'Employee Level Code' }) }}
+    </div>
+    <div class="col-2">
+        {{form_start(form)}}
+        {{form_widget(form.filters, {'value' :filter })}}
+        {{form_end(form)}}
+    </div>
+    <div class="col-1 p-0 text-center">
+        <button data-new-path="{{ path('portal_employee_level_new') }}"  data-list-path="{{ path('portal_employee_level_list') }}"  type="button" class="btn btn-success btn-xs btn-action-new" data-toggle="modal">
+            + New
+        </button>
+    </div>
+</div>
+<div id="replc_div" class="row">
+<table id="redirectPath" class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+        <tr>
+            <th>#</th>
+            <th{% if paged_records.issorted('d.employeelevelcode') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(paged_records, 'Code', 'd.employeeLevelCode') }}</th>
+            <th{% if paged_records.issorted('d.employeelevelname') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(paged_records, 'Name', 'd.employeeLevelName') }}</th>
+            <th>Organization</th>
+            <th class="text-right">Action</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% set offset = paged_records.getPaginationData.numItemsPerPage %}
+        {% set current = paged_records.getPaginationData.current %}
+        {% for record in paged_records %}
+            <tr data-id="{{record.guId}}">
+                <td>{{ ((current-1)*offset)+loop.index }}</td>
+                <td>{{record.employeeLevelCode}}</td>
+                <td>{{record.employeeLevelName}}</td>
+                <td>{{record.organization?record.organization.organizationName:''}}</td>
+                <td class="text-right">
+                    <button class="btn btn-xs btn-primary btn-action-edit" data-objid="{{record.guId}}" data-edit-path="{{ path('portal_employee_level_edit') }}">Edit</button>
+                    <button class="btn btn-xs btn-warning btn-action-view" data-objid="{{record.guId}}" data-view-path="{{ path('portal_employee_level_delete') }}">Delete</button>
+                </td>
+            </tr>
+        {% endfor %}
+    </tbody>
+</table>
+<div id="custom_filter_param" data-param-value="{{filter}}">
+</div>
+{{ knp_pagination_render(paged_records) }}
+</div>

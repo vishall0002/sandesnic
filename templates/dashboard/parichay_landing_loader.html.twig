@@ -1,0 +1,23 @@
+{% extends 'bases/base_public.html.twig' %}
+{% block content %}
+    <div class="text-center">
+        <div class=" text-center">
+            <i style="font-size:100px;color:#18BC9C;" class="fa fa-spinner fa-pulse fa-success"></i>
+        </div>
+        <div class="text-center mt-25">
+            <span style="font-size:30px;">
+                Handshaking in progress
+            </span><br/>
+            <span style="font-size:20px;color:red">
+                Do not refresh
+            </span>
+        </div>
+    </div>
+{% endblock %}
+{% block javascripts %}
+    <script type="text/javascript">
+        window.onload = function () {
+            window.location = "{{ path('parichay_success_landing')}}";
+        };
+    </script>
+{% endblock %}

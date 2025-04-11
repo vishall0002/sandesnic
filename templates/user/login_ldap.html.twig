@@ -1,0 +1,47 @@
+{% extends 'bases/base_public.html.twig' %}
+{% form_theme form '/bases/captcha_horizontal.html.twig' %}
+{% block content %}
+	<div class="row">
+		<div class="card m-auto col-10 col-sm-8 col-md-6 col-lg-4 col-xl-4 p-0" style="border: none;">
+			<div class="card-header bg-primary">
+				<span class="h3 font-weight-normal text-white">Sign in
+				</span>
+			</div>
+			<div class="card-body">
+				<form class="bg-white" action="{{ path('app_login_ldap_check') }}" id="__nornornor" method="post" autocomplete="off">
+					{% if error %}
+						<div class="alert alert-danger">
+							<button class="close" aria-hidden="true" data-dismiss="alert" type="button">×</button>
+							<b>Alert!</b>
+							{{ error|trans}}
+						</div>
+					{% endif %}
+					<div class="alert alert-secondary">
+						<span>This authentication method is applicable for authorised government officials</span>
+					</div>
+					<div class="form-group">
+						<label for="_peru">Email Address [LDAP]</label>
+						<input class="form-control  form-control-sm __selfperu" autocomplete="off" type="text" id="_peru" name="_peru" placeholder="Username" required="required">
+					</div>
+					<div class="form-group">
+						<label for="_thakol">Password</label>
+						<input class="form-control form-control-sm " autocomplete="off" type="password" id="_thakol" placeholder="Password" name="_thakol" required="required">
+					</div>
+					<strong class="text-danger">Cookies must be enabled for successful login and captcha display</strong>
+
+					<div class="form-group">
+						<small>Please fill the text field as shown in the image [small letters only]</small>
+						{{ form_widget(form.captcha)}}
+					</div>
+					<hr class="my-4">
+					<button id="_submit" name="_submit" class="btn btn-sm btn-success ml-3 " type="submit">
+						Sign in
+					</button>
+					<a href="{{ path('app_home') }}" class="btn btn-sm btn-primary ml-3">Cancel
+					</a>
+					<input type="hidden" id="_verifyUser" value="{{ path('usr_prelogin', {'username': '__objid__'}) }}"/>
+				</form>
+			</div>
+		</div>
+	</div>
+{% endblock %}

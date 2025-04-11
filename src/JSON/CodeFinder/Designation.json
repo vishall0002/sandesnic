@@ -1,0 +1,10 @@
+{
+    "Designation": {
+        "Parent1": {
+            "Entity": "Portal\\Designation",
+            "param": "designationName",
+            "label": "Designation"
+        }
+        
+    }
+}

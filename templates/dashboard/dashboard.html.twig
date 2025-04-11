@@ -1,0 +1,7 @@
+{% extends 'bases/base_dashboard.html.twig' %}
+{% block content %}
+  {% include '/dashboard/dashboard_chats.html.twig' %}
+{% endblock %}
+{% block js %}
+    <script src="{{ asset('build/js/dashboard.js') }}"></script>
+{% endblock %}

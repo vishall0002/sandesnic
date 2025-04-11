@@ -1,0 +1,109 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    {{caption}}
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        {% if 'ROLE_SUPER_ADMIN' in app.user.roles %}
+            <div class="row " id="form1">
+                <div class="col-md-6">
+                    <div class="form-group"><label class="required" for="organization_ministry">Ministry</label>
+                        <select id="organization_ministry" name="organization[ministry]" required="required" class="searchable form-control optionChange" data-nxt-field1="organization_organization" data-nxt-field2="organization_organizationUnit" data-path="{{path('portal_import_employee_fetch_org')}}" >
+                            <option value="" selected="selected">Select Ministry</option>
+                            {% for ministry in result %}
+                                <option value="{{ministry.id}}">{{ministry.ministryName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group"><label class="required" for="organization_organization">Organization</label>
+                        <select id="organization_organization" name="organization[organization]" required="required" class="searchable form-control optionChange" data-nxt-field1="organization_organizationUnit" data-path="{{path('portal_import_employee_fetch_org_unit')}}">
+                            <option value="" selected="selected">Select Organization</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="organization_organizationUnit">Organization Unit</label>
+                        <select id="organization_organizationUnit" name="organization[organizationUnit]" required="required" class="searchable form-control" >
+                            <option value="" selected="selected">Select Organization Unit</option>
+                        </select>
+                    </div>
+                </div>
+
+            </div>
+        {% elseif 'ROLE_MINISTRY_ADMIN' in app.user.roles %}
+            <div class="row " id="form1">
+                <div class="col-md-6">
+                    <div class="form-group"><label class="required" for="organization_organization">Organization</label>
+                        <select id="organization_organization" name="organization[organization]" required="required" class="searchable form-control optionChange" data-nxt-field1="organization_organizationUnit" data-path="{{path('portal_import_employee_fetch_org_unit')}}">
+                           <option value="" selected="selected">Select Organization</option>
+                           {% for organization in result %}
+                                <option value="{{organization.id}}">{{organization.organizationName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="form-group">
+                        <label class="required" for="organization_organizationUnit">Organization Unit</label>
+                        <select id="organization_organizationUnit" name="organization[organizationUnit]" required="required" class="searchable form-control" >
+                            <option value="" selected="selected">Select Organization Unit</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+
+        {% elseif 'ROLE_O_ADMIN' in app.user.roles %}
+            <div class="row " id="form1">
+                <div class="col-md-6">
+                    <div class="form-group"><label class="required" for="organization_ministry">Organization Unit</label>
+                        <select id="organization_organizationUnit" name="organization[organizationUnit]" required="required" class="searchable form-control" >
+                            <option value="" selected="selected">Select Organization Unit</option>
+                            {% for organizationUnit in result %}
+                                <option value="{{organizationUnit.id}}">{{organizationUnit.OUName}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                </div>
+            </div>
+        {% elseif 'ROLE_OU_ADMIN' in app.user.roles %}
+            <div class="form-group">
+                <label class="required" for="organization_organizationUnit">Organization Unit</label>
+                <select id="organization_organizationUnit" name="organization[organizationUnit]" required="required" class="searchable form-control" >
+                    <option value="{{oU.id}}" selected="selected">{{oU.OUName}}</option>
+                </select>
+            </div>
+        {% endif %}
+        {% if not oU %}
+            <div class="row invisible" id="form2" >
+            {% else %}
+                <div class="row" id="form2" >
+                {% endif %}
+                <div class="col-md-6 scanUploadDiv mb-1">
+                    <form method="post" id="fileinfo" name="fileinfo">
+                        <input data-mode="android" id="csvFileUpload" data-guid="{% if oU %}{{oU.id}}{% endif %}" data-upath="{{path('portal_import_employee_upload', {'guid' : '____' } )}}" type="file" name="file"  {#required="required"#}/>
+                    </form>
+                </div>
+                <div class="clearfix"></div>
+                <div class="progress no-padding no-margin col-md-12">
+                    <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+            </div>
+            <div id="error_list">
+            </div>
+    </section>
+    <input type="hidden" name="token" value="{{ csrf_token('form_intention') }}"/>  
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}
+{% block formend %}
+
+{% endblock %}

@@ -1,0 +1,53 @@
+{% extends 'bases/base_modal.html.twig' %}
+{% block modalTitle %}
+    {{caption}}
+{% endblock %}
+{% block formstart %}
+    {{ form_start(form) }}
+{% endblock %}
+{% block modalContent %}
+    <section class="form-block">
+        {{ form_row(form.guId) }}
+        <div class="row">
+            <div class="col-md-6">
+                {{ form_row(form.appVersion) }}
+            </div>
+             <div class="col-md-6">
+                {{ form_row(form.appBuildNo) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.appVersionNo) }}
+            </div>
+           {# <div class="col-md-6">
+                {{ form_row(form.appManifestName) }}
+            </div>#}
+            <div class="col-md-6">
+                {{ form_row(form.appReleaseNotes) }}
+            </div>
+        </div>
+    </section>
+    {{ form_row(form._token) }}
+    {{ form_end(form, {'render_rest': false}) }}
+
+<div class="row" id="form2" >
+    <div class="col-md-7 pull-right no-padding text-right scanUploadDiv">
+        <form method="post" id="fileinfo" name="fileinfo">
+            <input data-mode="android" id="scanFileUpload" data-action="edit" data-guid="{{objid}}" data-upath="{{path('portal_upload_save', {'guid' : '____' } )}}" type="file" name="file" class="pull-right" {#required="required"#}/>
+        </form>
+    </div>
+
+    <div class="clearfix"></div>
+    <div class="progress no-padding no-margin col-md-12">
+        <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+    </div>
+</div>
+{% endblock %}
+{% block modalFooter %}
+    <div class="col-md-12">
+        {{ form_widget(form.btnUpdate, {attr: {class: 'btn btn-sm btn-primary btn-action-submit-new'} }) }}
+        <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Close</button>
+    </div>
+{% endblock %}
+{% block formend %}
+    
+{% endblock %}

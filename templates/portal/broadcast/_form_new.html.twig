@@ -1,0 +1,131 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% block content %}
+    <div class="row">
+        <div class="col-4 p-0">
+            <h4>
+                {{ caption }}
+            </h4>
+        </div>
+    </div>
+    {{ form_start(form) }}
+    <section class="form-block">
+        {{ form_row(form.guId) }}
+        <div class="row">
+            <div class="col-md-12 input-group">
+                <h5 class="col-md-6 p-0">STEP-1</h5>
+                <div class="col-md-6 text-right">
+                    {% if status is defined and status =='edit' %}
+                    <span class="btn btn-sm btn-success publishList" data-objid="{{ objid }}" data-action="PUBLISH"  data-path="{{ path('list_publish') }}">Publish</span>
+                    {% endif %}
+                    {{ form_widget(form.btnInsert, {attr: {class: 'btn btn-sm btn-primary'} }) }}
+                    <button class="btn btn-sm btn-secondary" data-dismiss="modal" type="button">Cancel</button>
+                </div>
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.listName) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.listCategory) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.visibility) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.membershipType) }}
+            </div>
+            <div class="col-md-6">
+                {{ form_row(form.priority) }}
+            </div>
+            <div class="col-md-6 mt-4">
+                {{ form_row(form.AllowUnSubscribe) }}
+            </div>
+
+        </div>
+        <hr/>
+        {% if status is defined and status =='edit' %}
+
+            <div class="row">
+                <div class="col-md-12 input-group p-0">
+                    <h5 class="col-md-10">STEP-2 - Add Publishers</h5>
+                    <div  class="col-md-2">
+                        <button class="btn btn-sm btn-primary float-right addPublisher" data-objid="{{ organizationUnit.guId }}" data-path="{{ path('list_add_publisher') }}" data-dismiss="modal" type="button">Add Publisher</button>
+                    </div>
+                </div>
+                {% if (publishers | length > 0) %}
+                    <table id="ListPublisher" class="table table-striped table-bordered table-hover table-sm">
+                        <thead>
+                            <tr>
+                                <th width="5%">SlNo.</th>
+                                <th>Publisher Name</th>
+                                <th>Rate Limiter</th>
+                                <th width="10%">Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for record in publishers %}
+                                <tr data-objid="{{record.guId}}">
+                                    <td class="data">{{ loop.index }}</td>
+                                    <td class="data">{{ record.employee.employeeName }}</td>
+                                    <td class="data">{{ record.rateLimiter.rateLimitName }}</td>
+                                    <td class="data" data-objid="{{record.guId}}">
+                                        <span class="btn btn-xs btn-danger deleteSubscriber" data-subtype="ListPublisher" data-path="{{ path('list_delete_subscriber') }}">Delete</span>
+                                        {#                                        <span class="btn btn-xs btn-danger">Delete</span>#}
+                                    </td>
+                                </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                {% else %}
+                    <h4 class="col-md-12 alert alert-secondary text-center">No Publishers found.</h4>
+                {% endif %}
+            </div>
+            <hr/>
+            <h5>STEP-3 - Add Subscribers</h5>
+            <div class="row">
+                {% for record in subscriberTypes %}
+                    <div class="col p-1 m-0">
+                        <button class="btn btn-sm btn-block btn-primary codeFinderAction" data-custpath="{{ path('list_subscriber_insert') }}" data-custfunction="cust_codefinder" data-use="{{ record.cfCode }}">{{ record.subscriberType }}</button>
+                    </div>
+                {% endfor %}
+                <br/>
+                <div id="listSubscribers" class="col-md-12 p-0">
+                    {% for record in subscriberTypes %}
+                        {% if (subscribers[record.cfCode]['data'] is defined and subscribers[record.cfCode]['data'] | length > 0) %}
+                            <h5 id="{{ record.cfCode }}Head">{{ record.subscriberType }}</h5>
+                            <table id="{{ record.cfCode }}" class="table table-striped table-bordered table-hover table-sm">
+                                <thead>
+                                    <tr>
+                                        <th width="5%">SlNo.</th>
+                                            {% for key,value in subscribers[record.cfCode]['keys'] %}
+                                            <th>{{ value }}</th>
+
+                                        {% endfor %}
+                                        <th width="10%">Action</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for subscriber in subscribers[record.cfCode]['data'] %}
+                                        <tr>
+                                            <td>{{ loop.index }}</td>
+                                            {% for key,value in subscribers[record.cfCode]['keys'] %}
+                                                <td>{{ subscriber[key] }}</td>
+                                            {% endfor %}
+                                            <td class="data" data-objid="{{subscriber.guid}}">
+                                                <span class="btn btn-xs btn-danger deleteSubscriber" data-subtype="{{ record.cfCode }}" data-path="{{ path('list_delete_subscriber') }}">Delete</span>
+                                            </td>
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                        {% else %}
+                            {#                        <h6 class="col-md-12 alert alert-secondary text-center">No Subscribers found.</h6>#}
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+    {% endif %}
+</section>
+{{ form_row(form._token) }}
+{{ form_end(form, {'render_rest': false}) }}{% endblock %}{% block js %}
+    <script src="{{ asset('build/js/list.js') }}"></script>{% endblock %}

@@ -1,0 +1,35 @@
+{% macro amenuitem(label, guid, actionpath, classname="btn-primary", icon="fa-search", level="primary") %}
+	<a class="p-1 dropdown-item {{classname}}" href="javascript:void(0);" data-objid="{{guid}}" data-view-path="{{ actionpath }}">
+		<i class="fa {{icon}} text-{{level}}" style="width: 14px;"></i>
+		{{label}}</a>
+{% endmacro %}
+{% macro amenuhrefitem(label, guid, actionpath, classname="btn-primary", icon="fa-search", level="primary") %}
+	<a class="p-1 dropdown-item {{classname}}" href="{{actionpath}}" data-objid="{{guid}}">
+		<i class="fa {{icon}} text-{{level}}" style="width: 14px;"></i>
+		{{label}}</a>
+{% endmacro %}
+{% macro approveditem(label) %}
+	<span class="badge badge-pill badge-success">{{label}}</span>
+{% endmacro %}
+{% macro amenulistitem(label, guid, actionpath, classname="btn-primary", icon="fa-plus", level="primary") %}
+	<a class="p-1 dropdown-item {{classname}}" style="text-decoration: none" href="javascript:void(0);" data-objid="{{guid}}" data-pull-path="{{ actionpath }}">
+		<i class="fa {{icon}} text-{{level}}" style="width: 14px;"></i>
+		{{label}}
+	</a>
+{% endmacro %}
+{% macro amenuformitem(label, guid, actionpath, formname, classname="btn-primary", icon="fa-plus", level="primary") %}
+	<form name="{{formname~guid}}" action="{{actionpath}}" method="post">
+		<input type="hidden" name="objid" class="hdn-data-objid" value="{{guid}}"/>
+		<a class="p-1 dropdown-item {{classname}}" style="text-decoration: none" href="javascript:void(0);" onclick="document.forms['{{formname~guid}}'].submit();">
+			<i class="fa {{icon}} text-{{level}}" style="width: 14px;"></i>
+			{{label}}
+		</a>
+	</form>
+{% endmacro %}
+{% macro gims(label,guid, messagetype) %}
+	<a class="p-1 dropdown-item sendMessage" style="text-decoration: none" href="javascript:void(0);" data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-type="{{messagetype}}" data-dname="{{label}}" data-objid="{{guid}}">
+		<i class="fa fa-envelope text-primary" style="width: 14px;"></i>Send Sandes Message</a>
+{% endmacro %}
+{% macro divider() %}
+	<div class="dropdown-divider"></div>
+{% endmacro %}

@@ -1,0 +1,72 @@
+{% extends 'bases/base_masters.html.twig' %}
+{% import 'bases/__responsive_web_text.html.twig' as makris %}
+{% block content %}
+	Members in Group
+    <strong>{{ group.groupTitle }}</strong>
+    <section class="form-block">
+        {% if group.isHidden %}
+            <span class="badge bg-success m-1 badge-medium">Hidden</span>
+        {% else %}
+            <span class="badge bg-secondary m-1 badge-medium">Hidden</span>
+        {% endif %}
+        {% if group.isMemberOnly %}
+            <span class="badge bg-success m-1 badge-medium">Member Only</span>
+        {% else %}
+            <span class="badge bg-secondary m-1 badge-medium">Member Only</span>
+        {% endif %}
+        {% if group.isModerated %}
+            <span class="badge bg-success m-1 badge-medium">Moderated</span>
+        {% else %}
+            <span class="badge bg-secondary m-1 badge-medium">Moderated</span>
+        {% endif %}
+        {% if group.isPasswordProtected %}
+            <span class="badge bg-success m-1 badge-medium">Password Protected</span>
+        {% else %}
+            <span class="badge bg-secondary m-1 badge-medium">Password Protected</span>
+        {% endif %}
+        <table class="table table-sm table-striped table-bordered table-hover table-condensed">
+            <tbody>
+                <tr>
+                    <td class="text-right">Organization</td>
+                     <td class="font-weight-bold display-5">{{group.organizationUnit.organization?group.organizationUnit.organization.organizationName:''}}</td> 
+                    <td class="text-right">Organization Unit</td>
+                    {% if group.organizationUnit %}
+                        <td class="font-weight-bold display-5">{{group.organizationUnit?group.organizationUnit.OUName:''}}</td>
+                    {% endif %}
+                </tr>
+                <tr>
+                    <td class="text-right">Group Title</td>
+                    <td class="font-weight-bold display-5">{{group.groupTitle}}</td>
+                    <td class="text-right">Group Description</td>
+                    <td class="font-weight-bold display-5">{{group.groupDescription}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">Group Type</td>
+                    <td class="font-weight-bold display-5">{{group.groupType ? group.groupType.groupTypeName : 'Not set'}}</td>
+                    <td class="text-right">Group Purpose</td>
+                    <td class="font-weight-bold display-5">{{group.groupPurpose ? group.groupPurpose.groupPurposeName : 'Not set'}}</td>
+                </tr>
+                <tr>
+                    <td class="text-right">Group Creation Mode</td>
+                    <td class="font-weight-bold display-5">{{group.groupCreation ? group.groupCreation.groupCreationName : 'Not set'}}</td>
+                    <td class="text-right">Host Name</td>
+                    <td class="font-weight-bold display-5">{{group.xmppHost}}</td>
+                </tr>
+            </tbody>
+        </table>
+    </section>
+		<div class="col-12 text-right m-1">
+			<button class="btn btn-xs btn-primary" data-toggle="collapse" data-target="#__filterContainer" aria-expanded="false" aria-controls="__filterContainer">
+				<span class="d-none d-md-block">Filter</span>
+				<i class="d-sm-block d-md-none d-lg-none fa fa-search"></i>
+			</button>
+		</div>
+        {% include '/portal/generic/_dynamic_filter.html.twig' with {'listpath':path('portal_grp_listaddmembers', {'objid' : group.guId})} %}
+        <div id="__listContainer">
+            {{ render(controller('App\\Controller\\Portal\\GroupController::listAddMembers', {'objid': group.guId })) }}
+        </div>
+{% endblock %}
+{% block js %}
+	<script src="{{ asset('build/js/group.js') }}"></script>
+	<script src="{{ asset('build/js/upload.js') }}"></script>
+{% endblock %}

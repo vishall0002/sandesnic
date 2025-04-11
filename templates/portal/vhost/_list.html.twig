@@ -1,0 +1,38 @@
+{% if (pagination | length > 0) %}
+<table class="table table-striped table-bordered table-hover table-sm">
+	<thead>
+		<tr>
+			<th>#</th>
+			<th {% if pagination.issorted('v.vhostUrl') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'VHOST URL', 'v.vhostUrl') }}</th>
+			<th {% if pagination.issorted('v.vhostAlias') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Vhost Alias', 'v.vhostAlias') }}</th>
+			<th class="text-right">Action</th>
+		</tr>
+	</thead>
+	{% set offset = pagination.getPaginationData.numItemsPerPage %}
+	{% set current = pagination.getPaginationData.current %}
+	{% for record in pagination %}
+		{% set badges = '' %}
+		<tr data-id="{{record.guId}}" class="btn-action-trmenu" data-objid="{{record.guId}}" data-popper-header="{{record.vhostUrl}}">
+			<td>{{ ((current-1)*offset)+loop.index }}</td>
+			<td>{{record.vhostUrl}}</td>
+			<td>{{record.vhostAlias}}</td>
+			<td class="">
+				{% embed 'bases/__action_menu.html.twig' %}
+					{% block action_menu_header %}
+						<span>{{ record.vhostUrl }}</span>
+						{{ badges | raw }}
+					{% endblock %}
+					{% import "/bases/__action_menu_item.html.twig" as amenu %}
+					{% block action_menu %}
+						{{ amenu.amenuitem("Edit", record.guId,  path('portal_vhost_edit'), "btn-action-view", "fa-edit", "primary")}}
+						{{ amenu.amenuitem("Delete", record.guId, path('portal_vhost_delete'),"btn-action-view", "fa-trash", "danger" )}}
+					{% endblock %}
+				{% endembed %}
+			</td>
+		</tr>
+	{% endfor %}
+</table>
+{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No Records Found</h4>
+{% endif %}

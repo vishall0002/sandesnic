@@ -1,0 +1,27 @@
+{
+    "SubscriberOu": {
+        "Parent1": {
+            "Entity": "Masters\\MinistryCategory",
+            "param": "ministryCategory",
+            "label": "Ministry Category"
+        },
+        "Parent2": {
+            "path": "get_ministries",
+            "param": "ministryName",
+            "label": "Ministry",
+            "postParam": "ministryCategoryId"
+        },
+        "Parent3": {
+            "path": "get_organisations",
+            "param": "organizationName",
+            "label": "Organization",
+            "postParam": "ministryId"
+        },
+        "Parent4": {
+            "path": "get_organisation_units",
+            "param": "OUName",
+            "label": "Organization Unit",
+            "postParam": "orgId"
+        }
+    }
+}

@@ -1,0 +1,110 @@
+{% if (pagination | length > 0) %}
+	<table class="table table-striped table-bordered table-hover table-sm table-responsive-xl">
+		<thead>
+			<tr>
+				<th>ID</th>
+				<th {% if pagination.issorted('e.employeeName') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'Name', 'e.employeeName') }}</th>
+				<th {% if pagination.issorted('e.employeeCode') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'Code', 'e.employeeCode') }}</th>
+				<th {% if pagination.issorted('d.designationName') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'Designation', 'd.designationName') }}</th>
+				<th>Email</th>
+				<th>Mobile</th>
+				<th {% if pagination.issorted('ou.OUName') %} class="sorted" {% endif %}>
+					{{ knp_pagination_sortable(pagination, 'OU', 'ou.OUName') }}</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% set offset = pagination.getPaginationData.numItemsPerPage %}
+			{% set current = pagination.getPaginationData.current %}
+			{% for record in pagination %}
+				{% set badges = '' %}
+				<tr>
+					<td>
+						{{ ((current-1)*offset)+loop.index }}
+					</td>
+					<td class="data">
+						{{record.employeeName}}
+					</td>
+					<td class="data">
+						{{record.employeeCode}}
+					</td>
+					<td class="data">
+						{{record.designationName}}
+					</td>
+					<td class="data">
+						{{record.emailAddress}}
+					</td>
+					<td class="data">
+						{{record.mobileNumber}}
+					</td>
+					<td class="data">
+						{{record.OUName | upper}}
+					</td>
+					<td class="">
+						<div class="pull-left">
+							{% if record.isBetaUser is same as(1) %}
+								<i class="fa fa-coffee text-warning" title="Beta User"></i>
+								{% set badges = '<span class="m-1 badge badge-pill badge-warning">Beta</span>' %}
+							{% endif %}
+							{% if record.markerIcon is not null %}
+								<i class="fa {{ record.markerIcon }}" title="{{ record.offBoardReasonName }}"></i>
+								{% set badges = badges ~ '<span class="m-1 badge badge-pill badge-warning">' ~ record.offBoardReasonName ~'</span>' %}
+							{% endif %}
+							{% if record.isRetired is same as(true) %}
+								<i class="fa fa-coffee" title="Retired Employee"></i>
+								{% set badges = badges ~ '<span class="m-1 badge badge-pill badge-warning">Retired</span>' %}
+							{% endif %}
+							{% if record.isOUAdmin is same as(true) %}
+								<i class="fa fa-key" title="OU Admin"></i>
+								{% set badges = badges ~ '<span class="m-1 badge badge-pill badge-success">OUA</span>' %}
+							{% endif %}
+							{% if record.accountStatus is same as('V') %}
+								<i class="fa fa-check text-primary" title="Verified"></i>
+								{% set badges = badges ~ '<span class="m-1 badge badge-pill badge-primary">Verified</span>' %}
+							{% endif %}
+						</div>
+						{% embed 'bases/__action_menu.html.twig' %}
+							{% block action_menu_header %}
+								<span>{{ record.employeeName }}</span>
+								{{ badges | raw }}
+							{% endblock %}
+							{% import "/bases/__action_menu_item.html.twig" as amenu %}
+							{% block action_menu %}
+								{{ amenu.gims(record.employeeName,record.guId, "m")}}
+								<a class="p-1 dropdown-item btn-emp-photo" href="#" data-pup="{{ path('portal_upload_photo') }}" data-objid="{{record.guId}}">
+									<i class="fa fa-camera text-primary"></i>Change Profile Photo</a>
+								{{ amenu.amenuitem("View Details",record.guId,  path('portal_emp_view'),"btn-action-view")}}
+								{{ amenu.amenuitem("Edit Details",record.guId,  path('portal_emp_edit'),"btn-action-view", "fa-edit", "primary")}}
+								{{ amenu.amenuitem("Delete Member",record.guId,  path('portal_emp_delete'),"btn-action-view", "fa-trash", "danger")}}
+								{{ amenu.divider() }}
+								{{ amenu.amenuitem("Manage Roles/Privileges",record.guId,  path('portal_emp_roles'),"btn-action-view", "fa-cog", "success")}}
+								{{ amenu.amenuitem("Manage Groups",record.guId,  path('portal_emp_groups'),"btn-action-view","fa-users")}}
+								{{ amenu.amenuitem("Manage Group Admin",record.guId,  path('portal_emp_groups_admin'),"btn-action-view","fa-users")}}
+								{{ amenu.amenuitem("Transfer Member",record.guId, path('portal_employee_transfer'), "btn-action-view", "fa-send")}}
+								{{ amenu.amenuitem("Offboard Member",record.guId, path('portal_employee_offboard'), "btn-action-view", "fa-sign-out")}}
+								{{ amenu.divider() }}
+								{% if record.accountStatus is not same as('V') %}
+									{{ amenu.amenuitem("Confirm/Reject Verification",record.guId,  path('portal_verify_emp_verify'), "btn-action-view","")}}
+								{% endif %}
+								{% if is_granted("ROLE_SYSTEM_ADMIN") %}
+									{{ amenu.divider() }}
+									{{ amenu.amenuitem("Migrate Member",record.guId,  path('portal_emp_migrate'), "btn-action-view text-danger","fa-recycle")}}
+									{{ amenu.amenuitem("Send OTL",record.guId, path('portal_employee_otl'), "btn-action-otl text-danger", " fa-external-link")}}
+									{{ amenu.amenuitem("Add Apps",record.guId,  path('portal_emp_apps'), "btn-action-view text-danger", "fa-envelope-square")}}
+									{{ amenu.amenuitem("Mark as Beta User",record.guId,  path('portal_emp_beta'), "btn-action-beta text-danger", "fa-user-secret", "warning")}}
+									{{ amenu.amenuitem("Remote wipe out",record.guId,  path('superadmin_remote_wipeout_view'), "btn-action-view", "fa-user-secret", "warning")}}
+								{% endif %}
+							{% endblock %}
+						{% endembed %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-info">No members found</h4>
+{% endif %}

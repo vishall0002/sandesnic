@@ -1,0 +1,74 @@
+{% if (pagination | length > 0) %}
+	<table class="table table-striped table-bordered table-hover table-sm">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th {% if pagination.issorted('id') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'ID', '[id]') }}</th>
+				<th {% if pagination.issorted('ministryCode') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Ministry ', '[ministryCode]') }}</th>
+				<th {% if pagination.issorted('organizationCode') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Organization ', '[organizationCode]') }}</th>
+				<th {% if pagination.issorted('OUCode') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Organization Unit', '[OUCode]') }}</th>
+				<th {% if pagination.issorted('groupTitle') %} class="sorted" {% endif %}>{{ knp_pagination_sortable(pagination, 'Group Title', '[groupTitle]') }}</th>
+				<th>Action</th>
+			</tr>
+		</thead>
+		<tbody>
+			{% set offset = pagination.getPaginationData.numItemsPerPage %}
+			{% set current = pagination.getPaginationData.current %}
+			{% for record in pagination %}
+				{% set badges = '' %}
+				<tr class="btn-action-trmenu" data-objid="{{record.guId}}" data-popper-header="{{record.groupDescription}}">
+					<td>{{ ((current-1)*offset)+loop.index }}
+						<span class="pull-right text-green glyphicon glyphicon-user" title="Active"></span>
+					</td>
+					<td class="data">
+						{{record.id}}
+					</td>
+					<td class="data">
+						{{record.ministryCode}}
+					</td>
+					<td class="data">
+						{{record.organizationCode}}
+					</td>
+					<td class="data">
+						{{record.OUCode}}
+					</td>
+					<td class="data">
+						{{record.groupTitle}}
+					</td>
+					<td class="text-right">
+						{% embed 'bases/__action_menu.html.twig' %}
+							{% block action_menu_header %}
+								<span>{{ record.groupTitle }}</span>
+								{{ badges | raw }}
+							{% endblock %}
+							{% import "/bases/__action_menu_item.html.twig" as amenu %}
+							{% block action_menu %}
+								{{ amenu.amenuitem("View ",record.guId,  path('portal_grp_view'),"btn-action-view")}}
+								{{ amenu.amenuitem("Edit",record.guId,  path('portal_grp_edit'),"btn-action-view", "fa-edit", "primary")}}
+								{{ amenu.amenuitem("Profile Photo",record.guId,  path('portal_grp_photo'),"btn-grp-photo", "fa-camera", "success")}}
+								{{ amenu.amenuitem("Cover Image",record.guId,  path('portal_grp_coverimage'),"btn-grp-photo","fa-picture-o")}}
+								<div class="dropdown-divider"></div>
+								{{ amenu.amenuhrefitem("Add Member",record.guId,  path('portal_grp_listaddmembers_index', {'objid':record.guId }),"", "fa-users")}}
+								{# {{ amenu.amenuhrefitem("Add Member",record.guId,  path('portal_grp_listaddmembers'),"btn-action-view","fa-users")}} #}
+								{{ amenu.amenuitem("Manage Members",record.guId, path('portal_grp_listmembers'), "btn-action-view", "fa-sign-out")}}
+								{{ amenu.amenuitem("Disperse Group",record.guId,  path('portal_grp_removegroup'), "btn-action-view","fa-recycle")}}
+								{% if 'ROLE_GROUP_ADMIN' not in app.user.roles %}
+									{{ amenu.amenuitem("Change OU",record.guId,  path('portal_grp_change_ou'), "btn-action-view","fa-recycle")}}
+								{% endif %}
+								{% if is_granted("ROLE_SYSTEM_ADMIN") %}
+									{{ amenu.amenuitem("Enable E2EE",record.guId, path('portal_grp_view_e2ee'), "btn-action-view", "fa-send")}}
+								{% endif %}
+								<div class="dropdown-divider"></div>
+								<a class="p-1 dropdown-item sendMessage" data-path="{{ path('portal_send_message') }}" data-email="{{ path('portal_ntfy_email') }}" data-msg="{{ path('portal_ntfy_gims') }}" data-type="g" data-dname="{{record.groupTitle}}" data-objid="{{record.guId}}">
+									<i class="fa fa-envelope text-primary"></i>Send Message</a>
+							{% endblock %}
+						{% endembed %}
+					</td>
+				</tr>
+			{% endfor %}
+		</tbody>
+	</table>
+	{{ knp_pagination_render(pagination) }}
+{% else %}
+	<h4 class="alert alert-secondary">No Groups found</h4>
+{% endif %}
