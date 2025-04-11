@@ -233,7 +233,7 @@ class UpdateIndexDataCommand extends Command
         $filesystem = new \Symfony\Component\Filesystem\Filesystem();
         $filesystem->dumpFile($jsonFilePath, $jsonData);
 
-        $output->writeln('✅ Monthly message count data saved to MonthlymessageCountdata.json');
+        $output->writeln('Monthly message count data saved to MonthlymessageCountdata.json');
     }
 
 
