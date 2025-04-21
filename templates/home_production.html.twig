@@ -19,6 +19,53 @@
 		
 			<style>
 
+			{# monthly message count  #}
+			{# .card {
+				transition: transform 0.3s ease, box-shadow 0.3s ease;
+				cursor:  url(myBall.cur),auto;
+			}
+			.card:hover {
+				transform: translateY(-5px);
+				box-shadow: 0 8px 16px rgba(0, 0, 0, 0.1);
+			}
+
+			.tab-btn.active {
+				background-color: #0d6efd;
+				color: #fff !important;
+			} #}
+
+			/* Circle effect on card hover */
+			.card:hover {
+			cursor: pointer;
+			position: relative;
+			overflow: hidden;
+			}
+
+			.card::after {
+			content: "";
+			position: absolute;
+			width: 50px;
+			height: 50px;
+			color: white;
+			top: var(--y, 50%);
+			left: var(--x, 50%);
+			transform: translate(-50%, -50%);
+			background: rgba(0, 0, 0, 0.05);
+			border-radius: 50%;
+			pointer-events: none;
+			opacity: 0;
+			transition: opacity 0.3s, transform 0.3s;
+			}
+
+			.card:hover::after {
+			opacity: 1;
+			transform: translate(-50%, -50%) scale(1.5);
+			}
+
+
+
+			{# monthly message count ends here  #}
+
 			{# footer  #}
 
 				.footer a{
@@ -328,6 +375,8 @@
 				}
 			}
 
+
+
 				.note-container {
 					margin: 14px;
 				}
@@ -339,6 +388,10 @@
 					text-shadow: 0 0 black;
 					width: 100%;
 					display: none;
+				}
+
+				@media(max-width:500px){
+					
 				}
 	</style>
 	</head>
@@ -708,10 +761,11 @@
 								<h2>Sandes <span>Features</span></h2>
 								<h4 style="color:#f79a39">Checkout our latest features</h4>
 							</div>
-						</div>
+						</div>	
 					</div>
 					<div class="row features-items">
-						<div class="col-md-4 col-sm-6">
+					<div class="col-md-12 d-flex">
+						<div class="col-md-4" >
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-eye"></i>
@@ -722,7 +776,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
+						<div class="col-md-4 " >
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-users"></i>
@@ -733,7 +787,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
+						<div class="col-md-4 " >
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-users-rays"></i>
@@ -744,7 +798,9 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
+								</div>
+					<div class="col-md-12 d-flex" >
+						<div class="col-md-4 col-12">
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-certificate"></i>
@@ -755,7 +811,9 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
+				
+
+						<div class="col-md-4 col-12">
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-tower-broadcast"></i>
@@ -766,7 +824,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
+						<div class="col-md-4 col-12">
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-cloud-arrow-down"></i>
@@ -777,7 +835,9 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
+								</div>
+					<div class="col-md-12 d-flex">
+						<div class="col-md-4 col-12">
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-globe"></i>
@@ -788,7 +848,7 @@
 								</div>
 							</div>
 						</div>
-						<div class="col-md-4 col-sm-6">
+						<div class="col-md-4 col-12">
 							<div class="item">
 								<div class="icon">
 									<i class="fa-solid fa-gauge"></i>
@@ -800,10 +860,45 @@
 							</div>
 						</div>
 					</div>
+					</div>
 				</div>
 			</section>
 
+			
+
 		{# features section ends here  #}
+
+
+
+
+		{# MESSAGE COUNT FOR LAST 12 MONTHS STARTS HERE  #}
+				<section class="sandeshPort">
+					<div class="container-fluid section-wrapper">
+						<div class="row equal-height">
+							<div class="col-md-12 col-12">
+								<h1 class="index-hedding text-white">Sandes Dashboard Overview</h1>
+								<div>
+										<div class="progress monthly-progress d-none mb-3">
+											<div class="progress-bar progress-bar-striped progress-bar-animated" style="width: 100%"></div>
+										</div>
+
+										<div class="d-flex justify-content-center my-3">
+											<button class="btn btn-outline-danger me-2 tab-btn active" data-type="organization">Organization</button>
+											<button class="btn btn-outline-success tab-btn" data-type="egovapp">eGov App</button>
+										</div>
+
+
+										<div class="row g-3" id="monthlyCardContainer"></div>
+
+
+							<!-- Right Column: About -->
+							
+						</div>
+					</div>
+				</section>
+
+
+		{# MESSAGE COUNT FOR LAST 12 MONTHS ENDS HERE  #}
 
 
 
@@ -1060,6 +1155,94 @@
 	   	});
 	   });
 	   
+
+	{# function to  fetch monthly message count starts here  #}
+		let activeTab = 'organization'; // Declare this in global scope
+
+			function formatNumber(num) {
+				return num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+			}
+
+			function getMonthName(isoMonth) {
+				const [year, month] = isoMonth.split('-');
+				const date = new Date(`${year}-${month}-01`);
+				return date.toLocaleString('default', { month: 'long', year: 'numeric' }); // "July 2020"
+			}
+
+			function renderCards(monthlyData) {
+				let html = '';
+				monthlyData.forEach((item, index) => {
+					const value = item[activeTab];
+					const prev = monthlyData[index + 1] ? monthlyData[index + 1][activeTab] : null;
+					const trendIcon = prev !== null
+						? value > prev
+							? '<span class="text-success"><i class="fas fa-arrow-up"></i></span>'
+							: value < prev
+								? '<span class="text-danger"><i class="fas fa-arrow-down"></i></span>'
+								: '<span class="text-muted"><i class="fas fa-minus"></i></span>'
+						: '';
+
+					html += `
+						<div class="col-12 col-sm-6 col-md-4 col-lg-3 col-xl-2">
+							<div class="card h-100 shadow-sm border-0 rounded-4">
+								<div class="card-header text-white bg-dark text-center fw-bold" style="border-top-left-radius: 1rem; border-top-right-radius: 1rem;">
+									${getMonthName(item.month)}
+								</div>
+								<div class="card-body text-center">
+									<div class="fs-5 fw-semibold mb-2">
+										<i class="fas ${activeTab === 'organization' ? 'fa-building' : 'fa-mobile-alt'} me-2 text-${activeTab === 'organization' ? 'primary' : 'success'}"></i>
+										{# ${activeTab === 'organization' ? 'Organization' : 'eGov App'} #}
+									</div>
+									<div class="display-6 fw-bold mb-2">
+										${formatNumber(value)} ${trendIcon}
+									</div>
+								</div>
+							</div>
+						</div>
+					`;
+				});
+				$('#monthlyCardContainer').html(html);
+			}
+
+			$(document).ready(function () {
+				let monthlyData = [];
+
+				const url = "{{ path('get_monthly_message_data') }}"; // Symfony route
+
+				$.ajax({
+					url: url,
+					beforeSend: function () {
+						$('.monthly-progress').addClass('d-block');
+					},
+					success: function (data) {
+						console.log(data);
+						if (Array.isArray(data)) {
+							monthlyData = data;
+							renderCards(monthlyData);
+						}
+					},
+					complete: function () {
+						$('.monthly-progress').removeClass('d-block').addClass('d-none');
+					}
+				});
+
+				$('.tab-btn').on('click', function () {
+					$('.tab-btn').removeClass('active');
+					$(this).addClass('active');
+					activeTab = $(this).data('type');
+					renderCards(monthlyData);
+				});
+			});
+
+		{# function to  fetch monthly message count ends here  #}
+
+
+
+
+
+	   
+	   
+	   
 	   function formatNumber(num) {
 	   if (num === undefined || num === null) {
 	          return "Data not available"; // or handle it in any other appropriate way
@@ -1119,4 +1302,16 @@
 	      currentSlide = i;
 	    });
 	   });
+	</script>
+
+
+	<script>
+	$(document).on('mousemove', '.card', function (e) {
+		const rect = this.getBoundingClientRect();
+		const x = e.clientX - rect.left;
+		const y = e.clientY - rect.top;
+		this.style.setProperty('--x', `${x}px`);
+		this.style.setProperty('--y', `${y}px`);
+	});
+
 	</script>

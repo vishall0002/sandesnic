@@ -94,7 +94,7 @@ class UpdateIndexDataCommand extends Command
         $output->writeln('Json File data updated successfully.');
 
         $this->storeMonthlyMessageCount($output);
-        // $this->storeOnboardedMessageStats($output);  commenting this 
+        $this->storeOnboardedMessageStats($output);  //commenting this 
         
          return 1;
     }
@@ -237,61 +237,115 @@ class UpdateIndexDataCommand extends Command
     }
 
 
+
     private function storeOnboardedMessageStats(OutputInterface $output)
     {
         $em = $this->entityManager;
         $dbCon = $em->getConnection();
 
-        // -- 1. Message count by organization category --
+        // Query for organization message data (from gim.report.message_activity_org)
         $stmtOrg = $dbCon->prepare("
             SELECT 
-                COALESCE(o.category, 'others') as category,
+                CASE 
+                    WHEN LOWER(TRIM(mc.ministry_category)) = 'state' THEN 'State'
+                    WHEN LOWER(TRIM(mc.ministry_category)) = 'central' THEN 'Central'
+                    ELSE 'Others'
+                END as category,
                 SUM(ma.message_count) as total_messages
             FROM report.message_activity_org ma
-            INNER JOIN gim.organization o ON ma.organization_id = o.id
-            GROUP BY o.category
+            INNER JOIN gim.organization_unit ou ON ma.organization_id = ou.ou_id
+            LEFT JOIN gim.organization o ON ou.organization_id = o.id
+            LEFT JOIN gim.masters_ministries mm ON o.ministry_id = mm.id
+            LEFT JOIN gim.masters_ministry_categories mc ON mm.ministry_category_id = mc.id
+            GROUP BY category
         ");
         $stmtOrg->execute();
         $orgData = $stmtOrg->fetchAll(\PDO::FETCH_ASSOC);
 
-        // -- 2. Message count by egov app category --
+        // Query for eGov application message data (from report.app_message_activity)
+        // $stmtEgov = $dbCon->prepare("
+        //     SELECT 
+        //         CASE 
+        //             WHEN LOWER(TRIM(mc.ministry_category)) = 'state' THEN 'State'
+        //             WHEN LOWER(TRIM(mc.ministry_category)) = 'central' THEN 'Central'
+        //             ELSE 'Others'
+        //         END as category,
+        //         SUM(ma.message_count) as total_messages
+        //     FROM report.app_message_activity ma
+        //     // INNER JOIN gim.application a ON ma.application_id = a.id  // asfdasdfa
+        //     INNER JOIN gim.organization_unit ou ON ma.organization_id = ou.ou_id
+        //     LEFT JOIN gim.organization_type ot ON a.category = ot.code
+        //     LEFT JOIN gim.masters_ministry_categories mc ON ot.category_id = mc.id
+        //     GROUP BY category
+        // ");
+        // $stmtEgov->execute();
+        // $egovData = $stmtEgov->fetchAll(\PDO::FETCH_ASSOC);
+
         $stmtEgov = $dbCon->prepare("
             SELECT 
-                COALESCE(a.category, 'others') as category,
+                CASE 
+                    WHEN LOWER(TRIM(mc.ministry_category)) = 'state' THEN 'State'
+                    WHEN LOWER(TRIM(mc.ministry_category)) = 'central' THEN 'Central'
+                    ELSE 'Others'
+                END as category,
                 SUM(ma.message_count) as total_messages
-            FROM report.app_message_activity ma
-            INNER JOIN gim.application a ON ma.application_id = a.id
-            GROUP BY a.category
+            FROM report.message_activity_ou ma
+             INNER JOIN gim.organization_unit ou ON ma.organization_id = ou.ou_id
+            LEFT JOIN gim.organization o ON ou.organization_id = o.id
+            LEFT JOIN gim.masters_ministries mm ON o.ministry_id = mm.id
+            LEFT JOIN gim.masters_ministry_categories mc ON mm.ministry_category_id = mc.id
+            GROUP BY category
         ");
         $stmtEgov->execute();
         $egovData = $stmtEgov->fetchAll(\PDO::FETCH_ASSOC);
 
-        // Convert to associative arrays with category as key
+
+        // Merge the organization message data
         $orgStats = [];
         foreach ($orgData as $row) {
             $orgStats[$row['category']] = (int) $row['total_messages'];
         }
 
+        // Merge the eGov message data
         $egovStats = [];
         foreach ($egovData as $row) {
             $egovStats[$row['category']] = (int) $row['total_messages'];
         }
 
-        // Final combined output
+        // Ensure all categories are present (State, Central, Others)
+        $categories = ['State', 'Central', 'Others'];
+        foreach ($categories as $cat) {
+            if (!isset($orgStats[$cat])) {
+                $orgStats[$cat] = 0;
+            }
+            if (!isset($egovStats[$cat])) {
+                $egovStats[$cat] = 0;
+            }
+        }
+
+        // Prepare the final data to be saved
         $finalData = [
             'Organizations' => $orgStats,
             'eGovApplications' => $egovStats
         ];
 
-        // Write to JSON
+        // Get the project directory to save the JSON file
         $projectDir = $this->kernel->getProjectDir();
-        $jsonFilePath = $projectDir . '/OnboardedMessageStats.json';
+        $jsonFilePath = $projectDir . '/state_center_others_message_data.json';
 
+        // Use Symfony Filesystem to dump the data into the JSON file
         $filesystem = new \Symfony\Component\Filesystem\Filesystem();
         $filesystem->dumpFile($jsonFilePath, json_encode($finalData, JSON_PRETTY_PRINT));
 
-        $output->writeln('Onboarded organization and eGov application message counts saved to OnboardedMessageStats.json');
+        // Output confirmation message
+        $output->writeln('Onboarded organization and eGov application message counts saved to state_center_others_message_data.json');
     }
+
+    
+    
+
+
+    
 
 
 }

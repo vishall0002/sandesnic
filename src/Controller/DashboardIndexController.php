@@ -55,4 +55,25 @@ class DashboardIndexController extends AbstractController implements \App\Interf
         $data = json_decode($jsonData, true);
         return new JsonResponse($data);
     }
+
+
+    //new function by vishal to get the count of message in last 12 months
+    
+    /**
+    * @Route("/getmonthlymessagedata", name="get_monthly_message_data")
+    */
+    public function getMonthlyMessageData()
+    {
+        $jsonFilePath = $this->getParameter('kernel.project_dir') . '/MonthlymessageCountdata.json';
+
+        if (!file_exists($jsonFilePath)) {
+            throw $this->createNotFoundException('Monthly message count JSON file not found');
+        }
+
+        $jsonData = file_get_contents($jsonFilePath);
+        $data = json_decode($jsonData, true);
+
+        return new JsonResponse($data);
+    }
+
 }
