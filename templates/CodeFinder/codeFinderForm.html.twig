@@ -103,8 +103,9 @@
 {% block modalFooter %}
     {# <button type="button" id="district_btnInsert" name="district[btnInsert]" class="btn btn-sm btn-primary btn_portal_submit btn">OK</button>
     <button type="button" class="btn btn-sm btn-secondary" data-dismiss="modal">Close</button> #}
-<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-    <script src="{{asset('build/js/codeFinder.js')}}"></script>
+<script src="https://code.jquery.com/j
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.min.css">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/chosen/1.8.7/chosen.jquery.min.js"></script>/js/codeFinder.js')}}"></script>
 <script>
 $(document).ready(function() {
     $('#modelV').on('hidden.bs.modal', function () {
@@ -125,6 +126,7 @@ $(document).ready(function () {
 
    //re load when model show 
     $("#cf_modal_body").on("shown.bs.modal", function () {
+        alert("v");
         initializeChosen();
     });
     // Run it once for normal load

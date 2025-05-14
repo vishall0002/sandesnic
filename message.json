@@ -1,5 +1,8 @@
 {
     "show": true,
-    "heading": "Sandes Onboarding : ",
-    "message": "Please submit your documents for onboarding as soon as possible."
-}
+    "heading": "<span style='color:#c75463;'>Sandes Onboarding : </span>",
+    "message": "You may submit on-Boarding request of your Organisation / eGov application through <a href='https://eforms.nic.in/OnlineForms/' target='_blank' class='text-decoration-underline'>https://eforms.nic.in </a>"
+  }
+  
+
+  

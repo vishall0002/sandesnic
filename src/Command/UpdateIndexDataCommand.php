@@ -44,19 +44,60 @@ class UpdateIndexDataCommand extends Command
         $organization = 0;
         $qryMA = $em->createQuery("SELECT SUM(ma.messageCount),  MAX(ma.dateHour) FROM App:Dashboard\MessageActivity ma");
         $qryMACount = $qryMA->getResult();
-        
+
+
         // Message Activity Count
-        $qryMA = $dbCon->prepare("SELECT SUM(ma.message_count),  MAX(ma.date_hour) FROM report.message_activity_org as ma INNER JOIN gim.organization as o ON ma.organization_id = o.id WHERE o.ministry_id = :ministry OR :ministry = 0");
+        $qryMA = $dbCon->prepare("
+            SELECT 
+                SUM(ma.message_count) AS total_messages, 
+                MAX(ma.date_hour) AS latest_date
+            FROM report.message_activity_org AS ma
+            INNER JOIN gim.organization AS o ON ma.organization_id = o.id
+            INNER JOIN gim.masters_ministries AS mm ON o.ministry_id = mm.id
+            INNER JOIN gim.masters_ministry_categories AS mmc ON mm.ministry_category_id = mmc.id
+            WHERE o.ministry_id = :ministry OR :ministry = 0
+        ");
         $qryMA->bindValue('ministry', $ministry);
         $qryMA->execute();
         $qryMACounts = $qryMA->fetchAll(FetchMode::NUMERIC);
-        $qryMACount = $qryMACounts[0][0];
-        $updateTime = $qryMACounts[0][1];
+        $qryMACount = $qryMACounts[0][0];  // Total message count
+        $updateTime = $qryMACounts[0][1];  // Latest message date
+        
+
+        //Categories wise message count 
+        $qryCategoryWise = $dbCon->prepare("
+            SELECT 
+                mmc.ministry_category AS category_name,
+                SUM(ma.message_count) AS category_message_count
+            FROM report.message_activity_org AS ma
+            INNER JOIN gim.organization AS o ON ma.organization_id = o.id
+            INNER JOIN gim.masters_ministries AS mm ON o.ministry_id = mm.id
+            INNER JOIN gim.masters_ministry_categories AS mmc ON mm.ministry_category_id = mmc.id
+            WHERE o.ministry_id = :ministry OR :ministry = 0
+            GROUP BY mmc.ministry_category
+        ");
+    
+        $qryCategoryWise->bindValue('ministry', $ministry);
+        $qryCategoryWise->execute();
+        $categoryMessageCounts = $qryCategoryWise->fetchAll(FetchMode::ASSOCIATIVE);
+        
+
 
         // Registration Count
+
+        //in this will show total employee count and on hover will show registerd and onboard
         $qrychat = $dbCon->prepare("SELECT COUNT(1) FROM gim.employee as e WHERE e.registered = 'Y'");
         $qrychat->execute();
-        $qryRegistrationCount = $qrychat->fetchAll(FetchMode::NUMERIC)[0];
+        // $qryRegistrationCount = $qrychat->fetchAll(FetchMode::NUMERIC)[0];
+
+        $qryRegistrationCount = $qrychat->fetchAll(FetchMode::NUMERIC)[0][0];
+        // Total unregistered users in which registered = 'N'
+        $qrychatNew = $dbCon->prepare("SELECT COUNT(1) FROM gim.employee AS e WHERE e.registered = 'N'");
+        $qrychatNew->execute();
+        $newUser = $qrychatNew->fetchAll(FetchMode::NUMERIC)[0][0];
+
+        // Total users (registered + unregistered)
+        $totalUserOn = $qryRegistrationCount + $newUser;
 
       
         // Organization Count
@@ -64,6 +105,24 @@ class UpdateIndexDataCommand extends Command
         $qrychat->bindValue(':ministry', $ministry);
         $qrychat->execute();
         $qryOrganizationCount = $qrychat->fetchAll(FetchMode::NUMERIC)[0];
+
+
+
+        // Organization count grouped by ministry category
+        $qryOrgCategoryWise = $dbCon->prepare("
+        SELECT 
+            mmc.ministry_category AS category_name,
+            COUNT(o.id) AS organization_count
+        FROM gim.organization AS o
+        INNER JOIN gim.masters_ministries AS mm ON o.ministry_id = mm.id
+        INNER JOIN gim.masters_ministry_categories AS mmc ON mm.ministry_category_id = mmc.id
+        WHERE o.ministry_id = :ministry OR :ministry = 0
+        GROUP BY mmc.ministry_category
+        ");
+        $qryOrgCategoryWise->bindValue(':ministry', $ministry);
+        $qryOrgCategoryWise->execute();
+        $organisationwithminsitrycategories = $qryOrgCategoryWise->fetchAll(FetchMode::ASSOCIATIVE);
+
 
         //Egove Message Count
         $chatStatistics = $dbCon->prepare("select SUM(message_count) as egove from report.app_message_activity");
@@ -78,9 +137,12 @@ class UpdateIndexDataCommand extends Command
             'OCount' => $qryOrganizationCount,
             'LAU' => $updateTime,
             'ERCount' => $qryRegistrationCount,
+            'NewUser' => $newUser,
+            'TotalUserRegisteredAndNew' => $totalUserOn,
             'MCount' => $qryMACount,
-            'egovemessage' =>$qryegovMessageCount
-          
+            'egovemessage' =>$qryegovMessageCount,
+            'categoriesWiseMessageCount' =>  $categoryMessageCounts,
+            'organisationWithinMinistryCategories' => $organisationwithminsitrycategories
         ];
 
         // Convert data to JSON format
@@ -164,7 +226,30 @@ class UpdateIndexDataCommand extends Command
         $mergedData = [];
 
         foreach ($orgData as $row) {
-            $mergedData[$row['month']]['month'] = $row['month'];
+            $mergedData[$row['month']]['month'] = $row['month'];  $stmt = $dbCon->prepare("
+            SELECT 
+                COALESCE(org.month, egov.month) as month,
+                COALESCE(org.organization, 0) as organization,
+                COALESCE(egov.egovapp, 0) as egovapp
+            FROM (
+                SELECT 
+                    TO_CHAR(date_hour, 'YYYY-MM') as month,
+                    SUM(message_count) as organization
+                FROM report.message_activity_org
+                GROUP BY month
+            ) as org
+            FULL OUTER JOIN (
+                SELECT 
+                    TO_CHAR(date_hour, 'YYYY-MM') as month,
+                    SUM(message_count) as egovapp
+                FROM report.app_message_activity
+                GROUP BY month
+            ) as egov
+            ON org.month = egov.month
+            ORDER BY month DESC
+            LIMIT 12
+        ");
+
             $mergedData[$row['month']]['organization'] = (int)$row['organization'];
             $mergedData[$row['month']]['egovapp'] = 0;
         }
